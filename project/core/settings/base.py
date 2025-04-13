@@ -25,9 +25,11 @@ INSTALLED_APPS = [
     # Project Apps
     'auths.user',
     'apps.api',
+    'apps.shop',
     'apps.frontend',
     # Modules
     # 'rest_framework',
+    'djmoney',
 ]
 
 MIDDLEWARE = [
