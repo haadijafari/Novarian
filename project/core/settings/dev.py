@@ -20,14 +20,14 @@ MIDDLEWARE += [
 ]
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
+STATIC_URL = '/src/'
 MEDIA_URL = '/media/'
 
 STATIC_ROOT = BASE_DIR / 'static'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 STATICFILES_DIRS = [
-    BASE_DIR / "apps/frontend/vite-react/public",
+    BASE_DIR / "apps/frontend/vite-react/src",
 ]
 
 # reCaptcha
