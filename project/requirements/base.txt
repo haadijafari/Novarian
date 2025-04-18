@@ -3,6 +3,7 @@ python-dotenv
 pillow
 djangorestframework
 markdown
+django-cors-headers
 drf-spectacular
 django-ckeditor>6,<7
 django-money
