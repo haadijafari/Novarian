@@ -2,6 +2,7 @@ django>4.2,<4.3
 python-dotenv
 pillow
 djangorestframework
+django-cors-headers
 django-ckeditor>6,<7
 django-money
 django-robots
