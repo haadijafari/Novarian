@@ -105,8 +105,8 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Gift Shop API',
-    'DESCRIPTION': 'Online Gift Shop Website APIs',
+    'TITLE': 'Novarian Gift Shop API',
+    'DESCRIPTION': 'Novarian Online Gift Shop Website APIs',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
     # OTHER SETTINGS
