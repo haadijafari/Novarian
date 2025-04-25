@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'apps.product',
     'apps.cart',
     'apps.frontend',
+    'apps.utils',
     # Modules
     'rest_framework',
     'drf_spectacular',
