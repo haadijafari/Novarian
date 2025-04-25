@@ -1,6 +1,7 @@
 import uuid
 from decimal import Decimal
 
+from ckeditor.fields import RichTextField
 from colorfield.fields import ColorField
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -54,7 +55,7 @@ class Product(models.Model):
     )
     tags = TaggableManager(_('Tags'), blank=True)
     short_description = models.CharField(_('Short Description'), max_length=360, null=True)
-    description = models.TextField(_('Full Description'), null=True, blank=True)
+    description = RichTextField(_('Full Description'), null=True, blank=True)
     slug = models.SlugField(_('Slug'), default="", null=False, blank=True, db_index=True, max_length=200, unique=True)
     is_active = models.BooleanField(_('Active Status'), default=True, help_text=_('Turn off for Soft Delete'),
                                     db_index=True)
