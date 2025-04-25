@@ -1,3 +1,4 @@
+from drf_writable_nested import WritableNestedModelSerializer
 from rest_framework import serializers
 from taggit.serializers import TagListSerializerField, TaggitSerializer
 
@@ -22,7 +23,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
         fields = ['id', 'image', 'is_primary']
 
 
-class ProductSerializer(TaggitSerializer, serializers.ModelSerializer):
+class ProductSerializer(TaggitSerializer, WritableNestedModelSerializer):
     tags = TagListSerializerField(required=False, default=None)
     images = ProductImageSerializer(many=True, required=False)
     primary_image = ProductImageSerializer(read_only=True)
