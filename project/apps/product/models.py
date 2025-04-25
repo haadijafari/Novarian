@@ -1,9 +1,11 @@
+import uuid
 from decimal import Decimal
 
 from colorfield.fields import ColorField
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django.db.models import Q
 from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
@@ -11,12 +13,19 @@ from djmoney.models.fields import MoneyField
 from taggit.managers import TaggableManager
 
 
+class ActiveCategoryManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True)
+
+
 class ProductCategory(models.Model):
     title = models.CharField(_('Title'), max_length=300, db_index=True)
     img = models.ImageField(_('Image'), blank=True, null=True)
     color = ColorField(default='#FFFFFF')
-    is_active = models.BooleanField(_('Is Active'), default=False)
-    is_delete = models.BooleanField(_('Is Deleted'), default=False)
+    is_active = models.BooleanField(_('Is Active'), default=False, db_index=True)
+
+    objects = models.Manager()
+    active = ActiveCategoryManager()
 
     def __str__(self):
         return self.title
@@ -28,7 +37,8 @@ class ProductCategory(models.Model):
 
 class ActiveProductManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(is_active=True)
+        return super().get_queryset().filter(
+            Q(is_active=True) & Q(published_date__lt=timezone.now())).order_by('-published_date')
 
 
 class Product(models.Model):
@@ -39,19 +49,19 @@ class Product(models.Model):
     quantity = models.IntegerField(_('Quantity'), default=0,
                                    validators=[MinValueValidator(0)], )
     rating = models.DecimalField(
-        max_digits=2,
-        decimal_places=1,
+        max_digits=2, decimal_places=1, null=True, blank=True,
         validators=[MinValueValidator(Decimal('0.0')), MaxValueValidator(Decimal('5.0'))],
     )
     tags = TaggableManager(_('Tags'), blank=True)
     short_description = models.CharField(_('Short Description'), max_length=360, null=True)
     description = models.TextField(_('Full Description'), null=True, blank=True)
     slug = models.SlugField(_('Slug'), default="", null=False, blank=True, db_index=True, max_length=200, unique=True)
-    is_active = models.BooleanField(_('Active Status'), default=True, help_text=_('Turn off for Soft Delete'))
+    is_active = models.BooleanField(_('Active Status'), default=True, help_text=_('Turn off for Soft Delete'),
+                                    db_index=True)
     is_draft = models.BooleanField(_('Draft'), default=True)
     created_date = models.DateTimeField(_('Created Date'), auto_now_add=True)
     modified_date = models.DateTimeField(_('Modified Date'), auto_now=True)
-    published_date = models.DateTimeField(_('Published Date'), default=timezone.now)
+    published_date = models.DateTimeField(_('Published Date'), default=timezone.now, db_index=True)
 
     objects = models.Manager()
     active = ActiveProductManager()
@@ -72,7 +82,11 @@ class Product(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
+        if not self.slug:  # Auto-generate only if empty
+            self.slug = slugify(self.title)
+            # Ensure uniqueness by appending a random string if needed
+            while Product.objects.filter(slug=self.slug).exists():
+                self.slug = f"{slugify(self.title)}-{uuid.uuid4().hex[:4]}"
         super().save(*args, **kwargs)
 
     def delete(self, using=None, keep_parents=False):
