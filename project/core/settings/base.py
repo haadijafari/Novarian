@@ -25,16 +25,24 @@ INSTALLED_APPS = [
     # Project Apps
     'auths.user',
     'apps.api',
-    'apps.shop',
+    'apps.product',
+    'apps.cart',
     'apps.frontend',
+    'apps.utils',
     # Modules
-    # 'rest_framework',
+    'rest_framework',
+    'drf_spectacular',
     'djmoney',
+    'corsheaders',
+    'taggit',
+    'colorfield',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -81,10 +89,25 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 USE_I18N = True
 USE_TZ = True
 
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# REST Settings
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Gift Shop API',
+    'DESCRIPTION': 'Online Gift Shop Website APIs',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}
