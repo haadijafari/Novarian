@@ -1,5 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import redirect
+
+from core.settings.base import DEBUG
 
 
 def index_view(request, *args, **kwargs):
-    return render(request, 'index.html')
+    if DEBUG:
+        return redirect('/api/schema/swagger-ui/')
+    else:
+        pass
