@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
 
-const Home = () => {
+export default function Page() {
   return (
-    <div className=''>HeroPage</div>
-  )
+    <main className="relative h-screen ">
+    </main>
+  );
 }
-
-export default Home
