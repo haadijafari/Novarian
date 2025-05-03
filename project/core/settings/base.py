@@ -28,7 +28,8 @@ INSTALLED_APPS = [
     'apps.shop',
     'apps.frontend',
     # Modules
-    # 'rest_framework',
+    'rest_framework',
+    'drf_spectacular',
     'djmoney',
     'corsheaders',
 ]
@@ -90,3 +91,16 @@ USE_TZ = True
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# REST Settings
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Gift Shop API',
+    'DESCRIPTION': 'Online Gift Shop Website APIs',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}
