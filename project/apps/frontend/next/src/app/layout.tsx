@@ -1,12 +1,15 @@
 import "@/style/globals.css"
+import { Providers } from "./providers"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html suppressHydrationWarning>
-      <body className="bg-black">
-        <div>
-          {children}
-        </div>
+      <body>
+        <Providers>
+          <div>
+            {children}
+          </div>
+        </Providers>
       </body>
     </html >
   )
