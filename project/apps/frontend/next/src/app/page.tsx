@@ -1,5 +1,3 @@
-import InfiniteScroller from '@/components/infiniteScroller';
-import QubeLoader from '@/components/qubeLoader';
 import React from 'react';
 
 export default function Page() {
