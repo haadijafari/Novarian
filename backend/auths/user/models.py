@@ -8,16 +8,25 @@ from apps.utils.validators import iran_phone_regex
 
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, phone_number, password=None, **extra_fields):
-        if not phone_number:
-            raise ValueError(_('The Phone Number must be set.'))
+    def create_user(self, identifier, password=None, **extra_fields):
+        if not identifier:
+            raise ValueError("The Email or Phone number must be set")
+        
+        # Determine if identifier is email or phone
+        if "@" in identifier:
+            # TODO: Validate Email
+            extra_fields['email'] = identifier
+        else:
+            # TODO: Validate Phone Number
+            extra_fields['phone_number'] = identifier
+        
 
-        user = self.model(phone_number=self.normalize_email(phone_number), **extra_fields)
+        user = self.model(**extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, phone_number, password=None, **extra_fields):
+    def create_superuser(self, identifier, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
@@ -27,24 +36,27 @@ class CustomUserManager(BaseUserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError(_('Superuser must have is_superuser=True.'))
 
-        return self.create_user(phone_number, password, **extra_fields)
+        return self.create_user(identifier, password, **extra_fields)
 
 
 class User(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(
-        validators=[iran_phone_regex],
-        max_length=11,
-        help_text=_("Required. Iranian cell phone number like 09123456789."),
-        unique=True,
-        blank=False,
-        # null=False,  # Redundant for CharField, default is False
+        _("Phone Number"), unique=True, blank=True, null=True,
+        validators=[iran_phone_regex], max_length=11,
+        help_text=_("Iranian cell phone number like 09123456789."),
         error_messages={
             "unique": _("A user with this phone number already exists."),
         },
     )
+    email = models.EmailField(
+        _("Email Address"), unique=True, blank=True, null=True,
+        # TODO: validators=[EmailValidator()],
+        help_text=_("Email address like example@domain.com."),
+        error_messages={
+            "unique": _("A user with this email address already exists."),
+            })
     first_name = models.CharField(_("First Name"), max_length=150, blank=True)
     last_name = models.CharField(_("Last Name"), max_length=150, blank=True)
-    email = models.EmailField(_("Email Address"), blank=True, null=True)
 
     is_staff = models.BooleanField(
         _("Staff Status"),
@@ -105,4 +117,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         if self.first_name and self.last_name:
             return self.get_full_name()
-        return str(self.phone_number)
+        return str(self.email) or str(self.phone_number)

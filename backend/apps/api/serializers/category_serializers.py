@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.api.serializers.product_serializers import ProductSerializer
+# from apps.api.serializers.product_serializers import ProductSerializer
 from apps.product.models import ProductCategory
 
 

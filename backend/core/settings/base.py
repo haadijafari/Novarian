@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'apps.utils',
     # Modules
     'rest_framework',
+    'rest_framework.authtoken',
     'drf_spectacular',
     'djmoney',
     'corsheaders',
@@ -84,6 +85,13 @@ DATABASES = {
 }
 
 
+# Authentication Logic
+AUTHENTICATION_BACKENDS = [
+    'auths.user.authentication.EmailOrPhoneBackend',  # custom backend
+    'django.contrib.auth.backends.ModelBackend',    # fallback logic (secondary logic)
+]
+
+
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -114,6 +122,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # REST Settings
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
