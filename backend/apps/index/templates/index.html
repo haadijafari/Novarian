@@ -51,6 +51,7 @@
 <body>
     <div class="container">
         <h1>Hello {{ user.username|default:"Guest" }} 👋</h1>
+        <h2>{{request.user}}</h2>
         <ul>
             {% for name, url in urls.items %}
                 <li><a href="{{ url }}">{{ name }}</a></li>
