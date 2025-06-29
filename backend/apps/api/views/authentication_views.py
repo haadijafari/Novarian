@@ -31,7 +31,7 @@ class RegisterViewSet(ViewSet):
                 'user_id': user.id,
                 'token': token.key
             }, status=status.HTTP_201_CREATED)
-        
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -46,7 +46,7 @@ class LoginAPIViewSet(ViewSet):
                 {'detail': 'You are already logged in.'},
                 status=status.HTTP_403_FORBIDDEN
             )
-        
+
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data['user']
@@ -66,7 +66,7 @@ class LoginAPIViewSet(ViewSet):
             }, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
 
 class LogoutAPIViewSet(ViewSet):
     authentication_classes = [TokenAuthentication]
