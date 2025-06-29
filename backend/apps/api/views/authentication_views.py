@@ -3,6 +3,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from django.core.cache import cache
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 
 from apps.api.serializers.authentication_serializers import LoginSerializer, RegisterSerializer
@@ -64,3 +66,13 @@ class LoginAPIViewSet(ViewSet):
             }, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class LogoutAPIViewSet(ViewSet):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request):
+        request.auth.delete()
+
+        return Response({'message': 'Logged out successfully.'}, status=status.HTTP_200_OK)
