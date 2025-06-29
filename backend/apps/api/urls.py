@@ -15,5 +15,5 @@ router.register(r'login', LoginAPIViewSet, basename='login')
 router.register(r'register', RegisterViewSet, basename='register')
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('', include(router.urls), name='api'),
 ]

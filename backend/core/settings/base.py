@@ -24,13 +24,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     # Project Apps
     'auths.user',
     'apps.api',
     'apps.product',
     'apps.cart',
-    # 'apps.frontend',
+    'apps.index',
     'apps.utils',
+
     # Modules
     'rest_framework',
     'rest_framework.authtoken',

@@ -11,7 +11,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', include('apps.frontend.urls')),
+    path('', include('apps.index.urls')),
     # DRF
     path('api/', include('apps.api.urls')),
     path('api-auth/', include('rest_framework.urls')),
