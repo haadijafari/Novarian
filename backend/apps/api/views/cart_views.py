@@ -1,24 +1,16 @@
-from rest_framework import viewsets
-from rest_framework.exceptions import PermissionDenied
-from rest_framework.permissions import IsAuthenticated, BasePermission
-
 from apps.api.serializers.cart_serializers import CartSerializer
 from apps.cart.models import Cart
-from apps.utils.permissions import IsOwner
-
-
-class IsOwnerOrAdmin(BasePermission):
-    def has_object_permission(self, request, view, obj):
-        return obj.user == request.user or request.user.is_staff
+from apps.utils.permissions import IsOwner, IsSuperUser
+from rest_framework import viewsets
 
 
 class CartViewSet(viewsets.ModelViewSet):
     serializer_class = CartSerializer
-    permission_classes = [IsAuthenticated, IsOwner]
+    permission_classes = [IsOwner, IsSuperUser]
 
     def get_queryset(self):
         # Only return carts belonging to the logged-in user (unless admin)
-        if self.request.user.is_staff:
+        if self.request.user.is_superuser:
             return Cart.objects.all()
         return Cart.objects.filter(user=self.request.user)
 
