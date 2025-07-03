@@ -1,16 +1,20 @@
-from django.db import transaction
-from rest_framework.viewsets import ViewSet
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.permissions import AllowAny
+# Django imports
 from django.core.cache import cache
-from rest_framework.permissions import IsAuthenticated
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
-from rest_framework_simplejwt.exceptions import TokenError
+from django.db import transaction
+from django.utils.timezone import now
 
+# Third-party imports
+from rest_framework import status
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.viewsets import ViewSet
+from rest_framework_simplejwt.exceptions import TokenError
+from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
+from rest_framework_simplejwt.tokens import RefreshToken
+
+# Local app imports
 from apps.api.serializers.authentication_serializers import LoginSerializer, RegisterSerializer
-from apps.api.throttles import RegisterRateThrottle, LoginRateThrottle
+from apps.api.throttles import LoginRateThrottle, RegisterRateThrottle
 
 class RegisterViewSet(ViewSet):
     serializer_class = RegisterSerializer
@@ -56,6 +60,11 @@ class LoginAPIViewSet(ViewSet):
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data['user']
+
+            # update last_login manually
+            user.last_login = now()
+            user.save(update_fields=["last_login"])
+
             refresh = RefreshToken.for_user(user)
 
             # Clear throttle after successful login
