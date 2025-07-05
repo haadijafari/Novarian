@@ -16,6 +16,10 @@ DEBUG = os.environ.get('DEBUG') == 'True'
 # User
 AUTH_USER_MODEL = 'user.User'
 
+# Redis Cache Settings
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+
 
 # Application definition
 INSTALLED_APPS = [

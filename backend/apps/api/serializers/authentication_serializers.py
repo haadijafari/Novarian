@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import transaction
+from django.utils.translation import gettext_lazy as _
 
 from rest_framework import serializers
 
@@ -20,8 +21,19 @@ class LoginSerializer(serializers.ModelSerializer):
         query = {'email__iexact': identifier} if '@' in identifier else {'phone_number': identifier}
         user = User.objects.filter(**query).first()
 
-        if user is None or not user.is_active or not user.check_password(password):
-            raise serializers.ValidationError('Invalid credentials.')
+        if not user:
+            raise serializers.ValidationError(_("Invalid credentials."))
+
+        if not user.check_password(password):
+            raise serializers.ValidationError(_("Invalid credentials."))
+
+        if not user.is_active:
+            raise serializers.ValidationError(_("This account is inactive due to some restrictions."))
+
+        if '@' in identifier and not user.is_verified_email:
+            raise serializers.ValidationError(_("Email is not verified yet."))
+        elif '@' not in identifier and not user.is_verified_phone_number:
+            raise serializers.ValidationError(_("Phone number is not verified yet."))
 
         data['user'] = user
         return data

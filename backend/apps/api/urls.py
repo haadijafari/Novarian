@@ -6,6 +6,7 @@ from .views.product_views import ProductViewSet, ProductCategoryViewSet
 from .views.authentication_views import (
     LoginAPIViewSet, LogoutAPIViewSet, RegisterViewSet, GoogleLoginAPIView
 )
+from .views.verification_views import VerifyEmailAPIView, VerifyPhoneAPIView
 
 app_name = 'api'
 
@@ -19,5 +20,7 @@ router.register(r'register', RegisterViewSet, basename='register')
 
 urlpatterns = [
     path('', include(router.urls), name='api'),
+    path('verify-email/', VerifyEmailAPIView.as_view(), name='verify-email'),
+    path('verify-phone/', VerifyPhoneAPIView.as_view(), name='verify-phone'),
     path('auth/google/', GoogleLoginAPIView.as_view(), name='google-login'),
 ]

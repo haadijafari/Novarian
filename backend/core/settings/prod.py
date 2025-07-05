@@ -32,6 +32,20 @@ STATICFILES_DIRS = [
     # BASE_DIR / "apps/frontend/vite-react/dist",
 ]
 
+REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
+REDIS_USERNAME = os.getenv('REDIS_USERNAME')
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': f'rediss://{REDIS_USERNAME}:{REDIS_PASSWORD}@novarian.ir:6379/1',
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "COMPRESSOR": "django_redis.compressors.zlib.ZlibCompressor",
+        }
+    }
+}
+
 # Security
 CSRF_COOKIE_SECURE = True  # to avoid transmitting the CSRF cookie over HTTP accidentally.
 SESSION_COOKIE_SECURE = True  # to avoid transmitting the session cookie over HTTP accidentally.
