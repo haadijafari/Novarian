@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'drf_spectacular',
+    'social_django',
     'djmoney',
     'corsheaders',
     'taggit',
@@ -54,6 +55,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Google auth
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -91,8 +94,9 @@ DATABASES = {
 
 # Authentication Logic
 AUTHENTICATION_BACKENDS = [
+    'social_core.backends.google.GoogleOAuth2',       # Google auth
     'auths.user.authentication.EmailOrPhoneBackend',  # custom backend
-    'django.contrib.auth.backends.ModelBackend',    # fallback logic (secondary logic)
+    'django.contrib.auth.backends.ModelBackend',      # fallback logic (secondary logic)
 ]
 
 
@@ -157,3 +161,11 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
     # OTHER SETTINGS
 }
+
+# Google Auth
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'profile']
+LOGIN_REDIRECT_URL = '/'

@@ -6,6 +6,7 @@ from django.utils.timezone import now
 # Third-party imports
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from rest_framework_simplejwt.exceptions import TokenError
@@ -15,6 +16,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 # Local app imports
 from apps.api.serializers.authentication_serializers import LoginSerializer, RegisterSerializer
 from apps.api.throttles import LoginRateThrottle, RegisterRateThrottle
+from apps.utils.google_auth import authenticate_with_google_token
 
 class RegisterViewSet(ViewSet):
     serializer_class = RegisterSerializer
@@ -82,6 +84,30 @@ class LoginAPIViewSet(ViewSet):
             }, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class GoogleLoginAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        token = request.data.get("id_token")
+        if not token:
+            return Response({'detail': 'ID token is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user = authenticate_with_google_token(token)
+        if user is None:
+            return Response({'detail': 'Invalid or expired Google token.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        refresh = RefreshToken.for_user(user)
+
+        return Response({
+            'message': 'Logged in with Google successfully.',
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+            'user_id': user.id,
+            'email': user.email,
+            'phone_number': user.phone_number,
+        }, status=status.HTTP_200_OK)
 
 
 class LogoutAPIViewSet(ViewSet):

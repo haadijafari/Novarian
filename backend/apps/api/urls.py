@@ -3,7 +3,9 @@ from rest_framework.routers import DefaultRouter
 
 from .views.cart_views import CartViewSet
 from .views.product_views import ProductViewSet, ProductCategoryViewSet
-from .views.authentication_views import LoginAPIViewSet, LogoutAPIViewSet, RegisterViewSet
+from .views.authentication_views import (
+    LoginAPIViewSet, LogoutAPIViewSet, RegisterViewSet, GoogleLoginAPIView
+)
 
 app_name = 'api'
 
@@ -17,4 +19,5 @@ router.register(r'register', RegisterViewSet, basename='register')
 
 urlpatterns = [
     path('', include(router.urls), name='api'),
+    path('auth/google/', GoogleLoginAPIView.as_view(), name='google-login'),
 ]
