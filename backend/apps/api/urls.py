@@ -9,6 +9,7 @@ from .views.authentication_views import (
 from .views.verification_views import (
     VerifyEmailAPIView, VerifyPhoneAPIView, ResendVerificationCodeAPIView
 )
+from .views.reset_password_views import RequestPasswordResetAPIView, ResetPasswordAPIView
 
 app_name = 'api'
 
@@ -25,5 +26,7 @@ urlpatterns = [
     path('verify-email/', VerifyEmailAPIView.as_view(), name='verify-email'),
     path('verify-phone/', VerifyPhoneAPIView.as_view(), name='verify-phone'),
     path('resend-verification/', ResendVerificationCodeAPIView.as_view(), name='resend-verification'),
+    path('request-password-reset/', RequestPasswordResetAPIView.as_view(), name='request-password-reset'),
+    path('reset-password/', ResetPasswordAPIView.as_view(), name='reset-password'),
     path('auth/google/', GoogleLoginAPIView.as_view(), name='google-login'),
 ]
