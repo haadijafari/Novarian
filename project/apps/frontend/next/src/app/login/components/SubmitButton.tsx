@@ -10,7 +10,7 @@ interface SubmitButtonProps
   pendingText: string
 }
 
-export default function LoginSubmitButton({ onClick, pendingText, children, pending: isPending, className, pendingClassName }: SubmitButtonProps) {
+export default function SubmitButton({ onClick, pendingText, children, pending: isPending, className, pendingClassName }: SubmitButtonProps) {
   return (
     <button
       onClick={onClick}

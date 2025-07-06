@@ -3,7 +3,7 @@ import { Providers } from "./providers"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html suppressHydrationWarning>
+    <html suppressHydrationWarning lang="fa" dir="rtl">
       <body>
         <Providers>
           <div>

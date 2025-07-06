@@ -10,33 +10,32 @@ import React, {
   useState
 } from 'react'
 import {
-  errorMessageVariants,
   loadingVariants,
   shakeVariants
 } from './otpVariants'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'motion/react'
 import SubmitButton from './SubmitButton'
+import ErrorPopUp from './ErrorPopUp'
+import { isNumeric, toPersian } from '@/lib/utils'
 
 type Props = {
   length: number
   submitForm: (arg1: string) => Promise<{ error: string }>
 }
 
-const OtpInput = ({ length, submitForm: onOtpSubmit }: Props) => {
+const OtpForm = ({ length, submitForm: onOtpSubmit }: Props) => {
   const [otp, setOtp] = useState<string[]>(new Array(length).fill(''))
   const [isPending, setIsPending] = useState(false)
   const [error, setError] = useState('')
 
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
 
-  // Focuses the first input field on component mount.
   useEffect(() => {
     if (inputRefs.current[0]) {
       inputRefs.current[0].focus()
     }
   }, [])
 
-  // Memoizes the OTP submission logic.
   const submitOtp = useCallback(
     async (combinedOtp: string) => {
       setIsPending(true)
@@ -45,36 +44,33 @@ const OtpInput = ({ length, submitForm: onOtpSubmit }: Props) => {
       setError(submitError)
       setIsPending(false)
 
-      // using the setTimeout to send the focus call to the end of js event loop
       setTimeout(() => {
         inputRefs.current[0]?.focus()
       }, 1)
     },
-    [onOtpSubmit, inputRefs]
+    [onOtpSubmit, length]
   )
 
-  // Handles input changes and manages focus.
   const handleChange = useCallback(
     async (index: number, e: ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value
-      const newOtp = [...otp]
-
-      // Return if the value is not number
-      if (isNaN(+value)) return
-
-      // removing the error state
       setError('')
 
-      // allows only one number
-      newOtp[index] = value.substring(value.length - 1)
+      const lastChar = value.substring(value.length - 1)
+
+      // Only proceed if the character is a numeral (English or Persian)
+      if (!isNumeric(lastChar) && lastChar !== '') return
+
+      const newOtp = [...otp]
+
+      // Convert to Persian before setting state to ensure display consistency
+      newOtp[index] = toPersian(lastChar)
       setOtp(newOtp)
 
-      // moving to next input
-      if (value && index < length - 1 && inputRefs.current[index + 1]) {
+      if (lastChar && index < length - 1 && inputRefs.current[index + 1]) {
         inputRefs.current[index + 1]?.focus()
       }
 
-      // Submits OTP if all fields are filled.
       const combinedOtp = newOtp.join('')
       if (
         combinedOtp.length === length &&
@@ -87,45 +83,30 @@ const OtpInput = ({ length, submitForm: onOtpSubmit }: Props) => {
     [otp, length, submitOtp]
   )
 
-  // Handles keyboard events like Backspace and Arrow keys for navigation.
   const handleKeyDown = useCallback(
     async (index: number, e: KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Backspace') {
         if (!otp[index] && index > 0) {
           inputRefs.current[index - 1]?.focus()
-          const newOtp = [...otp]
-          newOtp[index - 1] = ''
-          setOtp(newOtp)
-        } else if (otp[index] && index >= 0) {
-          const newOtp = [...otp]
-          newOtp[index] = ''
-          setOtp(newOtp)
         }
+        const newOtp = [...otp]
+        newOtp[index] = ''
+        setOtp(newOtp)
       } else if (e.key === 'ArrowLeft' && index > 0) {
         inputRefs.current[index - 1]?.focus()
       } else if (e.key === 'ArrowRight' && index < length - 1) {
         inputRefs.current[index + 1]?.focus()
       } else if (e.key === 'Enter') {
+        e.preventDefault()
         const combinedOtp = otp.join('')
         if (combinedOtp.length === length && !otp.some(char => char === '')) {
           await submitOtp(combinedOtp)
         } else {
-          setError('please enter the full code')
+          setError('لطفا کد را کامل وارد کنید')
         }
       }
     },
-    [otp, length]
-  )
-
-  // Clears the clicked input field and sets focus.
-  const handleClick = useCallback(
-    (index: number) => {
-      const newOtp = [...otp]
-      newOtp[index] = ''
-      setOtp(newOtp)
-      inputRefs.current[index]?.focus()
-    },
-    [otp]
+    [otp, length, submitOtp]
   )
 
   const handlePaste = useCallback(
@@ -134,22 +115,16 @@ const OtpInput = ({ length, submitForm: onOtpSubmit }: Props) => {
       const value = e.clipboardData.getData('text').trim()
       setError('')
 
-      const firstNonDigit = value.search(/\D/)
-      const leadingNum = firstNonDigit === -1 ? value.length : firstNonDigit
-      const newOtp = [...otp]
+      const sanitizedValue = value.split('').filter(isNumeric)
+      if (sanitizedValue.length === 0) return
 
+      const newOtp = [...otp]
       for (let i = 0; i < length; i++) {
-        const c = value[i]
-        if (leadingNum - 1 < i) {
-          newOtp[i] = ''
-        } else if (isNaN(+c)) {
-          break
-        } else {
-          newOtp[i] = c
-        }
+        // Convert each character to Persian as it's being set
+        newOtp[i] = sanitizedValue[i] ? toPersian(sanitizedValue[i]) : ''
       }
 
-      const focusIndex = Math.min(leadingNum, length - 1)
+      const focusIndex = Math.min(sanitizedValue.length, length - 1)
       inputRefs.current[focusIndex]?.focus()
       setOtp(newOtp)
 
@@ -162,12 +137,11 @@ const OtpInput = ({ length, submitForm: onOtpSubmit }: Props) => {
   )
 
   return (
-    <form
-      className="flex flex-col items-center w-full max-w-md mx-auto p-6 sm:p-10 space-y-6"
-    >
+    <div className="flex flex-col items-center w-full max-w-md mx-auto p-6 sm:p-10 space-y-6">
       <motion.div
-        className="grid w-full gap-[clamp(0.75rem,2.0vw,3.5rem)]"
-        style={{ gridTemplateColumns: `repeat(${length}, minmax(0, 1fr))` }}
+        dir='ltr'
+        className="grid w-full justify-center gap-[clamp(1rem,1.5vw,3.0rem)]"
+        style={{ gridTemplateColumns: `repeat(${length}, auto)` }}
         variants={shakeVariants}
         initial="initial"
         animate={error ? 'shake' : 'initial'}
@@ -176,25 +150,25 @@ const OtpInput = ({ length, submitForm: onOtpSubmit }: Props) => {
           <motion.div
             variants={loadingVariants}
             animate={isPending ? 'pulse' : 'idle'}
-            className="relative aspect-square w-[clamp(3rem,5vw,9rem)] text-[clamp(2rem,4vw,8rem)] bg-white text-black rounded-xl text-center border-2 border-gray-300"
-            onClick={() => handleClick(id)}
+            className="relative aspect-square w-[clamp(4rem,4vw,4.5rem)] text-[clamp(2rem,4vw,4rem)] bg-primary-100 dark:bg-primary-900 rounded-xl text-center border-2"
+            onClick={() => inputRefs.current[id]?.focus()}
             key={id}
           >
             <motion.input
               ref={el => {
                 inputRefs.current[id] = el
               }}
-              type="text"
+              type="tel" // "tel" is better for numeric inputs
               inputMode="numeric"
-              pattern="[0-9]*"
               value={value}
               onPaste={e => handlePaste(e)}
               onChange={e => handleChange(id, e)}
               onKeyDown={e => handleKeyDown(id, e)}
-              className="absolute inset-0 w-full h-full rounded-xl text-white cursor-pointer"
+              className="absolute inset-0 w-full h-full rounded-xl cursor-pointer bg-transparent text-transparent caret-transparent text-center"
               disabled={isPending}
-              aria-label={`OTP digit ${id + 1} of ${length}`}
+              aria-label={`رقم ${id + 1} از ${length}`}
               autoComplete="one-time-code"
+              maxLength={1}
             />
             <AnimatePresence>
               {value !== '' && (
@@ -209,11 +183,10 @@ const OtpInput = ({ length, submitForm: onOtpSubmit }: Props) => {
                     damping: 20
                   }}
                   className={`
-                flex items-center justify-center aspect-square absolute inset-0 w-full h-full
-                bg-white text-black rounded-xl text-center
-                ${error ? 'border-red-500' : 'border-gray-300'}
-                ${isPending ? 'cursor-not-allowed' : ''}
-              `}
+                    flex items-center justify-center aspect-square absolute inset-0 w-full h-full dark:bg-primary-900 bg-primary-100 dark:text-white text-black rounded-xl text-center pointer-events-none
+                    ${error ? 'border-red-500' : 'border-gray-900'}
+                    ${isPending ? 'cursor-not-allowed' : ''}
+                  `}
                 >
                   {value}
                 </motion.p>
@@ -221,38 +194,36 @@ const OtpInput = ({ length, submitForm: onOtpSubmit }: Props) => {
             </AnimatePresence>
           </motion.div>
         ))}
-        {error && (
-          <motion.p
-            variants={errorMessageVariants}
-            initial="hidden"
-            animate="visible"
-            className="col-span-full text-red-500 text-center"
-          >
-            {error}
-          </motion.p>
-        )}
       </motion.div>
-
+      <div>
+        <AnimatePresence>
+          {error && (
+            <ErrorPopUp
+              className='text-sm sm:text-base col-span-full text-red-500 text-center'
+              key="otp-error"
+              text={error}
+            />
+          )}
+        </AnimatePresence>
+      </div>
       <SubmitButton
-        onClick={async e => {
-          e.preventDefault()
+        onClick={() => {
           const combinedOtp = otp.join('')
           if (combinedOtp.length === length && !otp.some(char => char === '')) {
-            await submitOtp(combinedOtp)
+            submitOtp(combinedOtp)
           } else {
-            setError('please enter the full code')
+            setError('لطفا کد را کامل وارد کنید')
           }
         }}
-        className="w-full h-16 sm:h-20 rounded-full shadow-xl font-semibold transition-colors duration-200 bg-red-300 text-black hover:bg-red-400 mt-6"
+        className="bg-accent-500 dark:bg-accent-400 dark:text-primary-50 text-primary-950 dark:hover:bg-accent-600 hover:bg-accent-300 w-full h-16 sm:h-20 rounded-full text-3xl shadow-xl font-semibold transition-colors duration-200"
         pending={isPending}
-        pendingClassName="bg-red-200 text-gray-500 cursor-not-allowed flex items-center justify-center space-x-2"
-        pendingText="submitting…"
+        pendingClassName="dark:bg-accent-600 bg-accent-300 text-gray-700 dark:text-gray-700 cursor-not-allowed flex items-center justify-center space-x-2"
+        pendingText="در حال ارسال..."
       >
-        submit
+        تایید
       </SubmitButton>
-    </form>
-
+    </div>
   )
 }
 
-export default OtpInput
+export default OtpForm

@@ -22,7 +22,6 @@ const loginSchema = z.union([emailBranch, phoneBranch])
 type FormState = { error: string }
 
 export async function loginSubmit(
-  _prevState: FormState,
   formData: FormData
 ): Promise<FormState> {
   // Extract and normalize input
@@ -46,7 +45,7 @@ export async function loginSubmit(
     }
   } catch (err) {
     // TODO: check `err` for more detailed messaging/logging
-    return { error: 'please enter a valid phone number or email address' }
+    return { error: err as string }
   }
 
   // redirect on success
@@ -57,17 +56,19 @@ export async function loginSubmit(
   else params.append("email", value)
 
   // testing pending state
-  await new Promise((resolve) => setTimeout(resolve, 0))
+  await new Promise((resolve) => setTimeout(resolve, 500))
 
-  redirect(`/login?${params.toString()}`)
+  return { error: "" }
 }
 
 // Placeholder functions for auth logic
 async function handleEmailLogin(email: string) {
+  console.log(email)
   // e.g. check credentials
 }
 
 async function handlePhoneLogin(phone: string) {
+  console.log(phone)
   // e.g. send OTP SMS or check SMS code
 }
 

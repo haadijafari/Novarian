@@ -1,55 +1,82 @@
 'use client'
 
-import React, { useActionState } from 'react'
+import React, { useState } from 'react'
 import { UserRound } from 'lucide-react'
 import ErrorPopUp from './ErrorPopUp'
-import { loginSubmit } from './actions'
 import SubmitButton from './SubmitButton'
 import { useRouter } from 'next/navigation'
 import InputWithIcon from './inputWithIcon'
-
-const initialState = {
-  error: '',
-}
+import { loginSubmit } from './actions'
+import { AnimatePresence } from 'motion/react'
 
 const LoginForm = () => {
+  const [error, setError] = useState("")
+  const [isPending, setIspending] = useState(false)
   const router = useRouter()
-  const [state, formAction, isPending] = useActionState(loginSubmit, initialState)
 
   return (
     <form
-      className="flex flex-col justify-between items-center w-full max-w-md mx-auto rounded-lg p-6 sm:p-10 space-y-6"
-      action={formAction}
+      noValidate
+      className="flex justify-center m-auto aspect-square overflow-hidden flex-col items-center w-full max-w-[500px] mx-auto rounded-lg p-6 sm:p-10 space-y-6"
+      onSubmit={async (e) => {
+        e.preventDefault()
+        setError("")
+
+        const formData = new FormData(e.currentTarget)
+        const numberOrGmail = formData.get('numberOrGmail') as string;
+
+        if (!numberOrGmail || numberOrGmail.trim() === '') {
+          setError("لطفا این فیلد را پر کنید") // Your custom error message
+          return // Stop the submission process
+        }
+
+        setIspending(true)
+
+        const result = await loginSubmit(formData)
+
+        setIspending(false)
+
+        if (result.error) {
+          setError(result.error)
+        }
+        else {
+          // Make sure to pass the phone number in the query
+          router.push(`/login?state=otp&number=${encodeURIComponent(numberOrGmail)}`)
+        }
+      }}
     >
-      <h1 className="text-5xl sm:text-8xl font-semibold text-center mb-16">Login</h1>
+      <h1 className="text-[clamp(2rem,11.5vw,3.6rem)] sm:text-[clamp(2rem,4.5vw,3.6rem)] font-semibold text-center mb-8 sm:mb-16">عضویت یا ورود</h1>
 
       <InputWithIcon
-        className="h-16 sm:h-20 w-full bg-white text-black rounded-full border-2 outline-none text-xl sm:text-2xl font-medium pr-11 pl-7 p-3"
+        className="h-16 sm:h-20 w-full bg-primary-100 dark:bg-primary-900 dark:border-primary-100 border-primary-900 rounded-full border-2 outline-none text-xl sm:text-2xl font-medium pr-7 pl-11 p-3"
+        labelClassName='text-md text-bold'
         id="numberOrGmail-input"
         name="numberOrGmail"
+        persian
         type="text"
-        placeholder="Number or Gmail"
+        placeholder="شماره تلفن یا ‍‍ایمیل"
         required
         iconSize="26"
         IconComponent={UserRound}
       />
 
-      <ErrorPopUp
-        text={state.error}
-        className="text-red-500 rounded-xl text-sm sm:text-base"
-      />
+      {/* Only render the error popup if there is an error */}
+      <AnimatePresence>
+        {error && (
+          <ErrorPopUp
+            text={error}
+            className="text-secondary-500 rounded-xl text-sm sm:text-base"
+          />
+        )}
+      </AnimatePresence>
 
       <SubmitButton
-        onClick={(e) => {
-          e.preventDefault()
-          router.push("/login?state=otp")
-        }}
-        className="w-full h-16 sm:h-20 rounded-full shadow-xl font-semibold transition-colors duration-200 bg-red-300 text-black hover:bg-red-400"
+        className="w-full h-16 items-center text-3xl sm:h-20 rounded-full shadow-xl font-semibold transition-colors duration-200 bg-accent-500 dark:bg-accent-400 dark:text-primary-50 text-primary-950 dark:hover:bg-accent-600 hover:bg-accent-300"
         pending={isPending}
-        pendingClassName="bg-red-200 text-gray-500 cursor-not-allowed flex items-center justify-center space-x-2"
-        pendingText="Logging in…"
+        pendingClassName="dark:bg-accent-200 bg-accent-700 text-gray-700 dark:text-gray-700 cursor-not-allowed flex items-center justify-center space-x-2"
+        pendingText="در حال ارسال..."
       >
-        login
+        ورود
       </SubmitButton>
     </form>
   )

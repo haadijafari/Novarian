@@ -1,1 +1,47 @@
 @import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  button {
+    @apply cursor-pointer;
+  }
+}
+
+@theme {
+  --color-primary-50: #eff5ff;
+  --color-primary-100: #dfeaff;
+  --color-primary-200: #b7d5ff;
+  --color-primary-300: #78b3ff;
+  --color-primary-400: #308bff;
+  --color-primary-500: #056cf2;
+  --color-primary-600: #0052cf;
+  --color-primary-700: #0041a7;
+  --color-primary-800: #02388a;
+  --color-primary-900: #020b27;
+  --color-primary-950: #020b1c;
+
+  --color-secondary-50: #fef2f3;
+  --color-secondary-100: #fee2e3;
+  --color-secondary-200: #fecacc;
+  --color-secondary-300: #fca5a9;
+  --color-secondary-400: #f87177;
+  --color-secondary-500: #ed333b;
+  --color-secondary-600: #dc262e;
+  --color-secondary-700: #b91c23;
+  --color-secondary-800: #991b20;
+  --color-secondary-900: #7f1d21;
+  --color-secondary-950: #450a0d;
+
+  --color-accent-50: #f1fcf5;
+  --color-accent-100: #defaea;
+  --color-accent-200: #bef4d5;
+  --color-accent-300: #8beab6;
+  --color-accent-400: #52d68d;
+  --color-accent-500: #33d17a;
+  --color-accent-600: #1d9c56;
+  --color-accent-700: #1b7a46;
+  --color-accent-800: #1a613b;
+  --color-accent-900: #175033;
+  --color-accent-950: #072c19;
+}
