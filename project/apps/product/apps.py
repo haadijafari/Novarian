@@ -2,7 +2,7 @@ from django.apps import AppConfig
 from django.utils.translation import gettext_lazy as _
 
 
-class CartConfig(AppConfig):
+class ProductConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'apps.shop'
-    verbose_name = _('Shop')
+    name = 'apps.product'
+    verbose_name = _('Product Module')

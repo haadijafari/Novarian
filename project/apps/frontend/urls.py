@@ -6,5 +6,4 @@ app_name = 'frontend'
 
 urlpatterns = [
     path('', views.index_view, name='index'),
-    re_path(r'^.*$', views.index_view),
 ]
