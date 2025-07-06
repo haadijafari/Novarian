@@ -2,6 +2,12 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+body {
+  /* This rule tells the browser: "The default font for everything
+     inside the body should be whatever the --font-vazirmatn variable is." */
+  font-family: var(--font-sahel);
+}
+
 @layer base {
   button {
     @apply cursor-pointer;
