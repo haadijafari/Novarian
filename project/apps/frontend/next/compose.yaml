@@ -1,0 +1,19 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    ports:
+      - "3000:3000"
+    develop:
+      watch:
+        - path: ./package.json
+          action: rebuild
+        - path: ./bun.lockb # Assuming this should be bun.lockb, correct if it's a typo for bun.lock
+          action: rebuild
+        - path: ./next.config.ts
+          action: rebuild
+        - path: .
+          target: /src
+          action: sync
