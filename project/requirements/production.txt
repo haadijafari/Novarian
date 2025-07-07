@@ -1,7 +1,0 @@
--r base.txt
-
-# Database
-mysqlclient
-
-# Security
-django-csp

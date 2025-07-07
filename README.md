@@ -1,87 +1,36 @@
-# Django, React and Vite Template
- This template was created for easy project setup and to avoid time waste.
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-![Template](/src/main.png)
+## Getting Started
 
-## Installation and Usage
-### Development
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the requirements.\
-(You can initialize a virtual environment as well)
+First, run the development server:
 
-```bash
-pip install project/requirements/development.txt
-```
-Then move to the ``frontend`` and then ``vite-react`` directory:
-```text
-└── project
-    ├── apps
-    ├── auths
-    ├── core
-    ├── frontend
-    │   └── vite-react
-    ├── manage.py
-    └── requirements
-```
-Run the [npm](https://docs.npmjs.com/cli/v10/commands/npm-install) installation command:
-```bash
-npm install
-```
-After installing the requirements you should fill the ``.env`` file inside project directory (project root directory) like this:
-```text
-└── project
-    └── .env
-```
-
-```text
-SECRET_KEY=h_r8#%xa4he^ec*(bvw0s1$4of7rkbwa=36ft-j58ff!37(79q
-DEBUG=True
-```
-p.s: The ``.env`` file is hidden by default in Linux.
-
-Note that ``SECRET_KEY`` and ``DEBUG`` is fatal and must be filled out.
-tou can use this command to generate a secret key as well:
-```bash
-python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
-```
-After the above steps you can now run the Django server in the project directory:
-```bash
-python manage.py migrate
-```
-```bash
-python manage.py runserver
-```
-and React/Vite server in the ``vite-react`` directory:
 ```bash
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-It's all done!\
-Just open [127.0.0.1:8000](http://127.0.0.1:8000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### Production
-Install the [pip](https://pip.pypa.io/en/stable/) packages for production.
-```bash
-pip install project/requirements/production.txt
-```
-and the [npm](https://docs.npmjs.com/cli/v10/commands/npm-install) packages like development.\
-The ``.env`` is like development as well but the ``DEBUG`` should be ``False``.\
-Modify the ``prod.py`` in ``core`` as you desire for production.
-```text
-└── project
-   └── core
-      └── settings
-         └── prod.py
-```
-Don't forget to run the ``migrate`` and ``collectstatic`` using ``manage.py``\
-Finally, run the ``npm run build`` where you would run ``npm run dev`` in development.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Contributing
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
+## Learn More
 
-Please make sure to update tests as appropriate.
+To learn more about Next.js, take a look at the following resources:
 
-## License
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-[MIT](https://choosealicense.com/licenses/mit/)
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
