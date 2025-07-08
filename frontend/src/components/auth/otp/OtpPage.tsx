@@ -1,10 +1,10 @@
 'use client'
 
 import React from 'react'
-import OtpForm from './OtpForm'
 import { ShieldCheck } from 'lucide-react'
-import OtpTimer from './otpTimer'
-import { otpSubmit } from './actions'
+import OtpForm from './OtpForm'
+import OtpTimer from './OtpTimer'
+import { otpSubmit } from '@/actions/auth/otpActions'
 
 type Props = { phoneNumber: string }
 otpSubmit

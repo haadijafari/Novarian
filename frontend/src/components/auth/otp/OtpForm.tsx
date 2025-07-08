@@ -11,12 +11,13 @@ import React, {
 } from 'react'
 import {
   loadingVariants,
+  popupVariants,
   shakeVariants
-} from './otpVariants'
+} from './otp.variants'
 import { AnimatePresence, motion } from 'motion/react'
-import SubmitButton from './SubmitButton'
-import ErrorPopUp from './ErrorPopUp'
 import { isNumeric, toPersian } from '@/lib/utils'
+import ErrorPopUp from '@/components/ui/ErrorPopUp'
+import SubmitButton from '@/components/ui/SubmitButton'
 
 type Props = {
   length: number
@@ -154,7 +155,7 @@ const OtpForm = ({ length, submitForm: onOtpSubmit }: Props) => {
             onClick={() => inputRefs.current[id]?.focus()}
             key={id}
           >
-            <motion.input
+            <input
               ref={el => {
                 inputRefs.current[id] = el
               }}
@@ -173,15 +174,11 @@ const OtpForm = ({ length, submitForm: onOtpSubmit }: Props) => {
             <AnimatePresence>
               {value !== '' && (
                 <motion.p
+                  variants={popupVariants}
                   key={value + id}
-                  initial={{ scale: 0.2, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0.2, opacity: 0 }}
-                  transition={{
-                    type: 'spring',
-                    stiffness: 500,
-                    damping: 20
-                  }}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
                   className={`
                     flex items-center justify-center aspect-square absolute inset-0 w-full h-full dark:bg-primary-900 bg-primary-100 dark:text-white text-black rounded-xl text-center pointer-events-none
                     ${error ? 'border-red-500' : 'border-gray-900'}

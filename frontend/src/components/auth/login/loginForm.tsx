@@ -2,12 +2,12 @@
 
 import React, { useState } from 'react'
 import { UserRound } from 'lucide-react'
-import ErrorPopUp from './ErrorPopUp'
-import SubmitButton from './SubmitButton'
 import { useRouter } from 'next/navigation'
-import InputWithIcon from './inputWithIcon'
-import { loginSubmit } from './actions'
 import { AnimatePresence } from 'motion/react'
+import ErrorPopUp from '@/components/ui/ErrorPopUp'
+import SubmitButton from '@/components/ui/SubmitButton'
+import { loginSubmit } from '@/actions/auth/loginActions'
+import InputWithIcon from '@/components/ui/inputWithIcon'
 
 const LoginForm = () => {
   const [error, setError] = useState("")
@@ -41,7 +41,7 @@ const LoginForm = () => {
         }
         else {
           // Make sure to pass the phone number in the query
-          router.push(`/login?state=otp&number=${encodeURIComponent(numberOrGmail)}`)
+          router.push(`/auth?state=otp&number=${encodeURIComponent(numberOrGmail)}`)
         }
       }}
     >
