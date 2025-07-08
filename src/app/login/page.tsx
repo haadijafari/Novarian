@@ -37,45 +37,41 @@ export default async function LoginPage({
           className="absolute dark:bg-secondary-600 bg-secondary-600 z-10 left-0 top-[-280%] w-full h-[300%] sm:w-[300%] sm:top-0 sm:h-full rounded-[9.5em] sm:left-[-250%] sm:[--x-otp:100%] sm:[--x-login:0] max-sm:[--y-otp:120%] max-sm:[--y-login:0]" />
       </div>
 
-      <AnimatePresence initial={false}>
+      <AnimatePresence mode='wait' initial={false}>
         {isLogin ? (
           <motion.div
             key="login"
             initial={{
-              x: "var(--x-initial, 0)",
               y: "var(--y-initial, 0)",
             }}
             animate={{
-              x: "var(--x-animate, 0)",
               y: "var(--y-animate, 0)",
-              transition: { delay: 0.6, duration: 0.6, ease: "easeInOut" },
+              transition: { duration: 0.6, ease: "easeInOut" },
             }}
             exit={{
               x: "var(--x-initial, 0)",
               y: "var(--y-initial, 0)",
             }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
-            className='overflow-auto flex absolute right-0 w-full sm:w-[50%] h-full justify-center md:[--x-initial:100%] md:[--x-animate:0] max-sm:[--y-initial:60%] max-sm:[--y-animate:0]'>
+            className='overflow-auto flex absolute right-0 w-full sm:w-[50%] h-full justify-center md:[--x-initial:100%] max-sm:[--y-initial:60%] max-sm:[--y-animate:0]'>
             <LoginForm />
           </motion.div>
         ) : (
           <motion.div
             key="otp"
             initial={{
-              x: "var(--x-initial, 0)",
               y: "var(--y-initial, 0)",
             }}
             animate={{
-              x: "var(--x-animate, 0)",
               y: "var(--y-animate, 0)",
-              transition: { delay: 0.6, duration: 0.6, ease: "easeInOut" },
+              transition: { duration: 0.6, ease: "easeInOut" },
             }}
             exit={{
               x: "var(--x-initial, 0)",
               y: "var(--y-initial, 0)",
             }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
-            className='top-0 overflow-auto flex absolute left-0 w-dvw sm:w-[50%] sm:h-[100%] h-[80%] justify-center md:[--x-initial:-100%] md:[--x-animate:0] max-sm:[--y-initial:-60%] max-sm:[--y-animate:0]'>
+            className='top-0 overflow-auto flex absolute left-0 w-dvw sm:w-[50%] sm:h-[100%] h-[80%] justify-center md:[--x-initial:-100%] max-sm:[--y-initial:-60%] max-sm:[--y-animate:0]'>
             <OtpForm phoneNumber={number} />
           </motion.div>
         )}
