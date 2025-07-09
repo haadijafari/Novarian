@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Novarian Gift Shop
 
-First, run the development server:
+This is a contribute project between Django and React to create a gift shop website named Novarian.
+
+![Novarian Hero Image](./novarian.png)
+
+## Tech Stack
+
+- **Backend:** Django, Django REST Framework
+- **Frontend:** React, Next.js, TypeScript
+- **Database:** PostgreSQL
+- **Caching/Message Broker:** Redis
+- **Web Server/Reverse Proxy:** Nginx
+- **Other:** Docker, CSS, HTML, JavaScript, Shell
+
+## Setup
+
+To run project locally, in production or using Docker you need to setup environment variables first. Rename the `.env.example` to `.env` and fill the required values.
+
+### Backend Setup (Django)
+
+1. Install dependencies:
+First install [uv package manager](https://docs.astral.sh/uv/getting-started/installation/) (feel free to read [uv documents](https://docs.astral.sh/uv/getting-started/))
+
+   ```bash
+   pip install uv
+   ```
+
+2. install packages:
+
+   ```bash
+   cd backend
+   un sync
+   ```
+
+3. Run migrations:
+
+   ```bash
+   uv run manage.py migrate
+   ```
+
+4. Start the backend server:
+
+   ```bash
+   uv run manage.py runserver
+   ```
+
+### Frontend Setup (React/Next.js)
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Start the frontend development server:
+
+   ```bash
+   npm run dev
+   ```
+
+3. Access the frontend at: [http://localhost:3000](http://localhost:3000)
+
+### Running with Docker
+
+- Just build and start all services **(recommended)**:
+  
+   ```bash
+   docker compose up --build
+   ```
+
+## Project Structure
+
+Brief overview of the main directories and their purposes.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Novarian
+├── backend          # Django project
+├── compose.yaml     # Docker Compose file
+├── dockerfiles      # Docker files
+├── frontend         # React/Next.js project
+├── .env.example     ## .env.example file which must be
+│                    ## modified like mentioned in 'Setup'
+├── LICENSE
+└── README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Contributing
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Contributions are always welcome!
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push to the branch (`git push origin feature/your-feature`)
+5. Open a pull request
 
-## Learn More
+## License
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the [MIT](https://choosealicense.com/licenses/mit/).
