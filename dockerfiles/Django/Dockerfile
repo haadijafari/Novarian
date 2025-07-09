@@ -15,14 +15,14 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 # Copy project files
-COPY pyproject.toml uv.lock ./
+COPY ./backend/pyproject.toml ./backend/uv.lock ./
 # Install dependencies using uv
 RUN uv sync
 
 # Copy project files
 COPY backend/ backend/
 COPY .env ./
-COPY entrypoint.sh ./
+COPY ./backend/entrypoint.sh ./
 
 # Expose the Django port
 EXPOSE 8000
