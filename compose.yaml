@@ -39,5 +39,24 @@ services:
     ports:
       - "6379:6379"
 
+  frontend:
+    build:
+      context: .
+      dockerfile: ./dockerfiles/Next/Dockerfile
+      target: dev
+    ports:
+      - "3000:3000"
+    develop:
+      watch:
+        - path: ./frontend/package.json
+          action: rebuild
+        - path: ./frontend/bun.lockb # Assuming this should be bun.lockb, correct if it's a typo for bun.lock
+          action: rebuild
+        - path: ./frontend/next.config.ts
+          action: rebuild
+        - path: .
+          target: ./frontend/src
+          action: sync
+
 volumes:
   postgres_db:
