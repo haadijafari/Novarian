@@ -1,14 +1,16 @@
 import logging
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from django.core.cache import cache
 from django.contrib.auth import get_user_model
+from django.core.cache import cache
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from apps.utils.verification import send_email_verification_code, send_phone_verification_code
 
 logger = logging.getLogger(__name__)
 User = get_user_model()
+
 
 class RequestPasswordResetAPIView(APIView):
     def post(self, request):
@@ -44,7 +46,7 @@ class ResetPasswordAPIView(APIView):
                 errors['code'] = ['This field is required.']
             if not new_password:
                 errors['new_password'] = ['This field is required.']
-            return Response(errors, status=400)
+            return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
         if "@" in identifier:
             user = User.objects.filter(email__iexact=identifier).first()

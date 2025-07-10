@@ -2,15 +2,12 @@
 from django.core.cache import cache
 from django.db import transaction
 from django.utils.timezone import now
-
-# Third-party imports
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet
 from rest_framework_simplejwt.exceptions import TokenError
-from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 from rest_framework_simplejwt.tokens import RefreshToken
 
 # Local app imports
@@ -18,6 +15,7 @@ from apps.api.serializers.authentication_serializers import LoginSerializer, Reg
 from apps.api.throttles import LoginRateThrottle, RegisterRateThrottle
 from apps.utils.google_auth import authenticate_with_google_token
 from apps.utils.verification import send_email_verification_code, send_phone_verification_code
+
 
 class RegisterViewSet(ViewSet):
     serializer_class = RegisterSerializer
