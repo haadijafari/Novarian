@@ -8,9 +8,9 @@ def generate_code():
 
 def send_email_verification_code(email):
     code = generate_code()
-    cache.set(f'verify_email:{email}', code, timeout=2 * 60)  # expires in 2 minutes
+    cache.set(f'verify_email:{email.lower()}', code, timeout=2 * 60)  # expires in 2 minutes
     if DEBUG:
-        print(f"[DEBUG] Email code for {email}: {code}")  # Replace with real email sending
+        print(f"[DEBUG] Email code for {email.lower()}: {code}")  # Replace with real email sending
     else:
         # TODO: Implement real email sending
         pass

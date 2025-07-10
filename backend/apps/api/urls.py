@@ -6,9 +6,7 @@ from .views.product_views import ProductViewSet, ProductCategoryViewSet
 from .views.authentication_views import (
     LoginAPIViewSet, LogoutAPIViewSet, RegisterViewSet, GoogleLoginAPIView
 )
-from .views.verification_views import (
-    VerifyEmailAPIView, VerifyPhoneAPIView, ResendVerificationCodeAPIView
-)
+from .views.verification_views import VerifyAPIView, ResendVerificationCodeAPIView
 from .views.reset_password_views import RequestPasswordResetAPIView, ResetPasswordAPIView
 
 app_name = 'api'
@@ -23,8 +21,7 @@ router.register(r'register', RegisterViewSet, basename='register')
 
 urlpatterns = [
     path('', include(router.urls), name='api'),
-    path('verify-email/', VerifyEmailAPIView.as_view(), name='verify-email'),
-    path('verify-phone/', VerifyPhoneAPIView.as_view(), name='verify-phone'),
+    path('verify/', VerifyAPIView.as_view(), name='verify'),
     path('resend-verification/', ResendVerificationCodeAPIView.as_view(), name='resend-verification'),
     path('request-password-reset/', RequestPasswordResetAPIView.as_view(), name='request-password-reset'),
     path('reset-password/', ResetPasswordAPIView.as_view(), name='reset-password'),
