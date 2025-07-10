@@ -8,25 +8,23 @@ from apps.utils.validators import iran_phone_regex
 
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, identifier, password=None, **extra_fields):
-        if not identifier:
+    def create_user(self, email=None, phone_number=None, password=None, **extra_fields):
+        if not email and not phone_number:
             raise ValueError("The Email or Phone number must be set")
-        
-        # Determine if identifier is email or phone
-        if "@" in identifier:
+
+        if email:
             # TODO: Validate Email
-            extra_fields['email'] = identifier
-        else:
+            extra_fields['email'] = email
+        if phone_number:
             # TODO: Validate Phone Number
-            extra_fields['phone_number'] = identifier
-        
+            extra_fields['phone_number'] = phone_number
 
         user = self.model(**extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, identifier, password=None, **extra_fields):
+    def create_superuser(self, email=None, phone_number=None, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
@@ -36,7 +34,7 @@ class CustomUserManager(BaseUserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError(_('Superuser must have is_superuser=True.'))
 
-        return self.create_user(identifier, password, **extra_fields)
+        return self.create_user(email=email, phone_number=phone_number, password=password, **extra_fields)
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -86,10 +84,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
-    USERNAME_FIELD = 'phone_number'
+    USERNAME_FIELD = 'email'
     EMAIL_FIELD = "email"  # Used by Django's email sending functions if needed
 
-    REQUIRED_FIELDS = ['first_name', 'last_name']  # These are prompted for createsuperuser
+    REQUIRED_FIELDS = ['phone_number', 'first_name', 'last_name']  # These are prompted for createsuperuser
 
     class Meta:
         verbose_name = _("User")
