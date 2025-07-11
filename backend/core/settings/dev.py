@@ -39,11 +39,13 @@ CORS_ALLOWED_ORIGINS = [
     # 'http://127.0.0.1:3000',
 ]
 
+# Get Redis host from environment variable, default to '127.0.0.1' for local development
+REDIS_HOST = os.getenv('REDIS_HOST', '127.0.0.1')
 
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/1',
+        'LOCATION': f'redis://{REDIS_HOST}:6379/1',
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "COMPRESSOR": "django_redis.compressors.zlib.ZlibCompressor",
