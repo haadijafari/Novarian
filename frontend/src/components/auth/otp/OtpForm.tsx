@@ -151,7 +151,7 @@ const OtpForm = ({ length, submitForm: onOtpSubmit }: Props) => {
           <motion.div
             variants={loadingVariants}
             animate={isPending ? 'pulse' : 'idle'}
-            className="relative aspect-square w-[clamp(4rem,4vw,4.5rem)] text-[clamp(2rem,4vw,4rem)] bg-primary-100 dark:bg-primary-900 rounded-xl text-center border-2"
+            className="relative aspect-square w-[clamp(4rem,4vw,4.5rem)] text-[clamp(2rem,4vw,4rem)] bg-surface-sharp rounded-xl text-center border-2"
             onClick={() => inputRefs.current[id]?.focus()}
             key={id}
           >
@@ -180,7 +180,7 @@ const OtpForm = ({ length, submitForm: onOtpSubmit }: Props) => {
                   animate="visible"
                   exit="exit"
                   className={`
-                    flex items-center justify-center aspect-square absolute inset-0 w-full h-full dark:bg-primary-900 bg-primary-100 dark:text-white text-black rounded-xl text-center pointer-events-none
+                    flex items-center justify-center aspect-square absolute inset-0 w-full h-full bg-surface-sharp text-ink rounded-xl text-center pointer-events-none
                     ${error ? 'border-red-500' : 'border-gray-900'}
                     ${isPending ? 'cursor-not-allowed' : ''}
                   `}
@@ -196,7 +196,7 @@ const OtpForm = ({ length, submitForm: onOtpSubmit }: Props) => {
         <AnimatePresence>
           {error && (
             <ErrorPopUp
-              className='text-sm sm:text-base col-span-full text-red-500 text-center'
+              className='text-sm sm:text-base col-span-full text-ink-warning text-center'
               key="otp-error"
               text={error}
             />
@@ -212,9 +212,9 @@ const OtpForm = ({ length, submitForm: onOtpSubmit }: Props) => {
             setError('لطفا کد را کامل وارد کنید')
           }
         }}
-        className="bg-accent-500 dark:bg-accent-400 dark:text-primary-50 text-primary-950 dark:hover:bg-accent-600 hover:bg-accent-300 w-full h-16 sm:h-20 rounded-full text-3xl shadow-xl font-semibold transition-colors duration-200"
+        className="bg-surface-accent text-ink-accent hover:bg-hover-accent w-full h-16 sm:h-20 rounded-full text-3xl shadow-xl font-semibold transition-colors duration-200"
         pending={isPending}
-        pendingClassName="dark:bg-accent-600 bg-accent-300 text-gray-700 dark:text-gray-700 cursor-not-allowed flex items-center justify-center space-x-2"
+        pendingClassName="bg-surface-pending text-ink-pending cursor-not-allowed flex items-center justify-center space-x-2"
         pendingText="در حال ارسال..."
       >
         تایید

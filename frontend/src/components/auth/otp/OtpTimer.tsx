@@ -40,7 +40,7 @@ const OtpTimer = ({ expiration }: { expiration: number }) => {
         <p>
           کد را دریافت نکردید؟
           <a
-            className='underline text-accent-500 cursor-pointer mr-1' // Added margin for spacing
+            className='hover:underline text-surface-accent cursor-pointer mr-1' // Added margin for spacing
             onClick={handleResend}
           >
             ارسال مجدد

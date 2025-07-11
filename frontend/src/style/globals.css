@@ -15,39 +15,87 @@ body {
 }
 
 @theme {
-  --color-primary-50: #eff5ff;
-  --color-primary-100: #dfeaff;
-  --color-primary-200: #b7d5ff;
-  --color-primary-300: #78b3ff;
-  --color-primary-400: #308bff;
-  --color-primary-500: #056cf2;
-  --color-primary-600: #0052cf;
-  --color-primary-700: #0041a7;
-  --color-primary-800: #02388a;
-  --color-primary-900: #020b27;
-  --color-primary-950: #020b1c;
+  /* --- Core UI Palette (Light Theme) --- */
+  --color-surface: hsl(210, 20%, 98%);
+  --color-ink: hsl(215, 28%, 17%);
+  --color-hover: hsl(210, 20%, 95%);
+  --color-active: hsl(210, 20%, 92%);
 
-  --color-secondary-50: #fef2f3;
-  --color-secondary-100: #fee2e3;
-  --color-secondary-200: #fecacc;
-  --color-secondary-300: #fca5a9;
-  --color-secondary-400: #f87177;
-  --color-secondary-500: #ed333b;
-  --color-secondary-600: #dc262e;
-  --color-secondary-700: #b91c23;
-  --color-secondary-800: #991b20;
-  --color-secondary-900: #7f1d21;
-  --color-secondary-950: #450a0d;
+  --color-surface-sharp: hsl(214, 32%, 91%);
+  --color-ink-sharp: hsl(217, 33%, 10%);
+  --color-hover-sharp: hsl(214, 32%, 88%);
+  --color-active-sharp: hsl(214, 32%, 85%);
 
-  --color-accent-50: #f1fcf5;
-  --color-accent-100: #defaea;
-  --color-accent-200: #bef4d5;
-  --color-accent-300: #8beab6;
-  --color-accent-400: #52d68d;
-  --color-accent-500: #33d17a;
-  --color-accent-600: #1d9c56;
-  --color-accent-700: #1b7a46;
-  --color-accent-800: #1a613b;
-  --color-accent-900: #175033;
-  --color-accent-950: #072c19;
+  --color-surface-muted: hsl(210, 25%, 96%);
+  --color-ink-muted: hsl(215, 14%, 47%);
+  --color-hover-muted: hsl(210, 25%, 93%);
+  --color-active-muted: hsl(210, 25%, 90%);
+
+  /* --- Functional & Brand Palette (Light Theme) --- */
+  --color-surface-accent: hsl(221, 83%, 53%);
+  --color-ink-accent: hsl(0, 0%, 100%);
+  --color-hover-accent: hsl(221, 83%, 48%);
+  --color-active-accent: hsl(221, 83%, 45%);
+
+  --color-surface-success: hsl(145, 63%, 42%);
+  --color-ink-success: hsl(0, 0%, 100%);
+  --color-hover-success: hsl(145, 63%, 37%);
+  --color-active-success: hsl(145, 63%, 34%);
+
+  --color-surface-warning: hsl(38, 92%, 50%);
+  --color-ink-warning: hsl(24, 91%, 15%);
+  --color-hover-warning: hsl(38, 92%, 45%);
+  --color-active-warning: hsl(38, 92%, 42%);
+
+  --color-surface-pending: hsl(38, 92%, 75%);
+  --color-ink-pending: hsl(38, 92%, 75%);
+
+  /* --- Utility Colors (Light Theme) --- */
+  --color-divider: hsl(114, 42%, 98%);
+  --color-shadow: hsl(220, 40%, 2%, 0.1);
+}
+
+@layer theme {
+  :root {
+    @variant dark {
+      /* --- Core UI Palette (Dark Theme) --- */
+      --color-surface: hsl(215, 28%, 17%);
+      --color-ink: hsl(210, 20%, 98%);
+      --color-hover: hsl(215, 28%, 22%);
+      --color-active: hsl(215, 28%, 25%);
+
+      --color-surface-sharp: hsl(217, 33%, 12%);
+      --color-ink-sharp: hsl(214, 32%, 91%);
+      --color-hover-sharp: hsl(217, 33%, 17%);
+      --color-active-sharp: hsl(217, 33%, 20%);
+
+      --color-surface-muted: hsl(215, 14%, 27%);
+      --color-ink-muted: hsl(210, 20%, 78%);
+      --color-hover-muted: hsl(215, 14%, 32%);
+      --color-active-muted: hsl(215, 14%, 35%);
+
+      /* --- Functional & Brand Palette (Dark Theme) --- */
+      --color-surface-accent: hsl(221, 83%, 53%);
+      --color-ink-accent: hsl(0, 0%, 100%);
+      --color-hover-accent: hsl(221, 83%, 63%);
+      --color-active-accent: hsl(221, 83%, 68%);
+
+      --color-surface-success: hsl(145, 63%, 42%);
+      --color-ink-success: hsl(0, 0%, 100%);
+      --color-hover-success: hsl(145, 63%, 52%);
+      --color-active-success: hsl(145, 63%, 57%);
+
+      --color-surface-warning: hsl(124, 21%, 25%);
+      --color-ink-warning: hsl(38, 92%, 60%);
+      --color-hover-warning: hsl(38, 92%, 70%);
+      --color-active-warning: hsl(38, 92%, 75%);
+
+      --color-surface-pending: hsl(38, 92%, 75%);
+      --color-ink-pending: hsl(38, 92%, 75%);
+
+      /* --- Utility Colors (Dark Theme) --- */
+      --color-divider: hsl(215, 15%, 40%);
+      --color-shadow: hsla(220, 40%, 2%, 0.6);
+    }
+  }
 }

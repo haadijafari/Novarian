@@ -33,7 +33,7 @@ const InputWithIcon = ({
       htmlFor={id}
       className={`
       ${labelClassName}
-      absolute text-primary-950 dark:text-primary-50 
+      absolute text-ink-muted
       delay-100 duration-200 ease-in-out
       top-1/2 -translate-y-1/2 rounded-full 
       pointer-events-none
@@ -52,11 +52,11 @@ const InputWithIcon = ({
       peer-focus:px-2.5
       peer-[:not(:placeholder-shown)]:px-2.5
 
-      peer-focus:bg-primary-900
-      peer-[:not(:placeholder-shown)]:bg-primary-900
+      peer-focus:bg-surface-muted
+      peer-[:not(:placeholder-shown)]:bg-surface-muted
 
-      peer-focus:text-primary-50
-      peer-[:not(:placeholder-shown)]:text-primary-50
+      peer-focus:text-ink-muted
+      peer-[:not(:placeholder-shown)]:text-ink-muted
   `}
     >
       {placeholder}
@@ -65,7 +65,7 @@ const InputWithIcon = ({
     <IconComponent
       size={iconSize}
       style={persian ? { left: `${iconSize}px` } : { right: `${iconSize}px` }}
-      className={`absolute top-1/2 transform -translate-y-1/2 text-primary-50`}
+      className={`absolute top-1/2 transform -translate-y-1/2 text-ink-muted`}
     />
   </div >
 )

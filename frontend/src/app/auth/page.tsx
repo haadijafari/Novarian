@@ -20,14 +20,14 @@ export default async function LoginPage({
   const isLogin = state !== "otp"
 
   return (
-    <div className='flex relative w-dvw h-dvh  bg-primary-50 dark:bg-primary-950 text-primary-950 dark:text-primary-50'>
+    <div className='flex relative w-dvw h-dvh bg-surface text-ink'>
       <div
         className={`absolute w-full h-full`}
       >
         <motion.div
           variants={capsuleVariants}
           animate={isLogin ? "login" : "otp"}
-          className="absolute dark:bg-secondary-600 bg-secondary-600 z-10 left-0 top-[-280%] w-full h-[300%] sm:w-[300%] sm:top-0 sm:h-full rounded-[9.5em] sm:left-[-250%] sm:[--x-otp:100%] sm:[--x-login:0] max-sm:[--y-otp:120%] max-sm:[--y-login:0]" />
+          className="absolute bg-surface-accent z-10 left-0 top-[-280%] w-full h-[300%] sm:w-[300%] sm:top-0 sm:h-full rounded-[9.5em] sm:left-[-250%] sm:[--x-otp:100%] sm:[--x-login:0] max-sm:[--y-otp:120%] max-sm:[--y-login:0]" />
       </div>
 
       <AnimatePresence mode='wait' initial={false}>
