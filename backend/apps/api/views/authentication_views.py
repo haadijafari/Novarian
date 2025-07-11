@@ -2,6 +2,7 @@
 from django.core.cache import cache
 from django.db import transaction
 from django.utils.timezone import now
+from django.utils.translation import gettext as _
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -26,7 +27,7 @@ class RegisterViewSet(ViewSet):
     def create(self, request):
         if request.user.is_authenticated:
             return Response(
-                {'detail': 'You are already logged in.'},
+                {'detail': _('You are already logged in.')},
                 status=status.HTTP_403_FORBIDDEN
             )
 
@@ -44,7 +45,7 @@ class RegisterViewSet(ViewSet):
             refresh = RefreshToken.for_user(user)
 
             return Response({
-                'message': 'User registered successfully and verification codes have been sent.',
+                'message': _('User registered successfully and verification codes have been sent.'),
                 'user_id': user.id,
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
@@ -62,7 +63,7 @@ class LoginAPIViewSet(ViewSet):
     def create(self, request):
         if request.user.is_authenticated:
             return Response(
-                {'detail': 'You are already logged in.'},
+                {'detail': _('You are already logged in.')},
                 status=status.HTTP_403_FORBIDDEN
             )
 
@@ -82,7 +83,7 @@ class LoginAPIViewSet(ViewSet):
                 cache.delete(cache_key)
 
             return Response({
-                'message': 'Logged in successfully.',
+                'message': _('Logged in successfully.'),
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
                 'user_id': user.id,
@@ -99,16 +100,16 @@ class GoogleLoginAPIView(APIView):
     def post(self, request):
         token = request.data.get("id_token")
         if not token:
-            return Response({'detail': 'ID token is required.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': _('ID token is required.')}, status=status.HTTP_400_BAD_REQUEST)
 
         user = authenticate_with_google_token(token)
         if user is None:
-            return Response({'detail': 'Invalid or expired Google token.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': _('Invalid or expired Google token.')}, status=status.HTTP_400_BAD_REQUEST)
 
         refresh = RefreshToken.for_user(user)
 
         return Response({
-            'message': 'Logged in with Google successfully.',
+            'message': _('Logged in with Google successfully.'),
             'refresh': str(refresh),
             'access': str(refresh.access_token),
             'user_id': user.id,
@@ -125,11 +126,11 @@ class LogoutAPIViewSet(ViewSet):
         try:
             refresh_token = request.data.get("refresh", "").strip()
             if not refresh_token:
-                return Response({'detail': 'Refresh token is required.'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'detail': _('Refresh token is required.')}, status=status.HTTP_400_BAD_REQUEST)
             token = RefreshToken(refresh_token)
             token.blacklist()
-            return Response({'message': 'Logged out successfully.'}, status=status.HTTP_200_OK)
+            return Response({'message': _('Logged out successfully.')}, status=status.HTTP_200_OK)
         except KeyError:
-            return Response({'detail': 'Refresh token is required.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': _('Refresh token is required.')}, status=status.HTTP_400_BAD_REQUEST)
         except TokenError:
-            return Response({'detail': 'Invalid or expired token.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': _('Invalid or expired token.')}, status=status.HTTP_400_BAD_REQUEST)

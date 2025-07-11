@@ -2,6 +2,7 @@ import logging
 
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
+from django.utils.translation import gettext as _
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -16,20 +17,20 @@ class RequestPasswordResetAPIView(APIView):
     def post(self, request):
         identifier = request.data.get('identifier')
         if not identifier:
-            return Response({'identifier': ['Identifier is required.']}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'identifier': [_('Identifier is required.')]}, status=status.HTTP_400_BAD_REQUEST)
 
         if "@" in identifier:
             user = User.objects.filter(email__iexact=identifier).first()
             if not user:
-                return Response({'identifier': ['User not found.']}, status=status.HTTP_404_NOT_FOUND)
+                return Response({'identifier': [_('User not found.')]}, status=status.HTTP_404_NOT_FOUND)
             send_email_verification_code(user.email)
         else:
             user = User.objects.filter(phone_number=identifier).first()
             if not user:
-                return Response({'identifier': ['User not found.']}, status=status.HTTP_404_NOT_FOUND)
+                return Response({'identifier': [_('User not found.')]}, status=status.HTTP_404_NOT_FOUND)
             send_phone_verification_code(user.phone_number)
 
-        return Response({'message': 'Reset code sent.'}, status=status.HTTP_200_OK)
+        return Response({'message': _('Reset code sent.')}, status=status.HTTP_200_OK)
 
 
 class ResetPasswordAPIView(APIView):
@@ -41,11 +42,11 @@ class ResetPasswordAPIView(APIView):
         if not all([identifier, code, new_password]):
             errors = {}
             if not identifier:
-                errors['identifier'] = ['This field is required.']
+                errors['identifier'] = [_('This field is required.')]
             if not code:
-                errors['code'] = ['This field is required.']
+                errors['code'] = [_('This field is required.')]
             if not new_password:
-                errors['new_password'] = ['This field is required.']
+                errors['new_password'] = [_('This field is required.')]
             return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
         if "@" in identifier:
@@ -56,11 +57,11 @@ class ResetPasswordAPIView(APIView):
             cached_code = cache.get(f'verify_phone:{identifier}')
 
         if not user:
-            return Response({'identifier': ['User not found.']}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'identifier': [_('User not found.')]}, status=status.HTTP_404_NOT_FOUND)
 
         if cached_code != code:
             logger.warning(f"Invalid code attempt for {identifier}")
-            return Response({'code': ['Invalid or expired code.']}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'code': [_('Invalid or expired code.')]}, status=status.HTTP_400_BAD_REQUEST)
 
         user.set_password(new_password)
         user.save()
@@ -69,4 +70,4 @@ class ResetPasswordAPIView(APIView):
         else:
             cache.delete(f'verify_phone:{identifier}')
 
-        return Response({'message': 'Password reset successfully.'}, status=status.HTTP_200_OK)
+        return Response({'message': _('Password reset successfully.')}, status=status.HTTP_200_OK)

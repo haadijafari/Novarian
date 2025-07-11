@@ -1,0 +1,376 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-11 19:49+0330\n"
+"PO-Revision-Date: 2025-07-11 18:29+0200\n"
+"Last-Translator: Your Name <your.email@example.com>\n"
+"Language-Team: Persian <fa@li.org>\n"
+"Language: fa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: apps/api/apps.py:8
+msgid "API Module"
+msgstr "ماژول API"
+
+#: apps/api/serializers/authentication_serializers.py:25
+#: apps/api/serializers/authentication_serializers.py:28
+msgid "Invalid credentials."
+msgstr "اعتبارنامه‌ها نامعتبر هستند."
+
+#: apps/api/serializers/authentication_serializers.py:31
+msgid "This account is inactive due to some restrictions."
+msgstr "این حساب به دلیل برخی محدودیت‌ها غیرفعال است."
+
+#: apps/api/serializers/authentication_serializers.py:34
+msgid "Email is not verified yet."
+msgstr "ایمیل هنوز تأیید نشده است."
+
+#: apps/api/serializers/authentication_serializers.py:36
+msgid "Phone number is not verified yet."
+msgstr "شماره تلفن هنوز تأیید نشده است."
+
+#: apps/api/serializers/authentication_serializers.py:53
+msgid "This email is already registered."
+msgstr "این ایمیل قبلاً ثبت شده است."
+
+#: apps/api/serializers/authentication_serializers.py:56
+msgid "This phone number is already registered."
+msgstr "این شماره تلفن قبلاً ثبت شده است."
+
+#: apps/api/views/authentication_views.py:30
+#: apps/api/views/authentication_views.py:66
+msgid "You are already logged in."
+msgstr "شما از قبل وارد شده‌اید."
+
+#: apps/api/views/authentication_views.py:48
+msgid "User registered successfully and verification codes have been sent."
+msgstr "کاربر با موفقیت ثبت شد و کدهای تأیید ارسال شده‌اند."
+
+#: apps/api/views/authentication_views.py:86
+msgid "Logged in successfully."
+msgstr "ورود با موفقیت انجام شد."
+
+#: apps/api/views/authentication_views.py:103
+msgid "ID token is required."
+msgstr "توکن شناسایی لازم است."
+
+#: apps/api/views/authentication_views.py:107
+msgid "Invalid or expired Google token."
+msgstr "توکن گوگل نامعتبر یا منقضی شده است."
+
+#: apps/api/views/authentication_views.py:112
+msgid "Logged in with Google successfully."
+msgstr "ورود با گوگل با موفقیت انجام شد."
+
+#: apps/api/views/authentication_views.py:129
+#: apps/api/views/authentication_views.py:134
+msgid "Refresh token is required."
+msgstr "توکن رفرش لازم است."
+
+#: apps/api/views/authentication_views.py:132
+msgid "Logged out successfully."
+msgstr "خروج با موفقیت انجام شد."
+
+#: apps/api/views/authentication_views.py:136
+msgid "Invalid or expired token."
+msgstr "توکن نامعتبر یا منقضی شده است."
+
+#: apps/api/views/reset_password_views.py:20
+msgid "Identifier is required."
+msgstr "شناسه لازم است."
+
+#: apps/api/views/reset_password_views.py:25
+#: apps/api/views/reset_password_views.py:30
+#: apps/api/views/reset_password_views.py:60
+msgid "User not found."
+msgstr "کاربر یافت نشد."
+
+#: apps/api/views/reset_password_views.py:33
+msgid "Reset code sent."
+msgstr "کد بازنشانی ارسال شد."
+
+#: apps/api/views/reset_password_views.py:45
+#: apps/api/views/reset_password_views.py:47
+#: apps/api/views/reset_password_views.py:49
+msgid "This field is required."
+msgstr "این فیلد الزامی است."
+
+#: apps/api/views/reset_password_views.py:64
+msgid "Invalid or expired code."
+msgstr "کد نامعتبر یا منقضی شده است."
+
+#: apps/api/views/reset_password_views.py:73
+msgid "Password reset successfully."
+msgstr "رمز عبور با موفقیت بازنشانی شد."
+
+#: apps/cart/apps.py:8
+msgid "Cart Module"
+msgstr "ماژول سبد خرید"
+
+#: apps/cart/models.py:18 auths/user/models.py:93
+msgid "User"
+msgstr "کاربر"
+
+#: apps/cart/models.py:19
+msgid "Paid Status"
+msgstr "وضعیت پرداخت"
+
+#: apps/cart/models.py:20
+msgid "Deleted"
+msgstr "حذف شده"
+
+#: apps/cart/models.py:21 apps/product/models.py:63
+msgid "Created Date"
+msgstr "تاریخ ایجاد"
+
+#: apps/cart/models.py:22
+msgid "Paid Date"
+msgstr "تاریخ پرداخت"
+
+#: apps/cart/models.py:23
+msgid "Updated Date"
+msgstr "تاریخ به‌روزرسانی"
+
+#: apps/cart/models.py:32 apps/cart/models.py:97
+msgid "Cart"
+msgstr "سبد خرید"
+
+#: apps/cart/models.py:33
+msgid "Carts"
+msgstr "سبدهای خرید"
+
+#: apps/cart/models.py:98 apps/product/models.py:72
+msgid "Product"
+msgstr "محصول"
+
+#: apps/cart/models.py:100
+msgid "Add to Cart Date"
+msgstr "تاریخ افزودن به سبد خرید"
+
+#: apps/cart/models.py:105
+msgid "Cart Item"
+msgstr "قلم سبد خرید"
+
+#: apps/cart/models.py:106
+msgid "Cart Items"
+msgstr "اقلام سبد خرید"
+
+#: apps/product/apps.py:8
+msgid "Product Module"
+msgstr "ماژول محصول"
+
+#: apps/product/models.py:23 apps/product/models.py:46
+msgid "Title"
+msgstr "عنوان"
+
+#: apps/product/models.py:24 apps/product/models.py:100
+msgid "Image"
+msgstr "تصویر"
+
+#: apps/product/models.py:26
+msgid "Is Active"
+msgstr "فعال است"
+
+#: apps/product/models.py:35 apps/product/models.py:47
+msgid "Category"
+msgstr "دسته بندی"
+
+#: apps/product/models.py:36
+msgid "Categories"
+msgstr "دسته بندی ها"
+
+#: apps/product/models.py:49
+msgid "Price"
+msgstr "قیمت"
+
+#: apps/product/models.py:50
+msgid "Quantity"
+msgstr "تعداد"
+
+#: apps/product/models.py:56
+msgid "Tags"
+msgstr "برچسب ها"
+
+#: apps/product/models.py:57
+msgid "Short Description"
+msgstr "توضیحات کوتاه"
+
+#: apps/product/models.py:58
+msgid "Full Description"
+msgstr "توضیحات کامل"
+
+#: apps/product/models.py:59
+msgid "Slug"
+msgstr "اسلاگ"
+
+#: apps/product/models.py:60
+msgid "Active Status"
+msgstr "وضعیت فعال"
+
+#: apps/product/models.py:60
+msgid "Turn off for Soft Delete"
+msgstr "برای حذف نرم، غیرفعال کنید"
+
+#: apps/product/models.py:62
+msgid "Draft"
+msgstr "پیش‌نویس"
+
+#: apps/product/models.py:64
+msgid "Modified Date"
+msgstr "تاریخ ویرایش"
+
+#: apps/product/models.py:65
+msgid "Published Date"
+msgstr "تاریخ انتشار"
+
+#: apps/product/models.py:73
+msgid "Products"
+msgstr "محصولات"
+
+#: apps/product/models.py:101
+msgid "Primary Image"
+msgstr "تصویر اصلی"
+
+#: apps/product/models.py:104
+msgid "Product Image"
+msgstr "تصویر محصول"
+
+#: apps/product/models.py:105
+msgid "Product Images"
+msgstr "تصاویر محصول"
+
+#: apps/utils/apps.py:8
+msgid "Utils Modules"
+msgstr "ماژول‌های ابزار"
+
+#: apps/utils/validators.py:6
+msgid "Enter a valid Iranian cell phone number (e.g., 09123456789)."
+msgstr "یک شماره موبایل معتبر ایرانی وارد کنید (مثال: 09123456789)."
+
+#: auths/user/admin.py:26
+msgid "Personal info"
+msgstr "اطلاعات شخصی"
+
+#: auths/user/admin.py:27 auths/user/admin.py:38
+msgid "Permissions"
+msgstr "مجوزها"
+
+#: auths/user/admin.py:29
+msgid "Important dates"
+msgstr "تاریخ‌های مهم"
+
+#: auths/user/forms.py:13 auths/user/forms.py:50
+msgid "Password"
+msgstr "رمز عبور"
+
+#: auths/user/forms.py:14
+msgid "Password confirmation"
+msgstr "تایید رمز عبور"
+
+#: auths/user/forms.py:29
+msgid "Passwords don't match."
+msgstr "رمزهای عبور مطابقت ندارند."
+
+#: auths/user/forms.py:52
+msgid ""
+"Raw passwords are not stored, so there is no way to see this user's "
+"password, but you can change the password using <a href=\"../password/"
+"\">this form</a>."
+msgstr ""
+"رمزهای عبور به صورت خام ذخیره نمی‌شوند، بنابراین راهی برای دیدن رمز عبور "
+"این کاربر وجود ندارد، اما می‌توانید رمز عبور را با استفاده از <a href=\""
+"../password/\">این فرم</a> تغییر دهید."
+
+#: auths/user/models.py:33
+msgid "Superuser must have is_staff=True."
+msgstr "کاربر فوق‌العاده باید is_staff=True باشد."
+
+#: auths/user/models.py:35
+msgid "Superuser must have is_superuser=True."
+msgstr "کاربر فوق‌العاده باید is_superuser=True باشد."
+
+#: auths/user/models.py:42
+msgid "Phone Number"
+msgstr "شماره تلفن"
+
+#: auths/user/models.py:44
+msgid "Iranian cell phone number like 09123456789."
+msgstr "شماره موبایل ایرانی مانند 09123456789."
+
+#: auths/user/models.py:46
+msgid "A user with this phone number already exists."
+msgstr "کاربری با این شماره تلفن از قبل وجود دارد."
+
+#: auths/user/models.py:50
+msgid "Email Address"
+msgstr "آدرس ایمیل"
+
+#: auths/user/models.py:52
+msgid "Email address like example@domain.com."
+msgstr "آدرس ایمیل مانند example@domain.com."
+
+#: auths/user/models.py:54
+msgid "A user with this email address already exists."
+msgstr "کاربری با این آدرس ایمیل از قبل وجود دارد."
+
+#: auths/user/models.py:56
+msgid "First Name"
+msgstr "نام"
+
+#: auths/user/models.py:57
+msgid "Last Name"
+msgstr "نام خانوادگی"
+
+#: auths/user/models.py:60
+msgid "Staff Status"
+msgstr "وضعیت کارمندی"
+
+#: auths/user/models.py:62
+msgid "Designates whether the user can log into this admin site."
+msgstr "مشخص می‌کند که آیا کاربر می‌تواند وارد سایت مدیریت شود یا خیر."
+
+#: auths/user/models.py:65
+msgid "Active"
+msgstr "فعال"
+
+#: auths/user/models.py:68
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+"مشخص می‌کند که آیا این کاربر باید فعال تلقی شود. به جای حذف حساب‌ها، این "
+"گزینه را بردارید."
+
+#: auths/user/models.py:72
+msgid "Date Joined"
+msgstr "تاریخ عضویت"
+
+#: auths/user/models.py:75
+msgid "Verified Phone Number"
+msgstr "شماره تلفن تأیید شده"
+
+#: auths/user/models.py:77
+msgid "Designates whether this user's phone number has been verified."
+msgstr "مشخص می‌کند که آیا شماره تلفن این کاربر تأیید شده است یا خیر."
+
+#: auths/user/models.py:80
+msgid "Verified Email"
+msgstr "ایمیل تأیید شده"
+
+#: auths/user/models.py:82
+msgid "Designates whether this user's Email has been verified."
+msgstr "مشخص می‌کند که آیا ایمیل این کاربر تأیید شده است یا خیر."
+
+#: auths/user/models.py:94
+msgid "Users"
+msgstr "کاربران"
