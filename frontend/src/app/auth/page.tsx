@@ -25,6 +25,7 @@ export default async function LoginPage({
         className={`absolute w-full h-full`}
       >
         <motion.div
+          initial={false}
           variants={capsuleVariants}
           animate={isLogin ? "login" : "otp"}
           className="absolute bg-surface-accent z-10 left-0 top-[-280%] w-full h-[300%] sm:w-[300%] sm:top-0 sm:h-full rounded-[9.5em] sm:left-[-250%] sm:[--x-otp:100%] sm:[--x-login:0] max-sm:[--y-otp:120%] max-sm:[--y-login:0]" />
