@@ -6,6 +6,9 @@ uv run backend/manage.py makemigrations
 echo "Applying migrations..."
 uv run backend/manage.py migrate
 
+echo "Compiling translations..."
+uv run backend/manage.py compilemessages
+
 # echo "Collecting static files..."
 # uv run core/manage.py collectstatic --noinput
 

@@ -4,7 +4,7 @@ FROM python:3.12-alpine
 COPY --from=ghcr.io/astral-sh/uv:0.7.15 /uv /uvx /bin/
 
 # Install build dependencies for pygraphviz
-RUN apk add --no-cache gcc musl-dev graphviz-dev
+RUN apk add --no-cache gcc musl-dev graphviz-dev gettext
 
 # Set the working directory
 WORKDIR /app
@@ -21,7 +21,7 @@ RUN uv sync
 
 # Copy project files
 COPY backend/ backend/
-COPY .env ./
+COPY .env ./.env
 COPY ./backend/entrypoint.sh ./
 
 # Expose the Django port
