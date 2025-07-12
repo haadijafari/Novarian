@@ -35,7 +35,7 @@ class RegisterViewSet(ViewSet):
             429: RegisterErrorResponseSerializer,
         },
         description="Register a new user and send verification codes to email/phone.",
-        tags=["Authentication", "Register"]
+        tags=["Authentication"]
     )
     @transaction.atomic
     def create(self, request):

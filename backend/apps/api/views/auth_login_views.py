@@ -40,7 +40,7 @@ class LoginAPIViewSet(ViewSet):
             429: LoginErrorResponseSerializer,
         },
         description="Authenticate user and return JWT tokens (access & refresh).",
-        tags=["Authentication", "Login"],
+        tags=["Authentication"],
     )
     @transaction.atomic
     def create(self, request):
