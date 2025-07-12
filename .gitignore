@@ -172,3 +172,6 @@ frontend/*.tsbuildinfo
 
 # Production build directory
 frontend/build/
+
+# alowing frontend lib
+!frontend/src/lib/
