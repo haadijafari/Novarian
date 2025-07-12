@@ -8,7 +8,7 @@ from rest_framework.test import APITestCase
 User = get_user_model()
 
 
-@patch('rest_framework.viewsets.ViewSet.get_throttles', return_value=[])
+@patch('apps.api.views.auth_login_views.LoginAPIViewSet.get_throttles', return_value=[])
 class LoginTests(APITestCase):
     def setUp(self):
         self.url = reverse('api:login-list')
