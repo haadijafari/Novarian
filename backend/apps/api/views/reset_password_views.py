@@ -36,7 +36,8 @@ class PasswordResetViewSet(ViewSet):
     @extend_schema(
         request=reset_serializers.PasswordResetRequestSerializer,
         responses={200: serializers.DictField()},
-        description="Request a password reset code via email or phone."
+        description="Request a password reset code via email or phone.",
+        tags=["Password Reset"],
     )
     @action(detail=False, methods=["post"], url_path="request")
     def request_reset(self, request):
@@ -56,7 +57,8 @@ class PasswordResetViewSet(ViewSet):
     @extend_schema(
         request=reset_serializers.PasswordResetSerializer,
         responses={200: serializers.DictField()},
-        description="Reset password using the code sent via email or SMS."
+        description="Reset password using the code sent via email or SMS.",
+        tags=["Password Reset"],
     )
     @action(detail=False, methods=["post"], url_path="reset")
     def reset_password(self, request):

@@ -174,7 +174,8 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'Novarian Online Gift Shop Website APIs',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
-    # OTHER SETTINGS
+    "COMPONENT_SPLIT_REQUEST": True,
+    "SCHEMA_PATH_PREFIX_TRIM": None,
 }
 
 # Google Auth

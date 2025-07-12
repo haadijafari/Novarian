@@ -9,7 +9,11 @@ class PasswordResetRequestSerializer(serializers.Serializer):
 class PasswordResetSerializer(serializers.Serializer):
     identifier = serializers.CharField(help_text=_("Email or phone number"))
     code = serializers.CharField(help_text=_("Verification code sent to email or phone"))
-    new_password = serializers.CharField(help_text=_("New password"))
+    new_password = serializers.CharField(
+        help_text=_("New password (must be strong)"),
+        write_only=True,
+        style={'input_type': 'password'}
+    )
 
     def validate_new_password(self, value):
         # Enforce Django password validators
