@@ -4,6 +4,7 @@ from django.db import transaction
 from django.utils.translation import gettext as _
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
+from rest_framework.exceptions import Throttled
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -15,6 +16,7 @@ from apps.api.serializers.auth_logout_serializers import (
     LogoutErrorResponseSerializer,
     LogoutSuccessResponseSerializer
 )
+from apps.api.throttles.auth_logout_throttle import FailedLogoutAttemptThrottle
 
 logger = logging.getLogger(__name__)
 
@@ -27,6 +29,7 @@ class LogoutAPIView(APIView):
     """
 
     permission_classes = [IsAuthenticated]
+    throttle_classes = [FailedLogoutAttemptThrottle]
 
     @extend_schema(
         request=LogoutSerializer,
@@ -44,6 +47,10 @@ class LogoutAPIView(APIView):
         """
         Blacklist the provided refresh token and log out the user.
         """
+
+        # Initialize throttle instance
+        throttle = self.get_throttles()[0]
+
         serializer = LogoutSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
@@ -55,24 +62,31 @@ class LogoutAPIView(APIView):
             ip = request.META.get('REMOTE_ADDR', '')
             user_agent = request.META.get('HTTP_USER_AGENT', '')
             logger.info(
-                f"IP: {ip} using User-Agent: {user_agent} logged out from {request.user.id} {request.user} using token: {refresh_token[:10]}...")
+                f"User {request.user.id} ({request.user}) logged out. "
+                f"IP: {ip}, User-Agent: {user_agent}, Token: {refresh_token[:10]}..."
+            )
             return Response(
                 LogoutSuccessResponseSerializer({'message': _('Logged out successfully.')}).data,
                 status=status.HTTP_200_OK
             )
 
-        except InvalidToken:
-            logger.info(f"User {request.user} attempted logout with invalid token.")
-            return Response(
-                LogoutErrorResponseSerializer({'detail': _('Invalid token.')}).data,
-                status=status.HTTP_401_UNAUTHORIZED
-            )
+        except (InvalidToken, TokenError) as e:
+            # Manually check throttle and raise if needed
+            if throttle.allow_request(request, self):
+                throttle.throttle_success()
+            else:
+                raise Throttled(detail=_("Too many failed logout attempts, please try again later."))
 
-        except TokenError:
-            logger.error(f"User {request.user} attempted logout with token error.")
+            user_info = (
+                f"{request.user.id}: {request.user}" 
+                if request.user and request.user.is_authenticated 
+                else "Anonymous user"
+            )
+            logger.warning(f"User {user_info} failed logout attempt: {str(e)}")
+            status_code = status.HTTP_401_UNAUTHORIZED if isinstance(e, InvalidToken) else status.HTTP_400_BAD_REQUEST
             return Response(
-                LogoutErrorResponseSerializer({'detail': _('Token error.')}).data,
-                status=status.HTTP_400_BAD_REQUEST
+                LogoutErrorResponseSerializer({'detail': str(e)}).data,
+                status=status_code
             )
 
         except Exception as e:

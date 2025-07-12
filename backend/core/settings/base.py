@@ -155,6 +155,7 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'anon': '5/hour',     # Anonymous users (not logged in)
         'user': '10/hour',    # Authenticated users
+        'failed_logout': '20/hour',  # allow 20 failed logout attempts per hour per user/IP
         'register': '5/day',  # Custom throttle for register
         'login': '5/hour',     # Custom throttle for login
     },
