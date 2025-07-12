@@ -1,47 +1,35 @@
 import Image from 'next/image'
+import React from 'react'
 
-export default function ProductCard({
-  width = 400,
-  height = 295,
-  radius = 20,
-  curveSize = 15,
-  offsetX = 90,
-  offsetY = 20,
-  backgroundColor = '#3FB8AF',
-}: {
-  width?: number
-  height?: number
-  radius?: number
-  curveSize?: number
-  offsetX?: number
-  offsetY?: number
-  backgroundColor?: string
-}) {
-  const cssVars = {
-    '--r': `${radius}px`,
-    '--s': `${curveSize}px`,
-    '--x': `${offsetX}px`,
-    '--y': `${offsetY}px`,
-    '--bg': backgroundColor,
-  } as React.CSSProperties
+const ProductCard = () => {
+  const bgColor = "white" // Using a more descriptive variable name
+  const r = 10
+
+  //WARNING: this page has a anti alignment problem conside using a clip-path solution and dynamicly change the r, w and h
 
   return (
-    <li
-      className="inverted-radius"
-      style={{
-        width: `${width}px`,
-        height: `${height}px`,
-        ...cssVars,
-      }}
-    >
-      <Image
-        className="rounded-2xl"   /* if you want an inner rounding on the image itself */
-        src="/1.jpg"
-        width={width}
-        height={height}
-        alt="product"
-      />
-    </li>
+    <>
+      <div className={`bg-center bg-cover rounded-[${r}px] rounded-bl-[0] relative overflow-hidden`}>
+        <Image
+          width={1000} height={1000} src={"/3.jpg"} alt='tets' />
+
+        <div
+          style={{ borderRadius: `0 ${r}px 0 0` }}
+          className={`flex items-center justify-center w-[100px] h-[20%] bg-${bgColor} absolute bottom-0 left-0`}
+        >
+
+          <svg className={`absolute left-0 bottom-full fill-${bgColor} translate-y-[0px]`} width={r} height={r}>
+            <path d={`M0,0 L0,${r} L${r},${r} A${r},${r} 0 0,1 0,0 Z`} />
+          </svg>
+
+          <svg className={`absolute left-full bottom-0 fill-${bgColor} -translate-x-[0px]`} width={r} height={r}>
+            <path d={`M0,0 L0,${r} L${r},${r} A${r},${r} 0 0,1 0,0 Z`} />
+          </svg>
+
+        </div>
+      </div>
+    </>
   )
 }
 
+export default ProductCard

@@ -4,7 +4,7 @@ import { Providers } from "./providers"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html suppressHydrationWarning lang="fa" dir="rtl" className={`${tanha.variable} ${vazirmatn.variable} ${sahel.variable} ${estedad.variable}`} >
+    <html suppressHydrationWarning lang="fa" dir="rtl" className={`${tanha.variable} ${vazirmatn.variable} ${sahel.variable} ${estedad.variable} bg-surface`} >
       <body>
         <Providers>
           <div>
