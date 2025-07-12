@@ -48,19 +48,25 @@ First install [uv package manager](https://docs.astral.sh/uv/getting-started/ins
 
 ### Frontend Setup (React/Next.js)
 
-1. Install dependencies:
+1. Install dependencies [bun bundler](https://bun.sh/docs/installation)):
 
    ```bash
-   npm install
-   ```
+   bun install
+    ```
 
-2. Start the frontend development server:
+2. go to the fronend directory
+
+   ```bash
+   cd frontend
+   ```
+   
+3. Start the frontend development server:
 
    ```bash
    npm run dev
    ```
 
-3. Access the frontend at: [http://localhost:3000](http://localhost:3000)
+4. Access the frontend at: [http://localhost:3000](http://localhost:3000)
 
 ### Running with Docker
 
