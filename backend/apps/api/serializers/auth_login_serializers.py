@@ -1,10 +1,9 @@
 from django.contrib.auth import get_user_model
-from django.db import transaction
 from django.utils.translation import gettext as _
-
 from rest_framework import serializers
 
 User = get_user_model()
+
 
 class LoginSerializer(serializers.ModelSerializer):
     identifier = serializers.CharField(write_only=True)
@@ -37,36 +36,3 @@ class LoginSerializer(serializers.ModelSerializer):
 
         data['user'] = user
         return data
-
-
-class RegisterSerializer(serializers.ModelSerializer):
-    identifier = serializers.CharField(write_only=True)
-    password = serializers.CharField(write_only=True, min_length=8)
-
-    class Meta:
-        model = User
-        fields = ('identifier', 'password')
-
-    def validate_identifier(self, value):
-        if "@" in value:
-            if User.objects.filter(email__iexact=value).exists():
-                raise serializers.ValidationError({'detail': _("This email is already registered.")})
-        else:
-            if User.objects.filter(phone_number=value).exists():
-                raise serializers.ValidationError({'detail': _("This phone number is already registered.")})
-        return value
-
-    @transaction.atomic
-    def create(self, validated_data):
-        identifier = validated_data.get('identifier')
-        password = validated_data.get('password')
-
-        if "@" in identifier:
-            user = User.objects.create(email=identifier)
-        else:
-            user = User.objects.create(phone_number=identifier)
-
-        user.set_password(password)
-        user.save()
-
-        return user
