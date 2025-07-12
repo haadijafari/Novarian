@@ -12,7 +12,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 # Local app imports
 from apps.api.serializers.authentication_serializers import LoginSerializer, RegisterSerializer
-from apps.api.throttles import LoginRateThrottle, RegisterRateThrottle
+from apps.api.throttles.auth_login_throttle import LoginRateThrottle
+from apps.api.throttles.auth_register_throttle import RegisterRateThrottle
 from apps.utils.google_auth import authenticate_with_google_token
 from apps.utils.verification import send_email_verification_code, send_phone_verification_code
 
