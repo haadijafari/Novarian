@@ -40,7 +40,7 @@ class LogoutAPIView(APIView):
             500: LogoutErrorResponseSerializer,
         },
         description="Log out by blacklisting the provided refresh token.",
-        tags=["Logout"]
+        tags=["Authentication", "Logout"]
     )
     @transaction.atomic
     def post(self, request):
