@@ -2,12 +2,12 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 from apps.api.views.auth_logout_views import LogoutAPIView
+from apps.api.views.auth_reset_password_views import PasswordResetViewSet
 from .views.authentication_views import (
     LoginAPIViewSet, RegisterViewSet, GoogleLoginAPIView
 )
 from .views.cart_views import CartViewSet
 from .views.product_views import ProductViewSet, ProductCategoryViewSet
-from .views.reset_password_views import PasswordResetViewSet
 from .views.verification_views import VerifyAPIView, ResendVerificationCodeAPIView
 
 app_name = 'api'

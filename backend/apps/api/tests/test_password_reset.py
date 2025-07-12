@@ -8,7 +8,7 @@ from rest_framework.test import APITestCase
 User = get_user_model()
 
 
-@patch('apps.api.views.reset_password_views.PasswordResetViewSet.get_throttles', return_value=[])
+@patch('apps.api.views.auth_reset_password_views.PasswordResetViewSet.get_throttles', return_value=[])
 class RequestPasswordResetTests(APITestCase):
     def setUp(self):
         self.url = reverse('api:password-reset-request-reset')
@@ -52,7 +52,7 @@ class RequestPasswordResetTests(APITestCase):
         self.assertIn("identifier", response.data)
 
 
-@patch('apps.api.views.reset_password_views.PasswordResetViewSet.get_throttles', return_value=[])
+@patch('apps.api.views.auth_reset_password_views.PasswordResetViewSet.get_throttles', return_value=[])
 class ResetPasswordTests(APITestCase):
     def setUp(self):
         self.url = reverse('api:password-reset-reset-password')

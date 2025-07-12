@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-11 19:49+0330\n"
+"POT-Creation-Date: 2025-07-12 12:01+0330\n"
 "PO-Revision-Date: 2025-07-11 18:29+0200\n"
 "Last-Translator: Your Name <your.email@example.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
@@ -21,6 +21,36 @@ msgstr ""
 #: apps/api/apps.py:8
 msgid "API Module"
 msgstr "ماژول API"
+
+#: apps/api/serializers/auth_logout_serializers.py:6
+#, fuzzy
+#| msgid "Refresh token is required."
+msgid "Refresh token to blacklist"
+msgstr "توکن رفرش لازم است."
+
+#: apps/api/serializers/auth_logout_serializers.py:11
+msgid "A success message indicating successful logout."
+msgstr ""
+
+#: apps/api/serializers/auth_logout_serializers.py:17
+msgid ""
+"An error message indicating why the logout failed (e.g., invalid token)."
+msgstr ""
+
+#: apps/api/serializers/auth_reset_password_serializers.py:6
+#: apps/api/serializers/auth_reset_password_serializers.py:10
+#, fuzzy
+#| msgid "Phone Number"
+msgid "Email or phone number"
+msgstr "شماره تلفن"
+
+#: apps/api/serializers/auth_reset_password_serializers.py:11
+msgid "Verification code sent to email or phone"
+msgstr ""
+
+#: apps/api/serializers/auth_reset_password_serializers.py:13
+msgid "New password (must be strong)"
+msgstr ""
 
 #: apps/api/serializers/authentication_serializers.py:25
 #: apps/api/serializers/authentication_serializers.py:28
@@ -47,6 +77,35 @@ msgstr "این ایمیل قبلاً ثبت شده است."
 msgid "This phone number is already registered."
 msgstr "این شماره تلفن قبلاً ثبت شده است."
 
+#: apps/api/views/auth_logout_views.py:69
+msgid "Logged out successfully."
+msgstr "خروج با موفقیت انجام شد."
+
+#: apps/api/views/auth_logout_views.py:78
+msgid "Too many failed logout attempts, please try again later."
+msgstr "تعداد دفعات تلاش ناموفق برای خروج از سیستم زیاد است، لطفاً بعداً دوباره امتحان کنید."
+
+#: apps/api/views/auth_logout_views.py:95
+msgid "Unexpected error occurred."
+msgstr "خطای غیرمنتظره‌ای رخ داد."
+
+#: apps/api/views/auth_reset_password_views.py:51
+#: apps/api/views/auth_reset_password_views.py:76
+msgid "User not found."
+msgstr "کاربر یافت نشد."
+
+#: apps/api/views/auth_reset_password_views.py:55
+msgid "Reset code sent."
+msgstr "کد بازنشانی ارسال شد."
+
+#: apps/api/views/auth_reset_password_views.py:80
+msgid "Invalid or expired code."
+msgstr "کد نامعتبر یا منقضی شده است."
+
+#: apps/api/views/auth_reset_password_views.py:86
+msgid "Password reset successfully."
+msgstr "رمز عبور با موفقیت بازنشانی شد."
+
 #: apps/api/views/authentication_views.py:30
 #: apps/api/views/authentication_views.py:66
 msgid "You are already logged in."
@@ -71,47 +130,6 @@ msgstr "توکن گوگل نامعتبر یا منقضی شده است."
 #: apps/api/views/authentication_views.py:112
 msgid "Logged in with Google successfully."
 msgstr "ورود با گوگل با موفقیت انجام شد."
-
-#: apps/api/views/authentication_views.py:129
-#: apps/api/views/authentication_views.py:134
-msgid "Refresh token is required."
-msgstr "توکن رفرش لازم است."
-
-#: apps/api/views/authentication_views.py:132
-msgid "Logged out successfully."
-msgstr "خروج با موفقیت انجام شد."
-
-#: apps/api/views/authentication_views.py:136
-msgid "Invalid or expired token."
-msgstr "توکن نامعتبر یا منقضی شده است."
-
-#: apps/api/views/reset_password_views.py:20
-msgid "Identifier is required."
-msgstr "شناسه لازم است."
-
-#: apps/api/views/reset_password_views.py:25
-#: apps/api/views/reset_password_views.py:30
-#: apps/api/views/reset_password_views.py:60
-msgid "User not found."
-msgstr "کاربر یافت نشد."
-
-#: apps/api/views/reset_password_views.py:33
-msgid "Reset code sent."
-msgstr "کد بازنشانی ارسال شد."
-
-#: apps/api/views/reset_password_views.py:45
-#: apps/api/views/reset_password_views.py:47
-#: apps/api/views/reset_password_views.py:49
-msgid "This field is required."
-msgstr "این فیلد الزامی است."
-
-#: apps/api/views/reset_password_views.py:64
-msgid "Invalid or expired code."
-msgstr "کد نامعتبر یا منقضی شده است."
-
-#: apps/api/views/reset_password_views.py:73
-msgid "Password reset successfully."
-msgstr "رمز عبور با موفقیت بازنشانی شد."
 
 #: apps/cart/apps.py:8
 msgid "Cart Module"
@@ -287,9 +305,9 @@ msgid ""
 "password, but you can change the password using <a href=\"../password/"
 "\">this form</a>."
 msgstr ""
-"رمزهای عبور به صورت خام ذخیره نمی‌شوند، بنابراین راهی برای دیدن رمز عبور "
-"این کاربر وجود ندارد، اما می‌توانید رمز عبور را با استفاده از <a href=\""
-"../password/\">این فرم</a> تغییر دهید."
+"رمزهای عبور به صورت خام ذخیره نمی‌شوند، بنابراین راهی برای دیدن رمز عبور این "
+"کاربر وجود ندارد، اما می‌توانید رمز عبور را با استفاده از <a href=\"../"
+"password/\">این فرم</a> تغییر دهید."
 
 #: auths/user/models.py:33
 msgid "Superuser must have is_staff=True."
@@ -348,8 +366,8 @@ msgid ""
 "Designates whether this user should be treated as active. Unselect this "
 "instead of deleting accounts."
 msgstr ""
-"مشخص می‌کند که آیا این کاربر باید فعال تلقی شود. به جای حذف حساب‌ها، این "
-"گزینه را بردارید."
+"مشخص می‌کند که آیا این کاربر باید فعال تلقی شود. به جای حذف حساب‌ها، این گزینه "
+"را بردارید."
 
 #: auths/user/models.py:72
 msgid "Date Joined"
@@ -374,3 +392,12 @@ msgstr "مشخص می‌کند که آیا ایمیل این کاربر تأیی
 #: auths/user/models.py:94
 msgid "Users"
 msgstr "کاربران"
+
+#~ msgid "Invalid or expired token."
+#~ msgstr "توکن نامعتبر یا منقضی شده است."
+
+#~ msgid "Identifier is required."
+#~ msgstr "شناسه لازم است."
+
+#~ msgid "This field is required."
+#~ msgstr "این فیلد الزامی است."

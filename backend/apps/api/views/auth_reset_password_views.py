@@ -10,7 +10,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
-import apps.api.serializers.reset_password_serializers as reset_serializers
+import apps.api.serializers.auth_reset_password_serializers as reset_serializers
 from apps.utils.verification import send_email_verification_code, send_phone_verification_code
 
 logger = logging.getLogger(__name__)
