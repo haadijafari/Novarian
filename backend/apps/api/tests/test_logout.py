@@ -68,8 +68,9 @@ class LogoutThrottleTests(APITestCase):
             password='throttle123',
             is_verified_email=True
         )
-        self.refresh_token = str(RefreshToken.for_user(self.user))
-        self.access_token = str(RefreshToken.for_user(self.user).access_token)
+        token = RefreshToken.for_user(self.user)
+        self.refresh_token = str(token)
+        self.access_token = str(token.access_token)
 
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.access_token}')
 
