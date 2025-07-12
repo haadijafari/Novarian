@@ -4,11 +4,10 @@ from django.db import transaction
 from django.utils.timezone import now
 from django.utils.translation import gettext as _
 from rest_framework import status
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet
-from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 
 # Local app imports
@@ -116,21 +115,3 @@ class GoogleLoginAPIView(APIView):
             'email': user.email,
             'phone_number': user.phone_number,
         }, status=status.HTTP_200_OK)
-
-
-class LogoutAPIViewSet(ViewSet):
-    permission_classes = [IsAuthenticated]
-
-    @transaction.atomic
-    def create(self, request):
-        try:
-            refresh_token = request.data.get("refresh", "").strip()
-            if not refresh_token:
-                return Response({'detail': _('Refresh token is required.')}, status=status.HTTP_400_BAD_REQUEST)
-            token = RefreshToken(refresh_token)
-            token.blacklist()
-            return Response({'message': _('Logged out successfully.')}, status=status.HTTP_200_OK)
-        except KeyError:
-            return Response({'detail': _('Refresh token is required.')}, status=status.HTTP_400_BAD_REQUEST)
-        except TokenError:
-            return Response({'detail': _('Invalid or expired token.')}, status=status.HTTP_400_BAD_REQUEST)

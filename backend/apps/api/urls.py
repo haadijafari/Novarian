@@ -1,8 +1,9 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
+from apps.api.views.auth_logout_views import LogoutAPIView
 from .views.authentication_views import (
-    LoginAPIViewSet, LogoutAPIViewSet, RegisterViewSet, GoogleLoginAPIView
+    LoginAPIViewSet, RegisterViewSet, GoogleLoginAPIView
 )
 from .views.cart_views import CartViewSet
 from .views.product_views import ProductViewSet, ProductCategoryViewSet
@@ -16,12 +17,12 @@ router.register(r'products', ProductViewSet, basename='product')
 router.register(r'categories', ProductCategoryViewSet, basename='category')
 router.register(r'carts', CartViewSet, basename='cart')
 router.register(r'login', LoginAPIViewSet, basename='login')
-router.register(r'logout', LogoutAPIViewSet, basename='logout')
 router.register(r'register', RegisterViewSet, basename='register')
 router.register(r'password-reset', PasswordResetViewSet, basename='password-reset')
 
 urlpatterns = [
     path('', include(router.urls), name='api'),
+    path('logout/', LogoutAPIView.as_view(), name='logout'),
     path('verify/', VerifyAPIView.as_view(), name='verify'),
     path('resend-verification/', ResendVerificationCodeAPIView.as_view(), name='resend-verification'),
     path('auth/google/', GoogleLoginAPIView.as_view(), name='google-login'),
