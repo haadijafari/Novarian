@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-12 12:01+0330\n"
+"POT-Creation-Date: 2025-07-13 09:54+0330\n"
 "PO-Revision-Date: 2025-07-11 18:29+0200\n"
 "Last-Translator: Your Name <your.email@example.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
@@ -22,60 +21,190 @@ msgstr ""
 msgid "API Module"
 msgstr "ماژول API"
 
-#: apps/api/serializers/auth_logout_serializers.py:6
-#, fuzzy
-#| msgid "Refresh token is required."
-msgid "Refresh token to blacklist"
-msgstr "توکن رفرش لازم است."
+#: apps/api/serializers/auth_google_serializers.py:6
+msgid "Google ID token"
+msgstr "توکن شناسایی گوگل"
 
-#: apps/api/serializers/auth_logout_serializers.py:11
-msgid "A success message indicating successful logout."
-msgstr ""
+#: apps/api/serializers/auth_google_serializers.py:10
+#: apps/api/serializers/auth_login_serializers.py:42
+msgid "Login success message"
+msgstr "پیام موفقیت‌آمیز ورود"
 
-#: apps/api/serializers/auth_logout_serializers.py:17
-msgid ""
-"An error message indicating why the logout failed (e.g., invalid token)."
-msgstr ""
+#: apps/api/serializers/auth_google_serializers.py:11
+#: apps/api/serializers/auth_login_serializers.py:43
+msgid "Refresh token"
+msgstr "توکن رفرش"
 
-#: apps/api/serializers/auth_reset_password_serializers.py:6
-#: apps/api/serializers/auth_reset_password_serializers.py:10
-#, fuzzy
-#| msgid "Phone Number"
-msgid "Email or phone number"
-msgstr "شماره تلفن"
+#: apps/api/serializers/auth_google_serializers.py:12
+#: apps/api/serializers/auth_login_serializers.py:44
+msgid "Access token"
+msgstr "توکن دسترسی"
 
-#: apps/api/serializers/auth_reset_password_serializers.py:11
-msgid "Verification code sent to email or phone"
-msgstr ""
+#: apps/api/serializers/auth_google_serializers.py:13
+#: apps/api/serializers/auth_login_serializers.py:45
+msgid "User ID"
+msgstr "شناسه کاربری"
 
-#: apps/api/serializers/auth_reset_password_serializers.py:13
-msgid "New password (must be strong)"
-msgstr ""
+#: apps/api/serializers/auth_google_serializers.py:14
+#: apps/api/serializers/auth_login_serializers.py:46
+msgid "User email"
+msgstr "ایمیل کاربر"
 
-#: apps/api/serializers/authentication_serializers.py:25
-#: apps/api/serializers/authentication_serializers.py:28
+#: apps/api/serializers/auth_google_serializers.py:15
+#: apps/api/serializers/auth_login_serializers.py:47
+msgid "User phone number"
+msgstr "شماره تلفن کاربر"
+
+#: apps/api/serializers/auth_google_serializers.py:19
+#: apps/api/serializers/auth_verification_serializers.py:19
+msgid "Error message"
+msgstr "پیام خطا"
+
+#: apps/api/serializers/auth_login_serializers.py:24
+#: apps/api/serializers/auth_login_serializers.py:27
+#: apps/api/views/auth_login_views.py:88
 msgid "Invalid credentials."
 msgstr "اعتبارنامه‌ها نامعتبر هستند."
 
-#: apps/api/serializers/authentication_serializers.py:31
+#: apps/api/serializers/auth_login_serializers.py:30
 msgid "This account is inactive due to some restrictions."
 msgstr "این حساب به دلیل برخی محدودیت‌ها غیرفعال است."
 
-#: apps/api/serializers/authentication_serializers.py:34
+#: apps/api/serializers/auth_login_serializers.py:33
 msgid "Email is not verified yet."
 msgstr "ایمیل هنوز تأیید نشده است."
 
-#: apps/api/serializers/authentication_serializers.py:36
+#: apps/api/serializers/auth_login_serializers.py:35
 msgid "Phone number is not verified yet."
 msgstr "شماره تلفن هنوز تأیید نشده است."
 
-#: apps/api/serializers/authentication_serializers.py:53
+#: apps/api/serializers/auth_login_serializers.py:51
+msgid "Error detail"
+msgstr "جزئیات خطا"
+
+#: apps/api/serializers/auth_login_serializers.py:55
+msgid "Already logged in message"
+msgstr "پیام از پیش ورود کرده‌اید"
+
+#: apps/api/serializers/auth_logout_serializers.py:6
+msgid "Refresh token to blacklist"
+msgstr "توکن رفرش برای لیست سیاه"
+
+#: apps/api/serializers/auth_logout_serializers.py:11
+msgid "A success message indicating successful logout."
+msgstr "پیام موفقیت‌آمیز نشان‌دهنده خروج موفق."
+
+#: apps/api/serializers/auth_logout_serializers.py:17
+msgid "An error message indicating why the logout failed (e.g., invalid token)."
+msgstr "پیام خطایی که دلیل عدم موفقیت خروج را نشان می‌دهد (مثلاً توکن نامعتبر)."
+
+#: apps/api/serializers/auth_register_serializers.py:21
 msgid "This email is already registered."
 msgstr "این ایمیل قبلاً ثبت شده است."
 
-#: apps/api/serializers/authentication_serializers.py:56
+#: apps/api/serializers/auth_register_serializers.py:24
 msgid "This phone number is already registered."
 msgstr "این شماره تلفن قبلاً ثبت شده است."
+
+#: apps/api/serializers/auth_register_serializers.py:44
+#: apps/api/serializers/auth_verification_serializers.py:15
+msgid "Success message"
+msgstr "پیام موفقیت"
+
+#: apps/api/serializers/auth_register_serializers.py:45
+msgid "ID of the registered user"
+msgstr "شناسه کاربر ثبت‌نام شده"
+
+#: apps/api/serializers/auth_register_serializers.py:46
+msgid "Email of the registered user"
+msgstr "ایمیل کاربر ثبت‌نام شده"
+
+#: apps/api/serializers/auth_register_serializers.py:47
+msgid "Phone number of the registered user"
+msgstr "شماره تلفن کاربر ثبت‌نام شده"
+
+#: apps/api/serializers/auth_register_serializers.py:48
+msgid "JWT refresh token"
+msgstr "توکن رفرش JWT"
+
+#: apps/api/serializers/auth_register_serializers.py:49
+msgid "JWT access token"
+msgstr "توکن دسترسی JWT"
+
+#: apps/api/serializers/auth_register_serializers.py:54
+msgid "Error(s) related to email or phone number"
+msgstr "خطا(ها) مربوط به ایمیل یا شماره تلفن"
+
+#: apps/api/serializers/auth_register_serializers.py:58
+msgid "Error(s) related to password"
+msgstr "خطا(ها) مربوط به رمز عبور"
+
+#: apps/api/serializers/auth_register_serializers.py:61
+msgid "General error message"
+msgstr "پیام خطای عمومی"
+
+#: apps/api/serializers/auth_reset_password_serializers.py:6
+#: apps/api/serializers/auth_reset_password_serializers.py:10
+msgid "Email or phone number"
+msgstr "ایمیل یا شماره تلفن"
+
+#: apps/api/serializers/auth_reset_password_serializers.py:11
+msgid "Verification code sent to email or phone"
+msgstr "کد تأیید به ایمیل یا تلفن ارسال شد"
+
+#: apps/api/serializers/auth_reset_password_serializers.py:13
+msgid "New password (must be strong)"
+msgstr "رمز عبور جدید (باید قوی باشد)"
+
+#: apps/api/serializers/auth_reset_password_serializers.py:25
+msgid "Password reset success message"
+msgstr "پیام موفقیت‌آمیز بازنشانی رمز عبور"
+
+#: apps/api/serializers/auth_reset_password_serializers.py:31
+msgid "Error(s) related to identifier"
+msgstr "خطا(ها) مربوط به شناسه"
+
+#: apps/api/serializers/auth_reset_password_serializers.py:36
+msgid "Error(s) related to verification code"
+msgstr "خطا(ها) مربوط به کد تأیید"
+
+#: apps/api/serializers/auth_reset_password_serializers.py:41
+msgid "Error(s) related to new password"
+msgstr "خطا(ها) مربوط به رمز عبور جدید"
+
+#: apps/api/serializers/auth_reset_password_serializers.py:45
+msgid "Generic error detail message"
+msgstr "پیام جزئیات خطای عمومی"
+
+#: apps/api/serializers/auth_verification_serializers.py:6
+#: apps/api/serializers/auth_verification_serializers.py:11
+msgid "User email or phone number"
+msgstr "ایمیل یا شماره تلفن کاربر"
+
+#: apps/api/serializers/auth_verification_serializers.py:7
+msgid "Verification code sent to user"
+msgstr "کد تأیید به کاربر ارسال شد"
+
+#: apps/api/views/auth_google_login_views.py:37
+msgid "ID token is required."
+msgstr "توکن شناسایی لازم است."
+
+#: apps/api/views/auth_google_login_views.py:45
+msgid "Invalid or expired Google token."
+msgstr "توکن گوگل نامعتبر یا منقضی شده است."
+
+#: apps/api/views/auth_google_login_views.py:55
+msgid "Logged in with Google successfully."
+msgstr "ورود با گوگل با موفقیت انجام شد."
+
+#: apps/api/views/auth_login_views.py:53
+#: apps/api/views/auth_register_views.py:45
+msgid "You are already logged in."
+msgstr "شما از قبل وارد شده‌اید."
+
+#: apps/api/views/auth_login_views.py:76
+msgid "Logged in successfully."
+msgstr "ورود با موفقیت انجام شد."
 
 #: apps/api/views/auth_logout_views.py:69
 msgid "Logged out successfully."
@@ -89,47 +218,26 @@ msgstr "تعداد دفعات تلاش ناموفق برای خروج از سی�
 msgid "Unexpected error occurred."
 msgstr "خطای غیرمنتظره‌ای رخ داد."
 
-#: apps/api/views/auth_reset_password_views.py:51
-#: apps/api/views/auth_reset_password_views.py:76
-msgid "User not found."
-msgstr "کاربر یافت نشد."
-
-#: apps/api/views/auth_reset_password_views.py:55
-msgid "Reset code sent."
-msgstr "کد بازنشانی ارسال شد."
-
-#: apps/api/views/auth_reset_password_views.py:80
-msgid "Invalid or expired code."
-msgstr "کد نامعتبر یا منقضی شده است."
-
-#: apps/api/views/auth_reset_password_views.py:86
-msgid "Password reset successfully."
-msgstr "رمز عبور با موفقیت بازنشانی شد."
-
-#: apps/api/views/authentication_views.py:30
-#: apps/api/views/authentication_views.py:66
-msgid "You are already logged in."
-msgstr "شما از قبل وارد شده‌اید."
-
-#: apps/api/views/authentication_views.py:48
+#: apps/api/views/auth_register_views.py:66
 msgid "User registered successfully and verification codes have been sent."
 msgstr "کاربر با موفقیت ثبت شد و کدهای تأیید ارسال شده‌اند."
 
-#: apps/api/views/authentication_views.py:86
-msgid "Logged in successfully."
-msgstr "ورود با موفقیت انجام شد."
+#: apps/api/views/auth_reset_password_views.py:59
+#: apps/api/views/auth_reset_password_views.py:88
+msgid "User not found."
+msgstr "کاربر یافت نشد."
 
-#: apps/api/views/authentication_views.py:103
-msgid "ID token is required."
-msgstr "توکن شناسایی لازم است."
+#: apps/api/views/auth_reset_password_views.py:63
+msgid "Reset code sent."
+msgstr "کد بازنشانی ارسال شد."
 
-#: apps/api/views/authentication_views.py:107
-msgid "Invalid or expired Google token."
-msgstr "توکن گوگل نامعتبر یا منقضی شده است."
+#: apps/api/views/auth_reset_password_views.py:92
+msgid "Invalid or expired code."
+msgstr "کد نامعتبر یا منقضی شده است."
 
-#: apps/api/views/authentication_views.py:112
-msgid "Logged in with Google successfully."
-msgstr "ورود با گوگل با موفقیت انجام شد."
+#: apps/api/views/auth_reset_password_views.py:98
+msgid "Password reset successfully."
+msgstr "رمز عبور با موفقیت بازنشانی شد."
 
 #: apps/cart/apps.py:8
 msgid "Cart Module"
@@ -392,12 +500,3 @@ msgstr "مشخص می‌کند که آیا ایمیل این کاربر تأیی
 #: auths/user/models.py:94
 msgid "Users"
 msgstr "کاربران"
-
-#~ msgid "Invalid or expired token."
-#~ msgstr "توکن نامعتبر یا منقضی شده است."
-
-#~ msgid "Identifier is required."
-#~ msgstr "شناسه لازم است."
-
-#~ msgid "This field is required."
-#~ msgstr "این فیلد الزامی است."
