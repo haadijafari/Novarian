@@ -20,3 +20,28 @@ class PasswordResetSerializer(serializers.Serializer):
         from django.contrib.auth.password_validation import validate_password
         validate_password(value)
         return value
+
+class PasswordResetSuccessResponseSerializer(serializers.Serializer):
+    message = serializers.CharField(help_text=_("Password reset success message"))
+
+class PasswordResetErrorResponseSerializer(serializers.Serializer):
+    identifier = serializers.ListField(
+        child=serializers.CharField(),
+        required=False,
+        help_text=_("Error(s) related to identifier")
+    )
+    code = serializers.ListField(
+        child=serializers.CharField(),
+        required=False,
+        help_text=_("Error(s) related to verification code")
+    )
+    new_password = serializers.ListField(
+        child=serializers.CharField(),
+        required=False,
+        help_text=_("Error(s) related to new password")
+    )
+    detail = serializers.CharField(
+        required=False,
+        help_text=_("Generic error detail message")
+    )
+

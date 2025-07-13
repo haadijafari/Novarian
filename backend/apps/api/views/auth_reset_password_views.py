@@ -4,13 +4,17 @@ from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.utils.translation import gettext as _
 from drf_spectacular.utils import extend_schema
-from rest_framework import serializers
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
-import apps.api.serializers.auth_reset_password_serializers as reset_serializers
+from apps.api.serializers.auth_reset_password_serializers import (
+    PasswordResetSerializer,
+    PasswordResetRequestSerializer,
+    PasswordResetSuccessResponseSerializer,
+    PasswordResetErrorResponseSerializer,
+)
 from apps.utils.verification import send_email_verification_code, send_phone_verification_code
 
 logger = logging.getLogger(__name__)
@@ -34,14 +38,18 @@ class PasswordResetViewSet(ViewSet):
             send_phone_verification_code(identifier.strip())
 
     @extend_schema(
-        request=reset_serializers.PasswordResetRequestSerializer,
-        responses={200: serializers.DictField()},
+        request=PasswordResetRequestSerializer,
+        responses={
+            200: PasswordResetSuccessResponseSerializer,
+            400: PasswordResetErrorResponseSerializer,
+            404: PasswordResetErrorResponseSerializer,
+        },
         description="Request a password reset code via email or phone.",
         tags=["Authentication"],
     )
     @action(detail=False, methods=["post"], url_path="request")
     def request_reset(self, request):
-        serializer = reset_serializers.PasswordResetRequestSerializer(data=request.data)
+        serializer = PasswordResetRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         identifier = serializer.validated_data.get('identifier')
 
@@ -55,14 +63,18 @@ class PasswordResetViewSet(ViewSet):
         return Response({'message': _('Reset code sent.')}, status=status.HTTP_200_OK)
 
     @extend_schema(
-        request=reset_serializers.PasswordResetSerializer,
-        responses={200: serializers.DictField()},
+        request=PasswordResetSerializer,
+        responses={
+            200: PasswordResetSuccessResponseSerializer,
+            400: PasswordResetErrorResponseSerializer,
+            404: PasswordResetErrorResponseSerializer,
+        },
         description="Reset password using the code sent via email or SMS.",
         tags=["Authentication"],
     )
     @action(detail=False, methods=["post"], url_path="reset")
     def reset_password(self, request):
-        serializer = reset_serializers.PasswordResetSerializer(data=request.data)
+        serializer = PasswordResetSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         identifier = serializer.validated_data.get('identifier')
