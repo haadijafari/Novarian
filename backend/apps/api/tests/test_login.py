@@ -8,7 +8,7 @@ from rest_framework.test import APITestCase
 User = get_user_model()
 
 
-@patch('rest_framework.viewsets.ViewSet.get_throttles', return_value=[])
+@patch('apps.api.views.auth_login_views.LoginAPIViewSet.get_throttles', return_value=[])
 class LoginTests(APITestCase):
     def setUp(self):
         self.url = reverse('api:login-list')
@@ -54,7 +54,7 @@ class LoginTests(APITestCase):
         }
         response = self.client.post(self.url, data, format="json")
         self.assertEqual(response.status_code, 400)
-        self.assertIn("non_field_errors", response.data)
+        self.assertIn("detail", response.data)
 
     def test_login_with_unverified_email_fails(self, _):
         user = User.objects.create_user(email="unverified@test.com", password=self.password)
@@ -64,7 +64,7 @@ class LoginTests(APITestCase):
         }
         response = self.client.post(self.url, data, format="json")
         self.assertEqual(response.status_code, 400)
-        self.assertIn("non_field_errors", response.data)
+        self.assertIn("detail", response.data)
 
     def test_login_with_unverified_phone_fails(self, _):
         user = User.objects.create_user(phone_number="09999999999", password=self.password)
@@ -74,7 +74,7 @@ class LoginTests(APITestCase):
         }
         response = self.client.post(self.url, data, format="json")
         self.assertEqual(response.status_code, 400)
-        self.assertIn("non_field_errors", response.data)
+        self.assertIn("detail", response.data)
 
 
 class LoginThrottleTests(APITestCase):

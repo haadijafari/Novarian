@@ -8,7 +8,7 @@ from rest_framework.test import APITestCase
 User = get_user_model()
 
 
-@patch('rest_framework.viewsets.ViewSet.get_throttles', return_value=[])
+@patch('apps.api.views.auth_register_views.RegisterViewSet.get_throttles', return_value=[])
 class RegisterTests(APITestCase):
     def setUp(self):
         # Because registered ViewSet with basename='register'

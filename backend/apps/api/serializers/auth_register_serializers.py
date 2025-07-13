@@ -6,38 +6,6 @@ from rest_framework import serializers
 
 User = get_user_model()
 
-class LoginSerializer(serializers.ModelSerializer):
-    identifier = serializers.CharField(write_only=True)
-    password = serializers.CharField(write_only=True)
-
-    class Meta:
-        model = User
-        fields = ['identifier', 'password']
-
-    def validate(self, data):
-        identifier = data.get('identifier')
-        password = data.get('password')
-
-        query = {'email__iexact': identifier} if '@' in identifier else {'phone_number': identifier}
-        user = User.objects.filter(**query).first()
-
-        if not user:
-            raise serializers.ValidationError({'detail': _("Invalid credentials.")})
-
-        if not user.check_password(password):
-            raise serializers.ValidationError({'detail': _("Invalid credentials.")})
-
-        if not user.is_active:
-            raise serializers.ValidationError({'detail': _("This account is inactive due to some restrictions.")})
-
-        if '@' in identifier and not user.is_verified_email:
-            raise serializers.ValidationError({'detail': _("Email is not verified yet.")})
-        elif '@' not in identifier and not user.is_verified_phone_number:
-            raise serializers.ValidationError({'detail': _("Phone number is not verified yet.")})
-
-        data['user'] = user
-        return data
-
 
 class RegisterSerializer(serializers.ModelSerializer):
     identifier = serializers.CharField(write_only=True)
@@ -70,3 +38,24 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+
+
+class RegisterSuccessResponseSerializer(serializers.Serializer):
+    message = serializers.CharField(help_text=_("Success message"))
+    user_id = serializers.IntegerField(help_text=_("ID of the registered user"))
+    email = serializers.EmailField(help_text=_("Email of the registered user"))
+    phone_number = serializers.CharField(help_text=_("Phone number of the registered user"))
+    refresh = serializers.CharField(help_text=_("JWT refresh token"))
+    access = serializers.CharField(help_text=_("JWT access token"))
+
+
+class RegisterErrorResponseSerializer(serializers.Serializer):
+    identifier = serializers.ListField(
+        child=serializers.CharField(help_text=_("Error(s) related to email or phone number")),
+        required=False
+    )
+    password = serializers.ListField(
+        child=serializers.CharField(help_text=_("Error(s) related to password")),
+        required=False
+    )
+    detail = serializers.CharField(help_text=_("General error message"), required=False)
