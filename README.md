@@ -31,7 +31,7 @@ First install [uv package manager](https://docs.astral.sh/uv/getting-started/ins
 
    ```bash
    cd backend
-   un sync
+   uv sync
    ```
 
 3. Run migrations:
