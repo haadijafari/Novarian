@@ -14,7 +14,7 @@ class VerifyAPITests(APITestCase):
         self.email = "verifyuser@example.com"
         self.phone = "09123456789"
         self.password = "securepass123"
-        self.url = reverse("api:verify")
+        self.url = reverse("api:verification-verify-identifier")
 
         self.user_email = User.objects.create_user(email=self.email, password=self.password)
         self.user_phone = User.objects.create_user(phone_number=self.phone, password=self.password)
@@ -59,7 +59,7 @@ class ResendVerificationCodeAPITests(APITestCase):
         self.email = "resend@example.com"
         self.phone = "09301234567"
         self.password = "securepass456"
-        self.url = reverse("api:resend-verification")
+        self.url = reverse("api:verification-resend-code")
 
         self.user_email = User.objects.create_user(email=self.email, password=self.password, is_verified_email=False)
         self.user_phone = User.objects.create_user(phone_number=self.phone, password=self.password,
@@ -69,14 +69,14 @@ class ResendVerificationCodeAPITests(APITestCase):
         cache.delete(f"resend_wait_email:{self.email}")
         cache.delete(f"resend_wait_phone:{self.phone}")
 
-    @patch("apps.api.views.verification_views.send_email_verification_code")
+    @patch("apps.api.views.auth_verification_views.send_email_verification_code")
     def test_resend_email_code_successfully(self, mock_send_email, _):
         response = self.client.post(self.url, {"identifier": self.email})
         self.assertEqual(response.status_code, 200)
         self.assertIn("message", response.data)
         mock_send_email.assert_called_once()
 
-    @patch("apps.api.views.verification_views.send_phone_verification_code")
+    @patch("apps.api.views.auth_verification_views.send_phone_verification_code")
     def test_resend_phone_code_successfully(self, mock_send_phone, _):
         response = self.client.post(self.url, {"identifier": self.phone})
         self.assertEqual(response.status_code, 200)
