@@ -47,7 +47,7 @@ class VerificationViewSet(ViewSet):
             404: VerificationErrorSerializer,
         },
         description="Verify user email or phone number using a code.",
-        tags=["Authentication", "Verification"],
+        tags=["Authentication"],
     )
     @action(detail=False, methods=["post"], url_path="verify")
     def verify_identifier(self, request):
@@ -85,7 +85,7 @@ class VerificationViewSet(ViewSet):
             429: VerificationErrorSerializer,
         },
         description="Resend email/phone verification code to user.",
-        tags=["Authentication", "Verification"],
+        tags=["Authentication"],
     )
     @action(detail=False, methods=["post"], url_path="resend")
     def resend_code(self, request):
