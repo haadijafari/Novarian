@@ -25,5 +25,5 @@ urlpatterns = [
     path('logout/', LogoutAPIView.as_view(), name='logout'),
     path('verify/', VerifyAPIView.as_view(), name='verify'),
     path('resend-verification/', ResendVerificationCodeAPIView.as_view(), name='resend-verification'),
-    path('auth/google/', GoogleLoginAPIView.as_view(), name='google-login'),
+    path('login/google/', GoogleLoginAPIView.as_view(), name='google-login'),
 ]
