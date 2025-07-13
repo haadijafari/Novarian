@@ -2,7 +2,8 @@
 
 import React from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { type Category } from '@/lib/type';
+import { type Category } from '@/lib/schemas/schemas';
+import Icon from '../ui/Icon';
 
 const ProductFilter = ({ categories }: { categories: Category[] }) => {
   const router = useRouter()
@@ -37,7 +38,7 @@ const ProductFilter = ({ categories }: { categories: Category[] }) => {
                 : "bg-surface-sharp text-ink-sharp hover:bg-surface-accent cursor-pointer"}
                 `}
             >
-              <category.icon className={`${isSelected ? "fill-active-sharp" : "group-hover:fill-active-accent"}`} />
+              <Icon iconName={category.Icon} className={`${isSelected ? "fill-active-sharp" : "group-hover:fill-active-accent"}`} />
               <p>{category.name}</p>
             </div>
           );

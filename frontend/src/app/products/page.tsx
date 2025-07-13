@@ -1,6 +1,6 @@
 import ProductCards from '@/components/products/ProductCard'
 import ProductFilter from '@/components/products/ProductFilter'
-import { type Category } from '@/lib/type'
+import { type Category } from '@/lib/schemas/schemas'
 import React from 'react'
 
 
