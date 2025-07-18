@@ -13,7 +13,7 @@ WORKDIR /app
 # Copy dependencies from the 'deps' stage
 COPY --from=deps /app/node_modules ./node_modules
 
-COPY frontend/. .
+COPY frontend/ .
 
 # Disabling Next.js telemetry 
 # Next.js telemetry collects completely anonymous data about general usage and command performance
@@ -27,7 +27,7 @@ WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
 
-COPY frontend/. .
+COPY frontend/ .
 
 EXPOSE 3000
 
