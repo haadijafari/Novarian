@@ -1,3 +1,11 @@
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+// Helper function for Dynamic and conditional tailwind classes
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
 // Helper function to convert English numbers to Persian
 export const toPersian = (n: string | number): string => {
   const numStr = n.toString();
@@ -8,7 +16,7 @@ export const toPersian = (n: string | number): string => {
   return numStr.replace(/[0-9]/g, (match) => persian[match as keyof typeof persian]);
 }
 
-// Helper function see if is string has only number
+// Helper function to see if the string has only number
 export const isNumeric = (str: string): boolean => {
   // Now accepts both English and Persian numerals
   return /^[0-9۰-۹]$/.test(str);
