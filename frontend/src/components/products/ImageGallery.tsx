@@ -1,34 +1,30 @@
 import Image from 'next/image'
+import Link from 'next/link' // <-- Import the Link component
 import React from 'react'
 
-const ImageGallery = () => {
-  const ImageArray = ["/1.jpg", "/2.jpg", "/3.jpg", "/4.jpg"]
+type image = { id: string, src: string }
+
+const ImageGallery = ({ slug, images }: { slug: string, images: Array<image> }) => {
+  // we'll just use the first image as the main one
+  const mainImage = images[0];
+
   return (
-    <>
-      <div className="flex flex-4 bg-cyan-100 flex-col" >
-        {/*mobile*/}
-        <div className='sm:hidden flex'>
-          <Image className='rounded-3xl' src="/1.jpg" alt="image" width={1000} height={1000} />
-        </div>
+    <div className="flex flex-[4] bg-cyan-100 flex-col p-2">
 
-        {/*desktop*/}
-        <div className='sm:block hidden'>
-          <div>
-            <Image className='rounded-3xl' src="/1.jpg" alt="image" width={1000} height={1000} />
-          </div>
+      {/* The link will point to a unique URL for that specific image */}
+      <Link href={`/products/${slug}/image/${mainImage.id}`}>
+        <Image className='rounded-3xl w-full h-auto object-cover aspect-square' src={mainImage.src} alt="image" width={1000} height={1000} />
+      </Link>
 
-          {/* light box div */}
-          <div className='flex flex-1 gap-3 m-2 mt-4'>
-            {ImageArray.map((e, i) => {
-              return <div key={i} className="flex-1">
-                <Image className="rounded-2xl" src={e} alt="image" width={1000} height={1000} />
-              </div>
-            })}
+      {/* Thumbnails - these are not links yet */}
+      <div className='flex flex-1 gap-3 m-2 mt-4'>
+        {images.map((image) => (
+          <div key={image.id} className="flex-1">
+            <Image className="rounded-2xl" src={image.src} alt="image" width={1000} height={1000} />
           </div>
-        </div >)
+        ))}
       </div>
-    </>
-
+    </div>
   )
 }
 

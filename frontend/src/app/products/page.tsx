@@ -3,11 +3,7 @@ import ProductFilter from '@/components/products/ProductFilter'
 import { type Category } from '@/lib/schemas/schemas'
 import React from 'react'
 
-
-
-type Props = {}
-
-const Products = (props: Props) => {
+const Products = () => {
 
   //TODO: get the list of products from backend
   const products = [...Array(2)]

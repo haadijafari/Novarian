@@ -7,7 +7,6 @@ import OtpTimer from './OtpTimer'
 import { otpSubmit } from '@/actions/auth/otpActions'
 
 type Props = { phoneNumber: string }
-otpSubmit
 
 const OtpPage = ({ phoneNumber }: Props) => {
 
