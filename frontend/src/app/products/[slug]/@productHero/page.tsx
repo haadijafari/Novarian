@@ -2,7 +2,6 @@ import React from 'react'
 import ImageGallery from '@/components/products/image-gallery'
 import { type image } from '@/lib/schemas/schemas'
 
-
 export default async function ProductHero({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
 
