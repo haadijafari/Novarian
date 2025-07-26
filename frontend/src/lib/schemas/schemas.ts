@@ -6,8 +6,6 @@ export const productSchema = z.object({
   price: z.number().positive(),
 });
 
-export type Product = z.infer<typeof productSchema>;
-
 export const cartItemSchema = z.object({
   productId: z.string().uuid("Invalid product ID format"),
   quantity: z.number().int().positive("Quantity must be a positive integer"),
@@ -18,8 +16,11 @@ export const cartItemSchema = z.object({
   image: z.string().url("Image must be a valid URL").optional(),
 });
 
+export type Product = z.infer<typeof productSchema>;
+
 export type CartItem = z.infer<typeof cartItemSchema>;
 export type Cart = Array<CartItem>
 
-
 export type Category = { name: string, Icon: string }
+
+export type image = { id: string, src: string }

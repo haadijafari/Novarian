@@ -1,16 +1,14 @@
-export default function ProductLayout({
-  children,
-  modal,
-}: {
-  children: React.ReactNode;
-  modal: React.ReactNode;
-}) {
-  return (
-    <>
-      {children}
+import { ReactNode } from 'react'
+export default function Layout({ children, modal, productHero }: { children: ReactNode, modal: ReactNode, productHero: ReactNode }) {
 
-      {/* This renders modal content on top */}
-      {modal}
-    </>
-  );
+  return <>
+    {children}
+    <div className='flex items-center justify-center min-h-screen w-screen bg-fuchsia-600 p-4'>
+      {productHero}
+    </div>
+    <div className='flex items-center justify-center min-h-screen w-screen bg-fuchsia-600 p-4'>
+    </div>
+
+    {modal}
+  </>
 }
