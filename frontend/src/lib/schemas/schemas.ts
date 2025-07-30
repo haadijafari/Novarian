@@ -24,3 +24,5 @@ export type Cart = Array<CartItem>
 export type Category = { name: string, Icon: string }
 
 export type image = { id: string, src: string }
+
+export type ratings = 0 | 1 | 2 | 3 | 4 | 5
