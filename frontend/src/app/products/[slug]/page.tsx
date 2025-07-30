@@ -12,8 +12,9 @@ export async function generateStaticParams() {
 }
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  //TODO slug isnt uesd here, ether use it or remove it, just remember to remove it from its parents too
   const { slug } = await params
-
+  console.log(slug)
   return (
     <div className='flex flex-col'>
       <div>should be under the above div</div>
