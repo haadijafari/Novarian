@@ -26,3 +26,13 @@ export type Category = { name: string, Icon: string }
 export type image = { id: string, src: string }
 
 export type rating = 0 | 1 | 2 | 3 | 4 | 5
+
+export type review = {
+  title: string,
+  discription: string,
+  rating: rating,
+  pictureURL?: string,
+  user: string,
+  showName: boolean,
+  purchased: boolean,
+}
