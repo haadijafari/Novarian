@@ -5,6 +5,7 @@ import { type image } from '@/lib/schemas/schemas'
 export default async function ProductHero({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
 
+  // TODO: fetch the product here
   // Simulate delay only once when slug changes (page load)
   await new Promise((res) => setTimeout(res, 3000))
 
