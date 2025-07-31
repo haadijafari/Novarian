@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // WARNING: remove the lorem picsum before production
+  images: {
+    remotePatterns: [new URL('https://picsum.photos/**')],
+  },
   async headers() {
     return [
       {
