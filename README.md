@@ -63,7 +63,7 @@ First install [uv package manager](https://docs.astral.sh/uv/getting-started/ins
 3. Start the frontend development server:
 
    ```bash
-   npm run dev
+   bun dev
    ```
 
 4. Access the frontend at: [http://localhost:3000](http://localhost:3000)
