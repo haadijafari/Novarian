@@ -153,8 +153,8 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.UserRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '5/hour',     # Anonymous users (not logged in)
-        'user': '10/hour',    # Authenticated users
+        'anon': '60/hour',     # Anonymous users (not logged in)
+        'user': '100/hour',    # Authenticated users
         'failed_logout': '10/hour',  # allow 10 failed logout attempts per hour per user/IP
         'register': '5/day',  # Custom throttle for register
         'login': '5/hour',     # Custom throttle for login
