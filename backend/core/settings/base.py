@@ -156,8 +156,8 @@ REST_FRAMEWORK = {
         'anon': '60/hour',     # Anonymous users (not logged in)
         'user': '100/hour',    # Authenticated users
         'failed_logout': '10/hour',  # allow 10 failed logout attempts per hour per user/IP
-        'register': '5/day',  # Custom throttle for register
-        'login': '5/hour',     # Custom throttle for login
+        'register': '15/day',  # Custom throttle for register
+        'login': '10/hour',     # Custom throttle for login
     },
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
