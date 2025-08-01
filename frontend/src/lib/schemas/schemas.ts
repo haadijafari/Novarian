@@ -33,6 +33,7 @@ export type review = {
   rating: rating,
   pictureURL?: string,
   user: string,
+  userIcon: string,
   showName: boolean,
   purchased: boolean,
 }

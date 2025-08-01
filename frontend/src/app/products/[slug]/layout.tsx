@@ -1,6 +1,5 @@
 import ProductAccordion from '@/components/products/productAccordion'
 import { ProductBreadCrumb } from '@/components/products/productBreadCrumb'
-import RatingStars from '@/components/products/rating-stars'
 import { ReactNode } from 'react'
 
 type Props = { children: ReactNode, modal: ReactNode, productHero: ReactNode, reviewSection: React.ReactNode }
@@ -18,7 +17,6 @@ export default function Layout({ children, modal, productHero, reviewSection }: 
       {reviewSection}
     </div>
 
-    <RatingStars value={5} />
     {modal}
   </>
 }

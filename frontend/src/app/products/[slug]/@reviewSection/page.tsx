@@ -1,4 +1,4 @@
-import ReviewCard from '@/components/products/reviewCard'
+import ReviewCard from '@/components/products/review-card/reviewCard'
 import { mockReviews } from './mockReviews'
 
 import React from 'react'

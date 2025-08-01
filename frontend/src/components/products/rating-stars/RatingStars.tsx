@@ -7,11 +7,12 @@ import "./style.css"
 type RatingProps = {
   scale?: number;
   value: rating;
+  className?: string,
   // If provided, the component becomes interactive and calls this function on change.
   setValue?: (newValue: rating) => void;
 }
 
-const Rating = ({ value, setValue, scale = 1 }: RatingProps) => {
+const Rating = ({ value, setValue, scale = 1, className }: RatingProps) => {
   // Interactivity depends on the setValue prop.
   const isInteractive = !!setValue;
 
@@ -51,7 +52,7 @@ const Rating = ({ value, setValue, scale = 1 }: RatingProps) => {
   return (
     <div
       dir="ltr"
-      className={`rating ${isInteractive ? 'rating-interactive' : ''} ${animate}`}
+      className={`rating ${isInteractive ? 'rating-interactive' : ''} ${animate} ${className}`}
       style={{
         '--active': '#FFED76',
         '--active-pale': 'rgba(255, 237, 118, .36)',
