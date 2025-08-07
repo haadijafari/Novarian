@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useLayoutEffect } from 'react'
 import { type rating } from '@/lib/schemas/schemas'
+import { getStarClassName } from '@/lib/utils'
 import "./style.css"
 
 type RatingProps = {
@@ -13,41 +14,29 @@ type RatingProps = {
 }
 
 const Rating = ({ value, setValue, scale = 1, className }: RatingProps) => {
-  // Interactivity depends on the setValue prop.
   const isInteractive = !!setValue;
+  const [prevValue, setPrevValue] = useState<rating | null>(null);
+  const [animate, setAnimate] = useState<'animate-right' | 'animate-left' | 'none'>('none');
+  const starRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const animationRef = useRef<HTMLDivElement | null>(null);
 
-  // tracks the previous value for the animation.
-  const [prevValue, setPrevValue] = useState<rating | null>(null)
-  const [animate, setAnimate] = useState<'animate-right' | 'animate-left' | 'none'>('none')
-
-  // Refs are only used for the interactive animation.
-  const starRefs = useRef<(HTMLLIElement | null)[]>([])
-  const animationRef = useRef<HTMLDivElement | null>(null)
-
-  // This effect calculates the animation position.
   useLayoutEffect(() => {
-    // It only runs if the component is interactive.
-    if (!isInteractive || !animationRef.current) return
-
-    const currentStarEl = starRefs.current[value - 1]
+    if (!isInteractive || !animationRef.current) return;
+    const currentStarEl = starRefs.current[value - 1];
     if (currentStarEl) {
-      const xPosition = currentStarEl.offsetLeft
-      animationRef.current.style.setProperty('--x', `${xPosition}px`)
+      const xPosition = currentStarEl.offsetLeft;
+      animationRef.current.style.setProperty('--x', `${xPosition}px`);
     }
-  }, [value, isInteractive])
+  }, [value, isInteractive]);
 
   const handleClick = (newRating: rating) => {
-    if (!isInteractive || animate !== 'none') return
-
-    const direction = newRating > value ? 'animate-right' : 'animate-left'
-    setAnimate(direction)
-    setPrevValue(value)
-
-    // Tell the parent component about the change.
+    if (!isInteractive || animate !== 'none') return;
+    const direction = newRating > value ? 'animate-right' : 'animate-left';
+    setAnimate(direction);
+    setPrevValue(value);
     setValue(newRating);
-
-    setTimeout(() => setAnimate('none'), 800)
-  }
+    setTimeout(() => setAnimate('none'), 800);
+  };
 
   return (
     <div
@@ -64,25 +53,14 @@ const Rating = ({ value, setValue, scale = 1, className }: RatingProps) => {
     >
       <ul>
         {[...Array(5)].map((_, i) => {
-          const ratingValue = (i + 1) as rating
-          let starClassName = ''
-
-          // Apply animation classes only in interactive mode.
-          if (isInteractive && animate !== 'none') {
-            if (value === ratingValue) starClassName = 'move-to'
-            else if (prevValue === ratingValue) starClassName = 'move-from'
-          } else if (value === ratingValue) {
-            // The 'current' class applies in both modes.
-            starClassName = 'current'
-          } else if (value > ratingValue) {
-            starClassName = 'active'
-          }
+          const ratingValue = (i + 1) as rating;
+          const starClassName = getStarClassName(isInteractive, animate, ratingValue, value, prevValue);
 
           return (
             <li
               key={i}
               ref={(el) => {
-                if (isInteractive) starRefs.current[i] = el
+                if (isInteractive) starRefs.current[i] = el;
               }}
               className={starClassName}
               onClick={() => handleClick(ratingValue)}
@@ -94,12 +72,10 @@ const Rating = ({ value, setValue, scale = 1, className }: RatingProps) => {
                 />
               </svg>
             </li>
-          )
+          );
         })}
       </ul>
 
-      {/* This div is only for the interactive animation */}
-      {/* A moving star that has opacity 0 except when its animated to move when the above div is hidden */}
       {isInteractive && (
         <div ref={animationRef}>
           <span>
@@ -113,7 +89,7 @@ const Rating = ({ value, setValue, scale = 1, className }: RatingProps) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Rating
+export default Rating;
