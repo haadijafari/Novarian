@@ -74,6 +74,8 @@ const Rating = ({ value, setValue, scale = 1, className }: RatingProps) => {
           } else if (value === ratingValue) {
             // The 'current' class applies in both modes.
             starClassName = 'current'
+          } else if (value > ratingValue) {
+            starClassName = 'active'
           }
 
           return (

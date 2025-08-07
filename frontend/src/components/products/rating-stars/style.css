@@ -110,6 +110,16 @@
   fill: rgba(0, 0, 0, 0.2);
 }
 
+.rating ul li.active svg {
+  color: var(--active);
+  fill: rgba(0, 0, 0, 0.2);
+}
+
+.rating ul li.active::before,
+.rating ul li.active::after {
+  display: none;
+}
+
 /* --- INTERACTIVE-ONLY STYLES --- */
 
 .rating-interactive ul li {
