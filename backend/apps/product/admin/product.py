@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from apps.product.models import Product, ProductCategory, ProductImage
+from apps.product.models import Product, ProductImage
 
 
 class ProductImageInline(admin.TabularInline):
@@ -49,8 +49,3 @@ class ProductImageAdmin(admin.ModelAdmin):
             ProductImage.objects.filter(product=obj.product, is_primary=True).exclude(pk=obj.pk).update(
                 is_primary=False)
         super().save_model(request, obj, form, change)
-
-
-@admin.register(ProductCategory)
-class ProductCategoryAdmin(admin.ModelAdmin):
-    pass
