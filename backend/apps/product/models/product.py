@@ -2,7 +2,6 @@ import uuid
 from decimal import Decimal
 
 from ckeditor.fields import RichTextField
-from colorfield.fields import ColorField
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
@@ -13,27 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from djmoney.models.fields import MoneyField
 from taggit.managers import TaggableManager
 
-
-class ActiveCategoryManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(is_active=True)
-
-
-class ProductCategory(models.Model):
-    title = models.CharField(_('Title'), max_length=300, db_index=True)
-    img = models.ImageField(_('Image'), blank=True, null=True)
-    color = ColorField(default='#FFFFFF')
-    is_active = models.BooleanField(_('Is Active'), default=False, db_index=True)
-
-    objects = models.Manager()
-    active = ActiveCategoryManager()
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = _('Category')
-        verbose_name_plural = _('Categories')
+from apps.product.models.category import ProductCategory
 
 
 class ActiveProductManager(models.Manager):
@@ -50,6 +29,7 @@ class Product(models.Model):
     quantity = models.IntegerField(_('Quantity'), default=0,
                                    validators=[MinValueValidator(0)], )
     rating = models.DecimalField(
+        verbose_name=_('Rating'),
         max_digits=2, decimal_places=1, null=True, blank=True,
         validators=[MinValueValidator(Decimal('0.0')), MaxValueValidator(Decimal('5.0'))],
     )
