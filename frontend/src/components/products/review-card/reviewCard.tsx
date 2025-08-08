@@ -17,13 +17,12 @@ type ReviewCardProps = {
 const ReviewCard = ({ review, className, ...rest }: ReviewCardProps) => {
   return (
     <div
-      dir="rtl"
-      className={`flex flex-col max-w-[400px] p-2 min-w-[360px] bg-surface rounded-xl overflow-hidden shadow-md ${className || ''}`}
+      className={`flex flex-col bg-surface-sharp rounded-xl w-full overflow-y-hidden shadow-md ${className || ''}`}
       {...rest}
     >
 
       {/* --- Product Image Section --- */}
-      {review.pictureURL && (
+      {review.pictureURL ? (
         <div className="flex-1 aspect-square relative">
           <Image
             alt={`Photo for review by ${review.user}`}
@@ -34,13 +33,13 @@ const ReviewCard = ({ review, className, ...rest }: ReviewCardProps) => {
 
           <div
             className="
-              absolute 
-              bottom-0 
-              start-4 
-              translate-y-1/2 
-              h-12 w-12 
-              rounded-full 
-              border-2 
+              absolute
+              bottom-0
+              start-4
+              translate-y-1/2
+              h-12 w-12
+              rounded-full
+              border-2
               border-surface
               overflow-hidden
             "
@@ -54,8 +53,24 @@ const ReviewCard = ({ review, className, ...rest }: ReviewCardProps) => {
             />
           </div>
         </div>
-      )}
-
+      ) : <div className='
+              -mb-6
+              mr-4
+              mt-2
+              start-4
+              h-12 w-12
+              rounded-full
+              border-2
+              border-surface
+              overflow-hidden'>
+        <Image
+          className='rounded-full'
+          alt={`Avatar of ${review.user}`}
+          src={review.userIcon}
+          width={48}
+          height={48}
+        />
+      </div>}
       {/* --- User Info & Rating Row --- */}
       <div className="flex items-center justify-between px-4 pt-8">
         <div className='flex-1 min-w-0'>
