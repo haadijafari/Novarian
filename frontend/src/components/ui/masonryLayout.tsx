@@ -15,6 +15,7 @@ type Props = {
   columnCount?: number,
   gap?: number,
   className?: string,
+  showLongestColumn?: boolean
 }
 
 /**
@@ -34,6 +35,7 @@ const MasonryLayout = ({
   columnCount = 3,
   gap = 16,
   className,
+  showLongestColumn = true
 }: Props) => {
   // A ref to get the DOM node of the main container, used for measuring its width.
   const containerRef = useRef<HTMLDivElement>(null);
@@ -119,19 +121,19 @@ const MasonryLayout = ({
     });
 
     // The total container height is the height of the tallest column.
-    const tallestColumnHeight = Math.max(...columnHeights, 0);
+    const columnHeight = showLongestColumn ? Math.max(...columnHeights, 0) : Math.min(...columnHeights);
 
     return {
       positions: calculatedPositions,
       // Subtract the final gap to prevent extra space at the bottom.
-      containerHeight: tallestColumnHeight > 0 ? tallestColumnHeight - gap : 0,
+      containerHeight: columnHeight > 0 ? columnHeight - gap : 0,
     };
   }, [children, containerWidth, columnCount, gap, itemHeights]); // Dependencies for the useMemo hook.
 
   return (
     <motion.div
       ref={containerRef}
-      className={`relative ${className || ''}`}
+      className={`relative overflow-hidden ${className || ''}`}
       // This tells Framer Motion to animate the height property whenever it changes.
       animate={{ height: containerHeight || 'auto' }}
       transition={{ type: 'spring', stiffness: 200, damping: 30 }}
