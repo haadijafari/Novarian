@@ -3,8 +3,8 @@ import {
   DialogTitle,
   DialogDescription
 } from "@/components/ui/dialog";
+import { ModalController } from "@/components/ui/modalController";
 import Image from "next/image";
-import { ModalController } from "./modal-controller";
 
 export default async function ImageModal({ params }: { params: Promise<{ img: string }> }) {
   const { img } = await params
