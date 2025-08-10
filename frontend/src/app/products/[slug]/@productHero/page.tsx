@@ -7,7 +7,7 @@ export default async function ProductHero({ params }: { params: Promise<{ slug: 
 
   // TODO: fetch the product here
   // Simulate delay only once when slug changes (page load)
-  await new Promise((res) => setTimeout(res, 3000))
+  await new Promise((res) => setTimeout(res, 100))
 
   const images: Array<image> = [
     { id: '1', src: '/1.jpg' },
