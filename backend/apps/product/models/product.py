@@ -26,6 +26,11 @@ class Product(models.Model):
     category = models.ManyToManyField(ProductCategory, verbose_name=_('Category'),
                                       related_name='product_categories', blank=True)
     price = MoneyField(_('Price'), max_digits=14, decimal_places=2, default_currency='IRR')
+    has_discount = models.BooleanField(_('Has Discount'), default=False)
+    discount_percentage = models.IntegerField(_('Discount Percentage'),
+                                              default=0, null=False, blank=False,
+                                              validators=[MinValueValidator(0), MaxValueValidator(99)],
+                                              help_text=_('False for disabling the discount on this product'))
     quantity = models.IntegerField(_('Quantity'), default=0,
                                    validators=[MinValueValidator(0)], )
     rating = models.DecimalField(
