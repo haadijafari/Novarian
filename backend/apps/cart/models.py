@@ -3,7 +3,8 @@ from decimal import Decimal
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db import models, transaction
-from django.db.models import Sum, F
+from django.db.models import Sum, F, Case, When, DecimalField
+from django.db.models.functions import Cast
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from djmoney.money import Money
@@ -40,6 +41,25 @@ class Cart(models.Model):
     def get_total_price(self):
         result = self.items.aggregate(
             total=Sum(F('product__price') * F('quantity'))
+        )
+        return result['total'] or Money(0, 'IRR')
+
+    def get_total_price_with_discount(self):
+        result = self.items.aggregate(
+            total=Sum(
+                Case(
+                    When(
+                        product__has_discount=True,
+                        then=F('product__price') * (
+                                Decimal('1') - (
+                                    Cast(F('product__discount_percentage'), DecimalField()) / Decimal('100'))
+                        )
+                    ),
+                    default=F('product__price'),
+                    output_field=DecimalField()
+                ) * F('quantity'),
+                output_field=DecimalField()
+            )
         )
         return result['total'] or Money(0, 'IRR')
 
@@ -112,11 +132,18 @@ class CartItem(models.Model):
     def total_price(self):
         return self.product.price * self.quantity
 
+    @property
+    def total_price_with_discount(self):
+        if self.product.has_discount and self.product.discount_percentage:
+            discount_factor = Decimal('1') - (Decimal(self.product.discount_percentage) / Decimal('100'))
+            return self.product.price * self.quantity * discount_factor
+        return self.total_price
+
     def save(self, *args, **kwargs):
         with transaction.atomic():
             if not self.product.is_active:
                 raise ValidationError("Cannot add inactive product to cart.")
-            if not self.product.quantity < 1:
+            if self.product.quantity < 1:
                 raise ValidationError("Cannot add non-available items to cart.")
             if self.quantity < 1:
                 raise ValidationError("Quantity must be at least 1.")
