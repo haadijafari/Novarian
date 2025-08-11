@@ -14,7 +14,7 @@ export default async function ImageModal({ params }: { params: Promise<{ img: st
   return (
     <ModalController>
       <DialogContent className="max-w-5xl w-auto p-0 bg-transparent border-0">
-        {/* Add the hidden title and description for screen readers ♿ */}
+        {/* Add the hidden title and description for screen readers */}
         <DialogTitle className="sr-only">{altText}</DialogTitle>
         <DialogDescription className="sr-only">
           A larger, more detailed view of the product.

@@ -2,9 +2,9 @@ import ProductAccordion from '@/components/products/productAccordion'
 import { ProductBreadCrumb } from '@/components/products/productBreadCrumb'
 import { ReactNode } from 'react'
 
-type Props = { children: ReactNode, lightBox: ReactNode, productHero: ReactNode, reviewSection: React.ReactNode }
+type Props = { children: ReactNode, modals: ReactNode, productHero: ReactNode, reviewSection: React.ReactNode }
 
-export default function Layout({ children, lightBox, productHero, reviewSection }: Props) {
+export default function Layout({ children, modals, productHero, reviewSection }: Props) {
 
   return <>
     {children}
@@ -17,6 +17,6 @@ export default function Layout({ children, lightBox, productHero, reviewSection 
       {reviewSection}
     </div>
 
-    {lightBox}
+    {modals}
   </>
 }
