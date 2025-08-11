@@ -18,9 +18,11 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
+    image_url = serializers.ImageField(source='image')
+
     class Meta:
         model = ProductImage
-        fields = ['id', 'image', 'is_primary']
+        fields = ['id', 'image_url', 'is_primary']
 
 
 class ProductSerializer(TaggitSerializer, WritableNestedModelSerializer):
