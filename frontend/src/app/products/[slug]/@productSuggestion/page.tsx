@@ -20,7 +20,7 @@ export default function CarouselSpacing() {
         {products.map((product, index) => (
           <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/4">
             <div className="p-1">
-              <ProductCard product={product} />
+              <ProductCard button={<div className="bg-surface-accent h-2/3 w-[80%] rounded-md flex items-center justify-center" >خرید</div>} product={product} />
             </div>
           </CarouselItem>
         ))}

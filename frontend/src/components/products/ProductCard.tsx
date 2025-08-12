@@ -1,10 +1,10 @@
 import { type Product } from '@/lib/schemas/schemas'
 import Image from 'next/image'
-import React from 'react'
+import React, { type JSX } from 'react'
 
-type Props = { product: Product, className?: string } & React.HTMLAttributes<HTMLDivElement>
+type Props = { product: Product, button: JSX.Element, className?: string } & React.HTMLAttributes<HTMLDivElement>
 
-const ProductCard = ({ product, className, ...rest }: Props) => {
+const ProductCard = ({ product, button, className, ...rest }: Props) => {
   const { image_url, id } = product.primary_image
   const r = 10
 
@@ -22,6 +22,7 @@ const ProductCard = ({ product, className, ...rest }: Props) => {
           style={{ borderRadius: `${r}px 0 0 0` }}
           className={`flex items-center justify-center w-[100px] h-[20%] bg-surface absolute bottom-0 right-0`}
         >
+          {button}
 
           <svg className={`absolute right-0 bottom-full fill-surface translate-y-[0px] rotate-y-180`} width={r} height={r}>
             <path d={`M0,0 L0,${r} L${r},${r} A${r},${r} 0 0,1 0,0 Z`} />
