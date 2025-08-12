@@ -1,12 +1,13 @@
 import Dropdown from '../ui/Dropdown';
 import { Bell, Gift, HeartHandshake } from 'lucide-react';
+import { NotificationBell } from './NotificationBell';
 
 const NotificationsDropdown = () => {
   return (
     <Dropdown
       button={
         <p className="cursor-pointer">
-          <Bell className="h-4 w-4 text-gray-600 dark:text-white" />
+          <NotificationBell className="h-4 w-4 text-gray-600 dark:text-white" />
         </p>
       }
       animation="origin-[65%_0%] md:origin-top-right transition-all duration-300 ease-in-out"
