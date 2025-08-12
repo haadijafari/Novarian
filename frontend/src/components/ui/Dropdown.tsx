@@ -1,3 +1,5 @@
+'use client'
+
 import { JSX, useEffect, useRef, useState, RefObject, SetStateAction, Dispatch, ReactNode } from "react";
 
 function useOutsideAlerter(
