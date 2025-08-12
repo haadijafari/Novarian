@@ -24,7 +24,7 @@ const SPRING_OPTIONS = {
   damping: 50,
 };
 
-export const ImageCarousel = ({ images, imgIndex, setImgIndex, slug }: Props) => {
+export const HeroCarousel = ({ images, imgIndex, setImgIndex, slug }: Props) => {
   console.log("hi rg")
   const onDragEnd = () => {
     const X = dragX.get()
@@ -76,4 +76,4 @@ export const ImageCarousel = ({ images, imgIndex, setImgIndex, slug }: Props) =>
   )
 }
 
-export default ImageCarousel
+export default HeroCarousel

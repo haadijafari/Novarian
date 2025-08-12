@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
-import ImageCarousel from './ImageCarousel'
+import HeroCarousel from './HeroCarousel'
 import DesktopExtras from './desktopExtras'
 import { type image } from '@/lib/schemas/schemas'
 import { useMediaQuery } from '@/lib/useMediaQuery'
@@ -37,7 +37,7 @@ const ImageGallery = ({ slug, images }: { slug: string, images: Array<image> }) 
   return (
     <div dir='ltr'
       className='flex flex-[4] bg-cyan-100 flex-col p-2 relative h-full w-full overflow-x-hidden rounded-3xl'>
-      <ImageCarousel images={images} setImgIndex={setImgIndex} imgIndex={imgIndex} slug={slug} />
+      <HeroCarousel images={images} setImgIndex={setImgIndex} imgIndex={imgIndex} slug={slug} />
       {isMobile ?
         <MobileExtras numImages={images.length} setImgIndex={setImgIndex} imgIndex={imgIndex} />
         :
