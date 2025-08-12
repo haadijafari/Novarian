@@ -12,22 +12,22 @@ const ProductCard = ({ product, className, ...rest }: Props) => {
   return (
     <>
       <div
-        className={`bg-center bg-cover rounded-[${r}px] rounded-bl-[0] relative overflow-hidden ${className}`}
+        className={`bg-center bg-cover rounded-[${r}px] rounded-br-[0] relative overflow-hidden ${className}`}
         {...rest}
       >
         <Image
           width={1000} height={1000} src={image_url} alt={`image ${id}`} />
 
         <div
-          style={{ borderRadius: `0 ${r}px 0 0` }}
-          className={`flex items-center justify-center w-[100px] h-[20%] bg-surface absolute bottom-0 left-0`}
+          style={{ borderRadius: `${r}px 0 0 0` }}
+          className={`flex items-center justify-center w-[100px] h-[20%] bg-surface absolute bottom-0 right-0`}
         >
 
-          <svg className={`absolute left-0 bottom-full fill-surface translate-y-[0px]`} width={r} height={r}>
+          <svg className={`absolute right-0 bottom-full fill-surface translate-y-[0px] rotate-y-180`} width={r} height={r}>
             <path d={`M0,0 L0,${r} L${r},${r} A${r},${r} 0 0,1 0,0 Z`} />
           </svg>
 
-          <svg className={`absolute left-full bottom-0 fill-surface -translate-x-[0px]`} width={r} height={r}>
+          <svg className={`absolute right-full bottom-0 fill-surface -translate-x-[0px] rotate-y-180`} width={r} height={r}>
             <path d={`M0,0 L0,${r} L${r},${r} A${r},${r} 0 0,1 0,0 Z`} />
           </svg>
 
