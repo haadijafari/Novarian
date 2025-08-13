@@ -1,5 +1,4 @@
-from rest_framework.permissions import BasePermission
-from rest_framework.permissions import SAFE_METHODS
+from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 
 class IsSuperUser(BasePermission):
@@ -59,3 +58,32 @@ class QuestionAnswerPermission(BasePermission):
             return True
         # Other methods only for admins
         return request.user.is_superuser or request.user.is_staff
+
+
+class ReviewPermission(BasePermission):
+    """
+    Any authenticated user can create a review.
+    Users can edit/delete their own review.
+    Staff/admin can edit/delete any review.
+    Safe methods (GET, HEAD, OPTIONS) allowed for everyone.
+    """
+
+    def has_permission(self, request, view):
+        # Allow GET/HEAD/OPTIONS for everyone
+        if request.method in SAFE_METHODS:
+            return True
+        # Any authenticated user can POST a review
+        if request.method == 'POST':
+            return request.user and request.user.is_authenticated
+        # Other methods (PUT, PATCH, DELETE) will check object permissions
+        return request.user and request.user.is_authenticated
+
+    def has_object_permission(self, request, view, obj):
+        # Allow GET/HEAD/OPTIONS for everyone
+        if request.method in SAFE_METHODS:
+            return True
+        # Staff/admin can edit/delete any review
+        if request.user.is_staff or request.user.is_superuser:
+            return True
+        # Regular user can edit/delete only their own review
+        return obj.user == request.user
