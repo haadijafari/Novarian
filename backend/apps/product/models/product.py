@@ -10,6 +10,7 @@ from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from djmoney.models.fields import MoneyField
+from djmoney.money import Money
 from taggit.managers import TaggableManager
 
 from apps.product.models.category import ProductCategory
@@ -79,6 +80,28 @@ class Product(models.Model):
     def delete(self, using=None, keep_parents=False):
         self.is_active = False
         self.save()
+
+    def get_similar_products(self, limit=5):
+        """
+        Returns a queryset of similar products based on category, tags, and price range.
+        """
+        # Get categories and tags of this product
+        category_ids = self.category.values_list('id', flat=True)
+        tag_names = self.tags.names()  # using django-taggit
+
+        # Price range: 1_000_000 Margin
+        price_margin = Decimal('1000000')
+        min_price = Money(self.price.amount - price_margin, self.price.currency)
+        max_price = Money(self.price.amount + price_margin, self.price.currency)
+
+        # Query similar products
+        return Product.active.filter(
+            Q(category__in=self.category.all()) |
+            Q(tags__name__in=self.tags.names())
+        ).exclude(id=self.id).filter(
+            price__gte=min_price,
+            price__lte=max_price
+        ).distinct()[:limit]
 
 
 class ProductImage(models.Model):

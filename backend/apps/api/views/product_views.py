@@ -1,6 +1,10 @@
+import hashlib
+
 from django.core.cache import cache
 from django.db.models import F
 from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from apps.api.serializers.product_serializers import ProductSerializer, CategorySerializer
 from apps.api.serializers.question_answer_serializers import QuestionAnswerSerializer
@@ -20,10 +24,16 @@ class ProductViewSet(viewsets.ModelViewSet):
         product = self.get_object()
 
         # Get visitor IP
-        ip = request.META.get('REMOTE_ADDR')
+        ip = request.META.get('HTTP_X_FORWARDED_FOR')
+        if ip:
+            ip = ip.split(',')[0]  # first IP in the list
+        else:
+            ip = request.META.get('REMOTE_ADDR')
 
+        # Hash ip for privacy
+        ip_hash = hashlib.sha256(ip.encode()).hexdigest()
         # Unique cache key per product per IP
-        cache_key = f'product_{product.id}_viewed_by_{ip}'
+        cache_key = f'product_{product.id}_viewed_by_{ip_hash}'
 
         # Only increment if this IP hasn't viewed in the last 24 hours
         if not cache.get(cache_key):
@@ -35,6 +45,13 @@ class ProductViewSet(viewsets.ModelViewSet):
         product.refresh_from_db()
 
         serializer = self.get_serializer(product)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['get'])
+    def similar(self, request, pk=None):
+        product = self.get_object()
+        similar_products = product.get_similar_products(limit=10)
+        serializer = self.get_serializer(similar_products, many=True)
         return Response(serializer.data)
 
 
