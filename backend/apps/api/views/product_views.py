@@ -3,6 +3,7 @@ import hashlib
 from django.core.cache import cache
 from django.db.models import F
 from django.db.models import Q, Count
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rapidfuzz import fuzz
 from rest_framework import viewsets
 from rest_framework.decorators import action
@@ -22,6 +23,54 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     permission_classes = [ProductPermission]
 
+    @extend_schema(
+        responses=ProductSerializer(many=True),
+        description="List all active products.",
+        tags=["Products"],
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
+    @extend_schema(
+        request=ProductSerializer,
+        responses=ProductSerializer,
+        description="Create a new product.",
+        tags=["Products"],
+    )
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
+
+    @extend_schema(
+        request=ProductSerializer,
+        responses=ProductSerializer,
+        description="Update an existing product (full update).",
+        tags=["Products"],
+    )
+    def update(self, request, *args, **kwargs):
+        return super().update(request, *args, **kwargs)
+
+    @extend_schema(
+        request=ProductSerializer,
+        responses=ProductSerializer,
+        description="Update an existing product (partial update).",
+        tags=["Products"],
+    )
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
+
+    @extend_schema(
+        responses=None,
+        description="Delete a product (soft delete).",
+        tags=["Products"],
+    )
+    def destroy(self, request, *args, **kwargs):
+        return super().destroy(request, *args, **kwargs)
+
+    @extend_schema(
+        responses=ProductSerializer,
+        description="Retrieve a single product and increment its view count.",
+        tags=["Products"],
+    )
     def retrieve(self, request, *args, **kwargs):
         product = self.get_object()
 
@@ -49,6 +98,11 @@ class ProductViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(product)
         return Response(serializer.data)
 
+    @extend_schema(
+        responses=ProductSerializer(many=True),
+        description="Get similar products based on category and tags.",
+        tags=["Products"],
+    )
     @action(detail=True, methods=['get'])
     def similar(self, request, pk=None):
         product = self.get_object()
@@ -56,6 +110,17 @@ class ProductViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(similar_products, many=True)
         return Response(serializer.data)
 
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(name='search', description='Search term for title, short_description, description', required=False, type=str),
+            OpenApiParameter(name='category', description='Category ID or name', required=False, type=str),
+            OpenApiParameter(name='tags', description='Filter by multiple tags (use multiple tags params)', required=False, type=str, many=True),
+            OpenApiParameter(name='ordering', description='Ordering field: -rating, rating, -price_amount, price_amount, -published_date, published_date', required=False, type=str),
+        ],
+        responses=ProductSerializer(many=True),
+        description="Search for products with optional category, tags, and ordering.",
+        tags=["Products"],
+    )
     @action(detail=False, methods=['get'])
     def search(self, request):
         query = request.query_params.get('search', '').strip()
