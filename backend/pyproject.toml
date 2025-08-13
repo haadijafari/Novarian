@@ -26,6 +26,7 @@ dependencies = [
     "markdown>=3.8.2", # Markdown support for the browsable API.
     "psycopg[binary]>=3.2.9",
     "python-dotenv>=1.1.1",
+    "rapidfuzz>=3.13.0",
     "social-auth-app-django>=5.5.1",
     "whitenoise>=6.9.0",
 ]

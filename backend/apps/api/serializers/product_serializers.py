@@ -39,6 +39,8 @@ class ProductSerializer(TaggitSerializer, WritableNestedModelSerializer):
         fields = [
             'id',
             'title',
+            'rating',
+            'view_count',
             'slug',
             'category',
             'price',
