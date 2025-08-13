@@ -1,6 +1,7 @@
 # ==================================
 # General & Global Ignores
 # ==================================
+media/
 
 # Environment variables
 .env*
