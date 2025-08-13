@@ -5,12 +5,12 @@ from ckeditor.fields import RichTextField
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from django.db.models import Q
+from django.db.models import Count, Q, Value
+from django.db.models.functions import Coalesce
 from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from djmoney.models.fields import MoneyField
-from djmoney.money import Money
 from taggit.managers import TaggableManager
 
 from apps.product.models.category import ProductCategory
@@ -83,25 +83,29 @@ class Product(models.Model):
 
     def get_similar_products(self, limit=5):
         """
-        Returns a queryset of similar products based on category, tags, and price range.
+        Returns a queryset of similar products:
+        - Products from the same category
+        - Sorted by rating first, then number of shared tags
+        - Excludes the current product
         """
-        # Get categories and tags of this product
-        category_ids = self.category.values_list('id', flat=True)
-        tag_names = self.tags.names()  # using django-taggit
+        tag_names = self.tags.names()
 
-        # Price range: 1_000_000 Margin
-        price_margin = Decimal('1000000')
-        min_price = Money(self.price.amount - price_margin, self.price.currency)
-        max_price = Money(self.price.amount + price_margin, self.price.currency)
+        # Base queryset: products in the same category, exclude current
+        qs = Product.active.filter(
+            category__in=self.category.all()
+        ).exclude(id=self.id)
 
-        # Query similar products
-        return Product.active.filter(
-            Q(category__in=self.category.all()) |
-            Q(tags__name__in=self.tags.names())
-        ).exclude(id=self.id).filter(
-            price__gte=min_price,
-            price__lte=max_price
-        ).distinct()[:limit]
+        # Annotate number of shared tags if tags exist
+        if tag_names:
+            qs = qs.annotate(
+                common_tags=Coalesce(Count('tags', filter=Q(tags__name__in=tag_names)), Value(0))
+            )
+            # Order by rating descending, then shared tags, then newest
+            qs = qs.order_by('-rating', '-common_tags', '-published_date')
+        else:
+            qs = qs.order_by('-rating', '-published_date')
+
+        return qs.distinct()[:limit]
 
 
 class ProductImage(models.Model):
