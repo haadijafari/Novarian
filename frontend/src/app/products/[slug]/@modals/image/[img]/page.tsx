@@ -4,11 +4,22 @@ import {
   DialogDescription
 } from "@/components/ui/dialog";
 import { ModalController } from "@/components/ui/modalController";
-import Image from "next/image";
+import { type image } from '@/lib/schemas/schemas'
+import ImageGallery from '@/components/products/image-gallery'
 
 export default async function ImageModal({ params }: { params: Promise<{ img: string }> }) {
+  // TODO: fetch the product here
+  // Simulate delay only once when slug changes (page load)
+  await new Promise((res) => setTimeout(res, 100))
+
+  const images: Array<image> = [
+    { id: '1', src: '/1.jpg' },
+    { id: '2', src: '/2.jpg' },
+    { id: '3', src: '/3.jpg' },
+    { id: '4', src: '/4.jpg' },
+  ]
+
   const { img } = await params
-  const imageSrc = `/${img}.jpg`;
   const altText = `Enlarged view of product image ${img}`;
 
   return (
@@ -19,14 +30,7 @@ export default async function ImageModal({ params }: { params: Promise<{ img: st
         <DialogDescription className="sr-only">
           A larger, more detailed view of the product.
         </DialogDescription>
-
-        <Image
-          src={imageSrc}
-          alt={altText}
-          width={1800}
-          height={1200}
-          className="w-full h-auto"
-        />
+        <ImageGallery className='flex-[4]' images={images} />
       </DialogContent>
     </ModalController>
   );

@@ -10,7 +10,7 @@ type Props = {
 const MobileExtras = ({ imgIndex, setImgIndex, numImages }: Props) => {
 
   return (
-    <div className='absolute flex justify-center w-full gap-1 bottom-2'>
+    <div className='md:hidden flex absolute justify-center w-full gap-1 bottom-2'>
       {[...Array(numImages)].map((_, idx) => {
         return <button
           className={`h-3 w-3 rounded-full bg-black ${imgIndex == idx && "bg-white w-8"} duration-300 ease-in-out transition-all`}

@@ -1,50 +1,118 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
-import HeroCarousel from './HeroCarousel'
+import { useTransitionRouter } from 'next-view-transitions'
+import { ImageCarousel } from './ImageCarousel'
 import DesktopExtras from './desktopExtras'
-import { type image } from '@/lib/schemas/schemas'
-import { useMediaQuery } from '@/lib/useMediaQuery'
 import MobileExtras from './mobileExtras'
+import { useSyncedImageIndex } from '@/lib/useSyncedImageIndex'
+import { type image } from '@/lib/schemas/schemas'
+import { cn } from '@/lib/utils'
 
-const ImageGallery = ({ slug, images }: { slug: string, images: Array<image> }) => {
-  // use useSearchParams to get the initial state on first load
-  const searchParams = useSearchParams()
-  const isMobile = useMediaQuery("(width < 768px)")
+// Props for the basic gallery with NO links
+type ImageGalleryBaseProps = {
+  slug?: never
+  images: Array<image>
+  className?: string
+}
 
-  const getInitialIndex = () => {
-    const param = searchParams.get('imgIndex')
-    if (param) {
-      const index = parseInt(param, 10)
-      if (!isNaN(index) && index >= 0 && index < images.length) {
-        return index
-      }
+// Props for the gallery WITH links
+type ImageGalleryWithLinksProps = {
+  slug: string
+  images: Array<image>
+  className?: string
+}
+
+type Props = ImageGalleryBaseProps | ImageGalleryWithLinksProps
+
+// A type guard function to check which mode the component is in
+function isImageGalleryWithLinks(props: Props): props is ImageGalleryWithLinksProps {
+  return typeof props.slug === 'string'
+}
+
+export const ProductImageGallery = (props: Props) => {
+  const { images, className } = props
+
+  const [imgIndex, setImgIndex] = useSyncedImageIndex(images.length)
+  const router = useTransitionRouter()
+
+
+  // Conditionally create props for the child carousel
+  const carouselLinkProps = isImageGalleryWithLinks(props)
+    ? {
+      getHref: (image: image) => `/products/${props.slug}/image/${image.id}`,
+      onLinkClick: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        e.preventDefault()
+        router.push(href)
+      },
     }
-    return 0
-  }
-
-  const [imgIndex, setImgIndex] = useState(getInitialIndex)
-
-  // This effect uses the browser's History API for shallow routing
-  useEffect(() => {
-    // Construct the new URL
-    const newUrl = `${window.location.pathname}?imgIndex=${imgIndex}`
-    // Use replaceState to update the URL without a page reload or server re-render
-    window.history.replaceState(null, '', newUrl)
-  }, [imgIndex])
+    : {}
 
   return (
-    <div dir='ltr'
-      className='flex flex-[4] bg-cyan-100 flex-col p-2 relative h-full w-full overflow-x-hidden rounded-3xl'>
-      <HeroCarousel images={images} setImgIndex={setImgIndex} imgIndex={imgIndex} slug={slug} />
-      {isMobile ?
-        <MobileExtras numImages={images.length} setImgIndex={setImgIndex} imgIndex={imgIndex} />
-        :
-        <DesktopExtras images={images} setImgIndex={setImgIndex} />
-      }
+    <div
+      dir="ltr"
+      className={cn(
+        'flex flex-col p-2 relative h-full w-full overflow-x-hidden rounded-3xl',
+        className
+      )}
+    >
+      <ImageCarousel
+        images={images}
+        setImgIndex={setImgIndex}
+        imgIndex={imgIndex}
+        {...carouselLinkProps}
+      />
+
+      <MobileExtras
+        numImages={images.length}
+        setImgIndex={setImgIndex}
+        imgIndex={imgIndex}
+      />
+      <DesktopExtras
+        images={images}
+        setImgIndex={setImgIndex}
+      />
     </div>
   )
 }
+const pageAnimation = () => {
+  /* document.documentElement.animate(
+    [
+      {
+        opacity: 1,
+        scale: 1,
+        transform: "translateY(0)",
+      },
+      {
+        opacity: 0.5,
+        scale: 0.9,
+        transform: "translateY(-100px)",
+      },
+    ],
+    {
+      duration: 1000,
+      easing: "cubic-bezier(0.76, 0, 0.24, 1)",
+      fill: "forwards",
+      pseudoElement: "::view-transition-old(root)",
+    }
+  );
 
-export default ImageGallery
+  document.documentElement.animate(
+    [
+      {
+        transform: "translateY(100%)",
+      },
+      {
+        transform: "translateY(0)",
+      },
+    ],
+    {
+      duration: 1000,
+      easing: "cubic-bezier(0.76, 0, 0.24, 1)",
+      fill: "forwards",
+      pseudoElement: "::view-transition-new(root)",
+    }
+  ); */
+};
+
+export default ProductImageGallery
