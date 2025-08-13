@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-13 09:54+0330\n"
+"POT-Creation-Date: 2025-08-13 19:11+0330\n"
 "PO-Revision-Date: 2025-07-11 18:29+0200\n"
 "Last-Translator: Your Name <your.email@example.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
@@ -95,7 +95,8 @@ msgid "A success message indicating successful logout."
 msgstr "پیام موفقیت‌آمیز نشان‌دهنده خروج موفق."
 
 #: apps/api/serializers/auth_logout_serializers.py:17
-msgid "An error message indicating why the logout failed (e.g., invalid token)."
+msgid ""
+"An error message indicating why the logout failed (e.g., invalid token)."
 msgstr "پیام خطایی که دلیل عدم موفقیت خروج را نشان می‌دهد (مثلاً توکن نامعتبر)."
 
 #: apps/api/serializers/auth_register_serializers.py:21
@@ -212,7 +213,9 @@ msgstr "خروج با موفقیت انجام شد."
 
 #: apps/api/views/auth_logout_views.py:78
 msgid "Too many failed logout attempts, please try again later."
-msgstr "تعداد دفعات تلاش ناموفق برای خروج از سیستم زیاد است، لطفاً بعداً دوباره امتحان کنید."
+msgstr ""
+"تعداد دفعات تلاش ناموفق برای خروج از سیستم زیاد است، لطفاً بعداً دوباره امتحان "
+"کنید."
 
 #: apps/api/views/auth_logout_views.py:95
 msgid "Unexpected error occurred."
@@ -243,51 +246,53 @@ msgstr "رمز عبور با موفقیت بازنشانی شد."
 msgid "Cart Module"
 msgstr "ماژول سبد خرید"
 
-#: apps/cart/models.py:18 auths/user/models.py:93
+#: apps/cart/models.py:19 apps/product/models/review.py:15
+#: auths/user/models.py:93
 msgid "User"
 msgstr "کاربر"
 
-#: apps/cart/models.py:19
+#: apps/cart/models.py:20
 msgid "Paid Status"
 msgstr "وضعیت پرداخت"
 
-#: apps/cart/models.py:20
+#: apps/cart/models.py:21
 msgid "Deleted"
 msgstr "حذف شده"
 
-#: apps/cart/models.py:21 apps/product/models.py:63
+#: apps/cart/models.py:22 apps/product/models/product.py:50
+#: apps/product/models/question_answer.py:12 apps/product/models/review.py:35
 msgid "Created Date"
 msgstr "تاریخ ایجاد"
 
-#: apps/cart/models.py:22
+#: apps/cart/models.py:23
 msgid "Paid Date"
 msgstr "تاریخ پرداخت"
 
-#: apps/cart/models.py:23
+#: apps/cart/models.py:24
 msgid "Updated Date"
 msgstr "تاریخ به‌روزرسانی"
 
-#: apps/cart/models.py:32 apps/cart/models.py:97
+#: apps/cart/models.py:33 apps/cart/models.py:119
 msgid "Cart"
 msgstr "سبد خرید"
 
-#: apps/cart/models.py:33
+#: apps/cart/models.py:34
 msgid "Carts"
 msgstr "سبدهای خرید"
 
-#: apps/cart/models.py:98 apps/product/models.py:72
+#: apps/cart/models.py:120 apps/product/models/product.py:59
 msgid "Product"
 msgstr "محصول"
 
-#: apps/cart/models.py:100
+#: apps/cart/models.py:122
 msgid "Add to Cart Date"
 msgstr "تاریخ افزودن به سبد خرید"
 
-#: apps/cart/models.py:105
+#: apps/cart/models.py:127
 msgid "Cart Item"
 msgstr "قلم سبد خرید"
 
-#: apps/cart/models.py:106
+#: apps/cart/models.py:128
 msgid "Cart Items"
 msgstr "اقلام سبد خرید"
 
@@ -295,85 +300,173 @@ msgstr "اقلام سبد خرید"
 msgid "Product Module"
 msgstr "ماژول محصول"
 
-#: apps/product/models.py:23 apps/product/models.py:46
+#: apps/product/models/category.py:12 apps/product/models/product.py:26
 msgid "Title"
 msgstr "عنوان"
 
-#: apps/product/models.py:24 apps/product/models.py:100
+#: apps/product/models/category.py:13 apps/product/models/product.py:113
 msgid "Image"
 msgstr "تصویر"
 
-#: apps/product/models.py:26
+#: apps/product/models/category.py:15
 msgid "Is Active"
 msgstr "فعال است"
 
-#: apps/product/models.py:35 apps/product/models.py:47
+#: apps/product/models/category.py:24 apps/product/models/product.py:27
 msgid "Category"
 msgstr "دسته بندی"
 
-#: apps/product/models.py:36
+#: apps/product/models/category.py:25
 msgid "Categories"
 msgstr "دسته بندی ها"
 
-#: apps/product/models.py:49
+#: apps/product/models/product.py:29
 msgid "Price"
 msgstr "قیمت"
 
-#: apps/product/models.py:50
+#: apps/product/models/product.py:30
+msgid "Has Discount"
+msgstr "تخفیف دارد"
+
+#: apps/product/models/product.py:31
+msgid "Discount Percentage"
+msgstr "درصد تخفیف"
+
+#: apps/product/models/product.py:34
+msgid "False for disabling the discount on this product"
+msgstr "برای غیرفعال کردن تخفیف این محصول، False انتخاب کنید"
+
+#: apps/product/models/product.py:35
 msgid "Quantity"
 msgstr "تعداد"
 
-#: apps/product/models.py:56
+#: apps/product/models/product.py:38 apps/product/models/review.py:21
+msgid "Rating"
+msgstr "امتیاز"
+
+#: apps/product/models/product.py:42
 msgid "Tags"
 msgstr "برچسب ها"
 
-#: apps/product/models.py:57
+#: apps/product/models/product.py:43
 msgid "Short Description"
 msgstr "توضیحات کوتاه"
 
-#: apps/product/models.py:58
+#: apps/product/models/product.py:44
 msgid "Full Description"
 msgstr "توضیحات کامل"
 
-#: apps/product/models.py:59
+#: apps/product/models/product.py:45
 msgid "Slug"
 msgstr "اسلاگ"
 
-#: apps/product/models.py:60
+#: apps/product/models/product.py:46
+msgid "View Count"
+msgstr "تعداد بازدید"
+
+#: apps/product/models/product.py:47 apps/product/models/question_answer.py:11
+#: apps/product/models/review.py:28
 msgid "Active Status"
 msgstr "وضعیت فعال"
 
-#: apps/product/models.py:60
+#: apps/product/models/product.py:47
 msgid "Turn off for Soft Delete"
 msgstr "برای حذف نرم، غیرفعال کنید"
 
-#: apps/product/models.py:62
+#: apps/product/models/product.py:49
 msgid "Draft"
 msgstr "پیش‌نویس"
 
-#: apps/product/models.py:64
+#: apps/product/models/product.py:51 apps/product/models/question_answer.py:13
+#: apps/product/models/review.py:36
 msgid "Modified Date"
 msgstr "تاریخ ویرایش"
 
-#: apps/product/models.py:65
+#: apps/product/models/product.py:52
 msgid "Published Date"
 msgstr "تاریخ انتشار"
 
-#: apps/product/models.py:73
+#: apps/product/models/product.py:60
 msgid "Products"
 msgstr "محصولات"
 
-#: apps/product/models.py:101
+#: apps/product/models/product.py:114
 msgid "Primary Image"
 msgstr "تصویر اصلی"
 
-#: apps/product/models.py:104
+#: apps/product/models/product.py:117
 msgid "Product Image"
 msgstr "تصویر محصول"
 
-#: apps/product/models.py:105
+#: apps/product/models/product.py:118
 msgid "Product Images"
 msgstr "تصاویر محصول"
+
+#: apps/product/models/question_answer.py:9
+msgid "Question"
+msgstr "پرسش"
+
+#: apps/product/models/question_answer.py:10
+msgid "Answer"
+msgstr "پاسخ"
+
+#: apps/product/models/question_answer.py:17
+msgid "Question & Answer"
+msgstr "پرسش و پاسخ"
+
+#: apps/product/models/question_answer.py:18
+msgid "Questions & Answers"
+msgstr "پرسش‌ها و پاسخ‌ها"
+
+#: apps/product/models/review.py:17
+#, fuzzy
+#| msgid "Product Image"
+msgid "User Received Product Image"
+msgstr "تصویر محصول دریافت شده توسط کاربر"
+
+#: apps/product/models/review.py:25
+#, fuzzy
+#| msgid "Full Description"
+msgid "Description Title"
+msgstr "عنوان توضیحات"
+
+#: apps/product/models/review.py:26
+#, fuzzy
+#| msgid "Full Description"
+msgid "Description"
+msgstr "توضیحات"
+
+#: apps/product/models/review.py:29
+msgid "Set True for confirmed reviews (Set False for Soft Delete)"
+msgstr "برای نقدهای تأیید شده True و برای حذف نرم False تنظیم کنید"
+
+#: apps/product/models/review.py:31
+#, fuzzy
+#| msgid "Active Status"
+msgid "Anonymity Status"
+msgstr "وضعیت ناشناس"
+
+#: apps/product/models/review.py:32
+msgid "User with True is anonymous"
+msgstr "کاربر با مقدار True ناشناس است"
+
+#: apps/product/models/review.py:33
+#, fuzzy
+#| msgid "Paid Status"
+msgid "Purchased Status"
+msgstr "وضعیت خرید"
+
+#: apps/product/models/review.py:34
+msgid "User purchased the product or not"
+msgstr "کاربر محصول را خریداری کرده است یا خیر"
+
+#: apps/product/models/review.py:40
+msgid "Review"
+msgstr "نقد"
+
+#: apps/product/models/review.py:41
+msgid "Reviews"
+msgstr "نقدها"
 
 #: apps/utils/apps.py:8
 msgid "Utils Modules"
