@@ -8,13 +8,14 @@ from apps.api.views.auth_register_views import RegisterViewSet
 from apps.api.views.auth_reset_password_views import PasswordResetViewSet
 from apps.api.views.auth_verification_views import VerificationViewSet
 from apps.api.views.cart_views import CartViewSet
-from apps.api.views.product_views import ProductViewSet, ProductCategoryViewSet
+from apps.api.views.product_views import ProductViewSet, ProductCategoryViewSet, QuestionAnswerViewSet
 
 app_name = 'api'
 
 router = DefaultRouter()
 router.register(r'products', ProductViewSet, basename='product')
 router.register(r'categories', ProductCategoryViewSet, basename='category')
+router.register(r'questions-answers', QuestionAnswerViewSet, basename='question-answer')
 router.register(r'carts', CartViewSet, basename='cart')
 router.register(r'login', LoginAPIViewSet, basename='login')
 router.register(r'register', RegisterViewSet, basename='register')

@@ -43,3 +43,19 @@ class ProductPermission(BasePermission):
             return True
         # Other methods only for admins or object owner
         return request.user.is_superuser or request.user.is_staff or obj.user == request.user
+
+
+class QuestionAnswerPermission(BasePermission):
+    def has_permission(self, request, view):
+        # Allow GET/HEAD/OPTIONS for everyone
+        if request.method in SAFE_METHODS:
+            return True
+        # Other methods only for authenticated users
+        return request.user and request.user.is_authenticated
+
+    def has_object_permission(self, request, view, obj):
+        # Allow GET/HEAD/OPTIONS for everyone
+        if request.method in SAFE_METHODS:
+            return True
+        # Other methods only for admins
+        return request.user.is_superuser or request.user.is_staff
