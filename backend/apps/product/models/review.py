@@ -7,11 +7,11 @@ from django.utils.translation import gettext_lazy as _
 from apps.product.models.product import Product
 
 
-class Comment(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments')
+class Review(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
     user_received_product_image = models.ImageField(
         _('User Received Product Image'),
-        upload_to='product_images/comments', null=True, blank=True
+        upload_to='product_images/reviews', null=True, blank=True
     )
     rating = models.DecimalField(
         verbose_name=_('Rating'),
@@ -22,7 +22,7 @@ class Comment(models.Model):
     description = models.TextField(_('Description'), null=False, blank=False)
     is_active = models.BooleanField(
         _('Active Status'), default=False, db_index=True,
-        help_text=_('Set True for confirmed comments (Set False for Soft Delete)')
+        help_text=_('Set True for confirmed reviews (Set False for Soft Delete)')
     )
     is_anonymous = models.BooleanField(_('Anonymity Status'),
                                        default=True, help_text=_('User with True is anonymous'))
@@ -33,8 +33,8 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ['-created_date', 'description_title']
-        verbose_name = _('Comment')
-        verbose_name_plural = _('Comments')
+        verbose_name = _('Review')
+        verbose_name_plural = _('Reviews')
 
     def __str__(self):
         return f"{self.product} - {self.description_title}"
