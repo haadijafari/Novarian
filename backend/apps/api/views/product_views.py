@@ -2,6 +2,8 @@ import hashlib
 
 from django.core.cache import cache
 from django.db.models import F
+from django.db.models import Q, Count
+from rapidfuzz import fuzz
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -52,6 +54,61 @@ class ProductViewSet(viewsets.ModelViewSet):
         product = self.get_object()
         similar_products = product.get_similar_products(limit=10)
         serializer = self.get_serializer(similar_products, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'])
+    def search(self, request):
+        query = request.query_params.get('search', '').strip()
+        category = request.query_params.get('category')
+        tags = request.query_params.getlist('tags')  # ?tags=tag1&tags=tag2
+        ordering = request.query_params.get('ordering', '-published_date')
+
+        qs = Product.active.all()
+
+        # Title/description search (broad DB filter)
+        if query:
+            qs = qs.filter(
+                Q(title__icontains=query) |
+                Q(short_description__icontains=query) |
+                Q(description__icontains=query)
+            )
+
+        # Filter by category ID or name
+        if category:
+            try:
+                category_id = int(category)
+                qs = qs.filter(
+                    Q(category__id=category_id) |
+                    Q(category__title__iexact=category)
+                )
+            except ValueError:
+                # Not a number, filter only by title
+                qs = qs.filter(category__title__iexact=category)
+
+        # Filter by multiple tags
+        if tags:
+            qs = qs.filter(tags__name__in=tags).annotate(tag_count=Count('tags')).order_by('-tag_count')
+
+        # Apply ordering (only if it's allowed)
+        allowed_orderings = [
+            '-rating', 'rating',
+            '-price_amount', 'price_amount',
+            '-published_date', 'published_date'
+        ]
+        if ordering in allowed_orderings:
+            qs = qs.order_by(ordering)
+
+        qs = qs.distinct()
+
+        # If query exists, rank results by fuzzy match
+        if query:
+            qs = sorted(
+                qs,
+                key=lambda p: fuzz.token_sort_ratio(p.title, query),
+                reverse=True
+            )
+
+        serializer = self.get_serializer(qs, many=True)
         return Response(serializer.data)
 
 
