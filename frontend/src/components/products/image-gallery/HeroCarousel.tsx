@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useMotionValue } from 'motion/react'
 import { type image } from '@/lib/schemas/schemas'
+import { useTransitionRouter } from 'next-view-transitions'
 
 
 type Props = {
@@ -25,7 +26,8 @@ const SPRING_OPTIONS = {
 };
 
 export const HeroCarousel = ({ images, imgIndex, setImgIndex, slug }: Props) => {
-  console.log("hi rg")
+  const router = useTransitionRouter()
+
   const onDragEnd = () => {
     const X = dragX.get()
     if (X > DRAG_BUFFER && imgIndex !== 0) {
@@ -60,6 +62,12 @@ export const HeroCarousel = ({ images, imgIndex, setImgIndex, slug }: Props) => 
             key={imageObject.id}
           >
             <Link
+              onClick={(e) => {
+                e.preventDefault()
+                router.push(`/products/${slug}/image/${imageObject.id}`, {
+                  onTransitionReady: pageAnimation,
+                })
+              }}
               href={`/products/${slug}/image/${imageObject.id}`}>
               <Image
                 className='rounded-3xl w-full h-auto object-cover aspect-square'
@@ -75,5 +83,45 @@ export const HeroCarousel = ({ images, imgIndex, setImgIndex, slug }: Props) => 
     </motion.div>
   )
 }
+
+const pageAnimation = () => {
+  /* document.documentElement.animate(
+    [
+      {
+        opacity: 1,
+        scale: 1,
+        transform: "translateY(0)",
+      },
+      {
+        opacity: 0.5,
+        scale: 0.9,
+        transform: "translateY(-100px)",
+      },
+    ],
+    {
+      duration: 1000,
+      easing: "cubic-bezier(0.76, 0, 0.24, 1)",
+      fill: "forwards",
+      pseudoElement: "::view-transition-old(root)",
+    }
+  );
+
+  document.documentElement.animate(
+    [
+      {
+        transform: "translateY(100%)",
+      },
+      {
+        transform: "translateY(0)",
+      },
+    ],
+    {
+      duration: 1000,
+      easing: "cubic-bezier(0.76, 0, 0.24, 1)",
+      fill: "forwards",
+      pseudoElement: "::view-transition-new(root)",
+    }
+  ); */
+};
 
 export default HeroCarousel
