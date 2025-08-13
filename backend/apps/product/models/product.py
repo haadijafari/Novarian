@@ -5,7 +5,8 @@ from ckeditor.fields import RichTextField
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from django.db.models import Q
+from django.db.models import Count, Q, Value
+from django.db.models.functions import Coalesce
 from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
@@ -42,6 +43,7 @@ class Product(models.Model):
     short_description = models.CharField(_('Short Description'), max_length=360, null=True)
     description = RichTextField(_('Full Description'), null=True, blank=True)
     slug = models.SlugField(_('Slug'), default="", null=False, blank=True, db_index=True, max_length=200, unique=True)
+    view_count = models.PositiveIntegerField(_('View Count'), default=0)
     is_active = models.BooleanField(_('Active Status'), default=True, help_text=_('Turn off for Soft Delete'),
                                     db_index=True)
     is_draft = models.BooleanField(_('Draft'), default=True)
@@ -78,6 +80,32 @@ class Product(models.Model):
     def delete(self, using=None, keep_parents=False):
         self.is_active = False
         self.save()
+
+    def get_similar_products(self, limit=5):
+        """
+        Returns a queryset of similar products:
+        - Products from the same category
+        - Sorted by rating first, then number of shared tags
+        - Excludes the current product
+        """
+        tag_names = self.tags.names()
+
+        # Base queryset: products in the same category, exclude current
+        qs = Product.active.filter(
+            category__in=self.category.all()
+        ).exclude(id=self.id)
+
+        # Annotate number of shared tags if tags exist
+        if tag_names:
+            qs = qs.annotate(
+                common_tags=Coalesce(Count('tags', filter=Q(tags__name__in=tag_names)), Value(0))
+            )
+            # Order by rating descending, then shared tags, then newest
+            qs = qs.order_by('-rating', '-common_tags', '-published_date')
+        else:
+            qs = qs.order_by('-rating', '-published_date')
+
+        return qs.distinct()[:limit]
 
 
 class ProductImage(models.Model):

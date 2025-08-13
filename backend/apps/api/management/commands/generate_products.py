@@ -1,12 +1,13 @@
+import os
 import random
 import uuid
-import os
 from decimal import Decimal
-from faker import Faker
+
+from django.conf import settings
+from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.utils import timezone
-from django.core.files import File
-from django.conf import settings
+from faker import Faker
 
 from apps.product.models import Product, ProductCategory, ProductImage
 
@@ -17,15 +18,17 @@ DEMO_IMAGE_DIR = settings.BASE_DIR / "demo_images"
 
 
 class Command(BaseCommand):
-    help = "Generate sample ProductCategory and Product records with multiple demo images"
+    help = "Generate sample ProductCategory, Product records with multiple demo images and tags"
 
     def add_arguments(self, parser):
         parser.add_argument('--categories', type=int, default=5, help="Number of categories to create")
         parser.add_argument('--products', type=int, default=20, help="Number of products to create")
+        parser.add_argument('--tags', type=int, default=15, help="Number of unique tags to generate")
 
     def handle(self, *args, **options):
         category_count = options['categories']
         product_count = options['products']
+        total_tags = options['tags']
 
         # Ensure demo image folder exists
         if not DEMO_IMAGE_DIR.exists():
@@ -52,6 +55,9 @@ class Command(BaseCommand):
         ]
         self.stdout.write(self.style.SUCCESS(f"Created {len(categories)} categories."))
 
+        # Generate a pool of tags for overlap
+        tag_pool = [fake.word().lower() for _ in range(total_tags)]
+
         # Create products
         for _ in range(product_count):
             product = Product.objects.create(
@@ -70,6 +76,10 @@ class Command(BaseCommand):
 
             # Assign random categories
             product.category.set(random.sample(categories, random.randint(1, len(categories))))
+
+            # Assign random tags (1–5 tags per product)
+            num_tags = random.randint(1, 5)
+            product.tags.set(random.sample(tag_pool, num_tags))
 
             # Pick 1–5 random images for this product
             num_images = random.randint(1, 5)
@@ -91,4 +101,4 @@ class Command(BaseCommand):
                         save=True
                     )
 
-        self.stdout.write(self.style.SUCCESS(f"Created {product_count} products with multiple demo images."))
+        self.stdout.write(self.style.SUCCESS(f"Created {product_count} products with multiple demo images and tags."))
