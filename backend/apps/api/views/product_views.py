@@ -1,3 +1,5 @@
+from django.core.cache import cache
+from django.db.models import F
 from rest_framework import viewsets
 
 from apps.api.serializers.product_serializers import ProductSerializer, CategorySerializer
@@ -13,6 +15,27 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.active.all()
     serializer_class = ProductSerializer
     permission_classes = [ProductPermission]
+
+    def retrieve(self, request, *args, **kwargs):
+        product = self.get_object()
+
+        # Get visitor IP
+        ip = request.META.get('REMOTE_ADDR')
+
+        # Unique cache key per product per IP
+        cache_key = f'product_{product.id}_viewed_by_{ip}'
+
+        # Only increment if this IP hasn't viewed in the last 24 hours
+        if not cache.get(cache_key):
+            # Atomic increment
+            Product.objects.filter(id=product.id).update(view_count=F('view_count') + 1)
+            cache.set(cache_key, True, 60 * 60 * 24)  # expire after 1 day
+
+        # Refresh the object so that the serializer has the updated view_count
+        product.refresh_from_db()
+
+        serializer = self.get_serializer(product)
+        return Response(serializer.data)
 
 
 class ProductCategoryViewSet(viewsets.ModelViewSet):

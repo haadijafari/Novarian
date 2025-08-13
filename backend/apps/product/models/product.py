@@ -42,6 +42,7 @@ class Product(models.Model):
     short_description = models.CharField(_('Short Description'), max_length=360, null=True)
     description = RichTextField(_('Full Description'), null=True, blank=True)
     slug = models.SlugField(_('Slug'), default="", null=False, blank=True, db_index=True, max_length=200, unique=True)
+    view_count = models.PositiveIntegerField(_('View Count'), default=0)
     is_active = models.BooleanField(_('Active Status'), default=True, help_text=_('Turn off for Soft Delete'),
                                     db_index=True)
     is_draft = models.BooleanField(_('Draft'), default=True)
