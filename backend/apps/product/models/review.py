@@ -1,14 +1,18 @@
 from decimal import Decimal
 
+from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from apps.product.models.product import Product
 
+User = get_user_model()
+
 
 class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    user = models.ForeignKey(User, verbose_name=_('User'), on_delete=models.SET_NULL, null=True, related_name='reviews')
     user_received_product_image = models.ImageField(
         _('User Received Product Image'),
         upload_to='product_images/reviews', null=True, blank=True

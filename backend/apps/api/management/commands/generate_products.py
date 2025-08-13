@@ -15,6 +15,7 @@ fake = Faker()
 # Path to demo images folder inside your project root
 DEMO_IMAGE_DIR = settings.BASE_DIR / "demo_images"
 
+
 class Command(BaseCommand):
     help = "Generate sample ProductCategory and Product records with multiple demo images"
 
