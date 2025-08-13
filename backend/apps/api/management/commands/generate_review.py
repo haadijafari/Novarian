@@ -53,7 +53,7 @@ class Command(BaseCommand):
                 user = random.choice(users)
                 title = fake.sentence(nb_words=6)
                 description = fake.paragraph(nb_sentences=random.randint(3, 10))
-                rating = round(random.uniform(1, 5), 1)
+                rating = random.randint(0, 10) * 0.5
                 is_anonymous = random.choice([True, False])
                 is_purchased = random.choice([True, False])
                 review_image = None
