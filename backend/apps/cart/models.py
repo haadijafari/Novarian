@@ -42,7 +42,8 @@ class Cart(models.Model):
         result = self.items.aggregate(
             total=Sum(F('product__price') * F('quantity'))
         )
-        return result['total'] or Money(0, 'IRR')
+        total = result['total']
+        return Money(total, 'IRR') if total else Money(0, 'IRR')
 
     def get_total_price_with_discount(self):
         result = self.items.aggregate(
@@ -61,7 +62,8 @@ class Cart(models.Model):
                 output_field=DecimalField()
             )
         )
-        return result['total'] or Money(0, 'IRR')
+        total = result['total']
+        return Money(total, 'IRR') if total else Money(0, 'IRR')
 
     def calculate_tax_price(self):
         return self.get_total_price() * Decimal('0.09')
@@ -147,4 +149,6 @@ class CartItem(models.Model):
                 raise ValidationError("Cannot add non-available items to cart.")
             if self.quantity < 1:
                 raise ValidationError("Quantity must be at least 1.")
+            if self.product.quantity < self.quantity:
+                raise ValidationError(f"Only {self.product.quantity} units available for {self.product.title}.")
             super().save(*args, **kwargs)

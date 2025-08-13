@@ -21,6 +21,7 @@ dependencies = [
     "djangorestframework-simplejwt>=5.5.0",
     "drf-spectacular>=0.28.0",
     "drf-writable-nested>=0.7.2",
+    "faker>=37.5.3",
     "google-auth>=2.40.3",
     "markdown>=3.8.2", # Markdown support for the browsable API.
     "psycopg[binary]>=3.2.9",

@@ -19,5 +19,5 @@ class QuestionAnswer(models.Model):
 
     def __str__(self):
         q = self.question.strip()
-        a = self.answer.strip()
-        return f"Q: {q[:20]}{'...' if len(q) > 20 else ''} | A: {a[:20]}{'...' if len(a) > 20 else ''}"
+        product = self.product
+        return f"{product} | Q: {q[:20]}{'...' if len(q) > 20 else ''}"
