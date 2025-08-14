@@ -1,8 +1,8 @@
 import random
 from faker import Faker
 from django.core.management.base import BaseCommand
-from apps.product.models import Product
-from apps.product.models import QuestionAnswer
+from apps.product.models.product import Product
+from apps.product.models.question_answer import QuestionAnswer
 
 fake = Faker()
 

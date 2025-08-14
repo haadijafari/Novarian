@@ -13,7 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from djmoney.models.fields import MoneyField
 from taggit.managers import TaggableManager
 
-from apps.product.models.category import ProductCategory
+from apps.product.models.category import Category
 
 
 class ActiveProductManager(models.Manager):
@@ -24,7 +24,7 @@ class ActiveProductManager(models.Manager):
 
 class Product(models.Model):
     title = models.CharField(_('Title'), max_length=64, null=False, blank=False, db_index=True)
-    category = models.ManyToManyField(ProductCategory, verbose_name=_('Category'),
+    category = models.ManyToManyField(Category, verbose_name=_('Category'),
                                       related_name='product_categories', blank=True)
     price = MoneyField(_('Price'), max_digits=14, decimal_places=2, default_currency='IRR')
     has_discount = models.BooleanField(_('Has Discount'), default=False)
