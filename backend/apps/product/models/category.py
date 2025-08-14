@@ -8,7 +8,7 @@ class ActiveCategoryManager(models.Manager):
         return super().get_queryset().filter(is_active=True)
 
 
-class ProductCategory(models.Model):
+class Category(models.Model):
     title = models.CharField(_('Title'), max_length=300, db_index=True)
     img = models.ImageField(_('Image'), blank=True, null=True)
     color = ColorField(default='#FFFFFF')

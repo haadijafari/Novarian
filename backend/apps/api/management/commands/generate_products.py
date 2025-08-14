@@ -9,7 +9,8 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 from faker import Faker
 
-from apps.product.models import Product, ProductCategory, ProductImage
+from apps.product.models.product import Product, ProductImage
+from apps.product.models.category import Category
 
 fake = Faker()
 
@@ -18,7 +19,7 @@ DEMO_IMAGE_DIR = settings.BASE_DIR / "demo_images"
 
 
 class Command(BaseCommand):
-    help = "Generate sample ProductCategory, Product records with multiple demo images and tags"
+    help = "Generate sample Category, Product records with multiple demo images and tags"
 
     def add_arguments(self, parser):
         parser.add_argument('--categories', type=int, default=5, help="Number of categories to create")
@@ -46,7 +47,7 @@ class Command(BaseCommand):
 
         # Create categories
         categories = [
-            ProductCategory.objects.create(
+            Category.objects.create(
                 title=fake.word().capitalize(),
                 color=fake.color(),
                 is_active=True

@@ -4,7 +4,8 @@ from django.contrib.auth import get_user_model
 from django.core.files import File
 from django.core.management.base import BaseCommand
 from faker import Faker
-from apps.product.models import Product, Review
+from apps.product.models.product import Product
+from apps.product.models.review import Review
 
 from pathlib import Path
 

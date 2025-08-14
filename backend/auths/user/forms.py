@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField  # For admin to display password hash
 from django.utils.translation import gettext_lazy as _
 
-from .models import User
+from auths.user.models import User
 
 
 class CustomUserCreationForm(forms.ModelForm):

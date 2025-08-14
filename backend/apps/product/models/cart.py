@@ -9,7 +9,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from djmoney.money import Money
 
-from apps.product.models import Product
+from apps.product.models.product import Product
 
 User = get_user_model()
 

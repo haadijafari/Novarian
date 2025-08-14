@@ -1,5 +1,5 @@
 from apps.api.serializers.cart_serializers import CartSerializer
-from apps.cart.models import Cart
+from apps.product.models.cart import Cart
 from apps.utils.permissions import IsOwner, IsSuperUser
 from rest_framework import viewsets
 

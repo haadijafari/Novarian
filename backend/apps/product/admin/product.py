@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from apps.product.models import Product, ProductImage
+from apps.product.models.product import Product, ProductImage
 
 
 class ProductImageInline(admin.TabularInline):

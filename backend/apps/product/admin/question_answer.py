@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.product.models import QuestionAnswer
+from apps.product.models.question_answer import QuestionAnswer
 
 
 @admin.register(QuestionAnswer)

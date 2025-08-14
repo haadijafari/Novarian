@@ -12,7 +12,9 @@ from rest_framework.response import Response
 from apps.api.serializers.product_serializers import ProductSerializer, CategorySerializer
 from apps.api.serializers.question_answer_serializers import QuestionAnswerSerializer
 from apps.api.serializers.review_serializers import ReviewSerializer
-from apps.product.models import Product, ProductCategory, QuestionAnswer
+from apps.product.models.product import Product
+from apps.product.models.category import Category
+from apps.product.models.question_answer import QuestionAnswer
 from apps.product.models.review import Review
 from apps.utils.permissions import ProductPermission, QuestionAnswerPermission
 from apps.utils.permissions import ReviewPermission
@@ -178,7 +180,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 class ProductCategoryViewSet(viewsets.ModelViewSet):
-    queryset = ProductCategory.active.all()
+    queryset = Category.active.all()
     serializer_class = CategorySerializer
     permission_classes = [ProductPermission]
 

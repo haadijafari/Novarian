@@ -2,12 +2,13 @@ from drf_writable_nested import WritableNestedModelSerializer
 from rest_framework import serializers
 from taggit.serializers import TagListSerializerField, TaggitSerializer
 
-from apps.product.models import Product, ProductImage, ProductCategory
+from apps.product.models.product import Product, ProductImage
+from apps.product.models.category import Category
 
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = ProductCategory
+        model = Category
         fields = [
             'id',
             'title',
@@ -31,7 +32,7 @@ class ProductSerializer(TaggitSerializer, WritableNestedModelSerializer):
     primary_image = ProductImageSerializer(read_only=True)
     category = serializers.PrimaryKeyRelatedField(
         many=True, read_only=False,
-        queryset=ProductCategory.active.all()
+        queryset=Category.active.all()
     )
 
     class Meta:
