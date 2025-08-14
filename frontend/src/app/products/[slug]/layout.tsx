@@ -3,9 +3,9 @@ import ProductAccordion from '@/components/products/productAccordion'
 import { ProductBreadCrumb } from '@/components/products/productBreadCrumb'
 import { ReactNode } from 'react'
 
-type Props = { children: ReactNode, modals: ReactNode, productHero: ReactNode, reviewSection: React.ReactNode, productSuggestion: ReactNode }
+type Props = { children: ReactNode, modals: ReactNode, productHero: ReactNode, reviews: React.ReactNode, suggestions: ReactNode, discussions: ReactNode }
 
-export default function Layout({ children, modals, productHero, reviewSection, productSuggestion }: Props) {
+export default function Layout({ children, modals, productHero, reviews, suggestions, discussions }: Props) {
 
   return (
     <div className="flex flex-col h-screen w-full overflow-y-auto dark:bg-navy-900">
@@ -20,10 +20,13 @@ export default function Layout({ children, modals, productHero, reviewSection, p
         </div>
         <ProductAccordion />
         <div className='flex items-center justify-center min-h-screen w-screen bg-surface p-4'>
-          {reviewSection}
+          {reviews}
         </div>
         <div className='flex items-center justify-center min-h-screen w-screen bg-surface p-4'>
-          {productSuggestion}
+          {suggestions}
+        </div>
+        <div className='flex items-center justify-center min-h-screen w-screen bg-surface p-4'>
+          {discussions}
         </div>
       </div>
       {modals}
