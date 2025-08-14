@@ -53,6 +53,7 @@ export const ImageCarousel = ({
       style={{ x: dragX }}
       onDragEnd={onDragEnd}
       animate={{ translateX: `-${imgIndex * 100}%` }}
+      initial={false}
       transition={SPRING_OPTIONS}
       className="flex h-full cursor-grab active:cursor-grabbing"
     >
@@ -77,7 +78,7 @@ export const ImageCarousel = ({
                 width={1000}
                 height={1000}
                 onDragStart={(e) => e.preventDefault()}
-                priority={idx === priorityImageIndex} // Prioritize loading the first image
+                priority={idx === priorityImageIndex}
               />
             </ImageWrapper>
           </motion.div>
