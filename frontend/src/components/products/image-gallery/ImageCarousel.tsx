@@ -14,7 +14,6 @@ type Props = {
   // A function to generate the href for a given image
   getHref?: (image: image) => string
   // A function to handle the left-click on the link
-  onLinkClick?: (event: React.MouseEvent<HTMLAnchorElement>, href: string) => void
   priorityImageIndex?: number
 }
 
@@ -32,7 +31,6 @@ export const ImageCarousel = ({
   imgIndex,
   setImgIndex,
   getHref,
-  onLinkClick,
   priorityImageIndex = 0
 }: Props) => {
   const dragX = useMotionValue(0)
@@ -69,7 +67,6 @@ export const ImageCarousel = ({
           >
             <ImageWrapper
               href={href}
-              onClick={(e: React.MouseEvent<HTMLAnchorElement>) => href && onLinkClick?.(e, href)}
             >
               <Image
                 className="rounded-3xl w-full h-auto object-cover aspect-square"
@@ -92,20 +89,18 @@ export const ImageCarousel = ({
 const ImageWrapper = ({
   href,
   children,
-  ...props
 }: {
   href?: string
   children: React.ReactNode
-  [key: string]: any
 }) => {
   if (href) {
     return (
-      <Link href={href} {...props}>
+      <Link href={href}>
         {children}
       </Link>
     )
   }
-  return <div {...props}>{children}</div>
+  return <div>{children}</div>
 }
 
 export default ImageCarousel

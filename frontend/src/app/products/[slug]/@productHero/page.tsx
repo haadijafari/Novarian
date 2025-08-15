@@ -4,11 +4,12 @@ import { type image } from '@/lib/schemas/schemas'
 import ImageGallerySkeleton from '@/components/products/image-gallery/ImageGallerySkeleton'
 import { type ReadonlyURLSearchParams } from 'next/navigation'
 
-async function getProductData(_: string) {
+async function getProductData(slug: string) {
 
   // TODO: fetch the product here using the slug
   // Simulate network delay
   await new Promise((res) => setTimeout(res, 1000))
+  console.log(slug)
 
   const images: Array<image> = [
     { id: '1', src: '/1.jpg' },
@@ -24,13 +25,13 @@ export default async function ProductHeroPage({
   searchParams,
 }: {
   params: Promise<{ slug: string }>
-  searchParams: ReadonlyURLSearchParams
+  searchParams: Promise<ReadonlyURLSearchParams>
 }) {
   const { slug } = await params
   const { images } = await getProductData(slug)
 
   // Create a unique key from the URL search params to prevent state "flicker"
-  const galleryKey = new URLSearchParams(searchParams).toString()
+  const galleryKey = new URLSearchParams(await searchParams).toString()
 
   return (
     <div className="flex w-full max-w-7xl p-2 md:flex-row flex-col bg-orange-400 rounded-lg">

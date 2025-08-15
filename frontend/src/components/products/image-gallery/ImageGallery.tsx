@@ -1,7 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { useTransitionRouter } from 'next-view-transitions'
+import React from 'react'
 import { ImageCarousel } from './ImageCarousel'
 import DesktopExtras from './desktopExtras'
 import MobileExtras from './mobileExtras'
@@ -34,17 +33,12 @@ export const ProductImageGallery = (props: Props) => {
   const { images, className } = props
 
   const [imgIndex, setImgIndex] = useSyncedImageIndex(images.length)
-  const router = useTransitionRouter()
 
 
   // Conditionally create props for the child carousel
   const carouselLinkProps = isImageGalleryWithLinks(props)
     ? {
       getHref: (image: image) => `/products/${props.slug}/image/${image.id}`,
-      onLinkClick: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-        e.preventDefault()
-        router.push(href)
-      },
     }
     : {}
 
@@ -75,44 +69,5 @@ export const ProductImageGallery = (props: Props) => {
     </div>
   )
 }
-const pageAnimation = () => {
-  /* document.documentElement.animate(
-    [
-      {
-        opacity: 1,
-        scale: 1,
-        transform: "translateY(0)",
-      },
-      {
-        opacity: 0.5,
-        scale: 0.9,
-        transform: "translateY(-100px)",
-      },
-    ],
-    {
-      duration: 1000,
-      easing: "cubic-bezier(0.76, 0, 0.24, 1)",
-      fill: "forwards",
-      pseudoElement: "::view-transition-old(root)",
-    }
-  );
-
-  document.documentElement.animate(
-    [
-      {
-        transform: "translateY(100%)",
-      },
-      {
-        transform: "translateY(0)",
-      },
-    ],
-    {
-      duration: 1000,
-      easing: "cubic-bezier(0.76, 0, 0.24, 1)",
-      fill: "forwards",
-      pseudoElement: "::view-transition-new(root)",
-    }
-  ); */
-};
 
 export default ProductImageGallery

@@ -1,5 +1,5 @@
 import Dropdown from '../ui/Dropdown';
-import { Bell, Gift, HeartHandshake } from 'lucide-react';
+import { Gift, HeartHandshake } from 'lucide-react';
 import { NotificationBell } from './NotificationBell';
 
 const NotificationsDropdown = () => {
