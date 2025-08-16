@@ -8,6 +8,7 @@ import ErrorPopUp from '@/components/ui/ErrorPopUp'
 import SubmitButton from '@/components/ui/SubmitButton'
 import { loginSubmit } from '@/actions/auth/loginActions'
 import InputWithIcon from '@/components/ui/inputWithIcon'
+import { ROUTES } from '@/lib/navigation'
 
 const LoginForm = () => {
   const [error, setError] = useState("")
@@ -41,7 +42,7 @@ const LoginForm = () => {
         }
         else {
           // Make sure to pass the phone number in the query
-          router.push(`/auth?state=otp&number=${encodeURIComponent(numberOrGmail)}`)
+          router.push(`${ROUTES.AUTH.path()}?state=otp&number=${encodeURIComponent(numberOrGmail)}`)
         }
       }}
     >

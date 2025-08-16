@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { ROUTES } from "@/lib/navigation"
 import { SlashIcon } from "lucide-react"
 
 import {
@@ -11,12 +12,13 @@ import {
 } from "@/components/ui/breadCrumb"
 
 export function ProductBreadCrumb() {
+  const { HOME, PRODUCTS } = ROUTES
   return (
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href="/">خانه</Link>
+            <Link href={HOME.path()}>{HOME.persianName}</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator>
@@ -24,7 +26,7 @@ export function ProductBreadCrumb() {
         </BreadcrumbSeparator>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href="/products">محصولات</Link>
+            <Link href={PRODUCTS.path()}>{PRODUCTS.persianName}</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator>

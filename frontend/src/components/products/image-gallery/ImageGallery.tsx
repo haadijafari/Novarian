@@ -9,6 +9,7 @@ import { type image } from '@/lib/schemas/schemas'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import Image from 'next/image'
+import { ROUTES } from '@/lib/navigation'
 
 // Props for the basic gallery with NO links
 type Props = {
@@ -17,7 +18,7 @@ type Props = {
   className?: string
 }
 
-export const ProductImageGallery = ({ images, className }: Props) => {
+export const ProductImageGallery = ({ images, className, slug }: Props) => {
   const [imgIndex, setImgIndex] = useSyncedImageIndex(images.length)
 
   return (
@@ -34,9 +35,11 @@ export const ProductImageGallery = ({ images, className }: Props) => {
         imgIndex={imgIndex}
       >
         {images.map((imageobject, idx) => {
+          const imagePath = ROUTES.PRODUCT_IMAGE_MODAL.path(slug!, `${imgIndex}`)
+
           return (
             <Slide currentSlide={idx == imgIndex} key={idx}>
-              <Link href='#'>
+              <Link href={imagePath}>
                 <Image
                   className="rounded-3xl w-full h-auto object-cover aspect-square"
                   src={imageobject.src}
