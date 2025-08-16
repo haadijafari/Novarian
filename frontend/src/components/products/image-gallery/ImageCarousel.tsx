@@ -1,20 +1,15 @@
 'use client'
 
-import { type Dispatch, type SetStateAction } from 'react'
+import { JSX, type Dispatch, type SetStateAction } from 'react'
 import React from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
 import { motion, useMotionValue } from 'motion/react'
 import { type image } from '@/lib/schemas/schemas'
 
-type Props = {
+type ImageCarouselProps = {
   images: image[]
   imgIndex: number
   setImgIndex: Dispatch<SetStateAction<number>>
-  // A function to generate the href for a given image
-  getHref?: (image: image) => string
-  // A function to handle the left-click on the link
-  priorityImageIndex?: number
+  children: JSX.Element[]
 }
 
 const DRAG_BUFFER = 50
@@ -30,9 +25,8 @@ export const ImageCarousel = ({
   images,
   imgIndex,
   setImgIndex,
-  getHref,
-  priorityImageIndex = 0
-}: Props) => {
+  children,
+}: ImageCarouselProps) => {
   const dragX = useMotionValue(0)
 
   const onDragEnd = () => {
@@ -55,52 +49,23 @@ export const ImageCarousel = ({
       transition={SPRING_OPTIONS}
       className="flex h-full cursor-grab active:cursor-grabbing"
     >
-      {images.map((imageObject, idx) => {
-        const href = getHref?.(imageObject)
-
-        return (
-          <motion.div
-            key={imageObject.id}
-            animate={{ scale: idx === imgIndex ? 1 : 0.85 }}
-            transition={SPRING_OPTIONS}
-            className="w-full flex-shrink-0"
-          >
-            <ImageWrapper
-              href={href}
-            >
-              <Image
-                className="rounded-3xl w-full h-auto object-cover aspect-square"
-                src={imageObject.src}
-                alt={imageObject.id || 'Product image'}
-                width={1000}
-                height={1000}
-                onDragStart={(e) => e.preventDefault()}
-                priority={idx === priorityImageIndex}
-              />
-            </ImageWrapper>
-          </motion.div>
-        )
-      })}
+      {children}
     </motion.div>
   )
 }
 
-// Helper component to avoid repetitive conditional logic in the map loop
-const ImageWrapper = ({
-  href,
-  children,
-}: {
-  href?: string
-  children: React.ReactNode
-}) => {
-  if (href) {
-    return (
-      <Link href={href}>
-        {children}
-      </Link>
-    )
-  }
-  return <div>{children}</div>
+type slideProps = { currentSlide: boolean, children: JSX.Element }
+
+export const Slide = ({ currentSlide, children }: slideProps) => {
+  return (
+    <motion.div
+      animate={{ scale: currentSlide ? 1 : 0.85 }}
+      transition={SPRING_OPTIONS}
+      className="w-full flex-shrink-0"
+    >
+      {children}
+    </motion.div>
+  )
 }
 
 export default ImageCarousel
