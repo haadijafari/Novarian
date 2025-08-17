@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ROUTES } from "@/lib/navigation"
+import { ROUTES } from "@/lib/routes"
 import { SlashIcon } from "lucide-react"
 
 import {

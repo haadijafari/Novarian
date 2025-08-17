@@ -8,7 +8,7 @@ import ErrorPopUp from '@/components/ui/ErrorPopUp'
 import SubmitButton from '@/components/ui/SubmitButton'
 import { loginSubmit } from '@/actions/auth/loginActions'
 import InputWithIcon from '@/components/ui/inputWithIcon'
-import { ROUTES } from '@/lib/navigation'
+import { ROUTES } from '@/lib/routes'
 
 const LoginForm = () => {
   const [error, setError] = useState("")

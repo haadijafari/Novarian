@@ -9,7 +9,7 @@ import { type image } from '@/lib/schemas/schemas'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ROUTES } from '@/lib/navigation'
+import { ROUTES } from '@/lib/routes'
 
 // Props for the basic gallery with NO links
 type Props = {
@@ -35,7 +35,7 @@ export const ProductImageGallery = ({ images, className, slug }: Props) => {
         imgIndex={imgIndex}
       >
         {images.map((imageobject, idx) => {
-          const imagePath = ROUTES.PRODUCT_IMAGE_MODAL.path(slug!, `${imgIndex}`)
+          const imagePath = ROUTES.PRODUCT_IMAGE_MODAL.path({ slug: slug!, imageIndex: `${imgIndex}` })
 
           return (
             <Slide currentSlide={idx == imgIndex} key={idx}>

@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { Breadcrumb } from './breadCrumb';
 import { ProductBreadCrumb } from '../products/productBreadCrumb';
 
 type Props = {
@@ -17,7 +16,7 @@ const NavbarBrand = ({ brandText }: Props) => {
           href="#"
           className="font-bold capitalize hover:text-navy-700 dark:hover:text-white"
         >
-          عنوان
+          {brandText}
         </Link>
       </p>
     </div>

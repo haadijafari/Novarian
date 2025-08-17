@@ -1,4 +1,4 @@
-import { ROUTES } from "@/lib/navigation";
+import { ROUTES } from "@/lib/routes";
 import { redirect } from "next/navigation";
 
 export async function otpSubmit(userOtp: string) {
