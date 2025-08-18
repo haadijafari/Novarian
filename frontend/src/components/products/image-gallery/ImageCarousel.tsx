@@ -1,15 +1,15 @@
 'use client'
 
-import { JSX, type Dispatch, type SetStateAction } from 'react'
+import type { ReactNode, Dispatch, SetStateAction } from 'react'
 import React from 'react'
 import { motion, useMotionValue } from 'motion/react'
-import { type image } from '@/lib/schemas/schemas'
+import type { image } from '@/lib/schemas/schemas'
 
 type ImageCarouselProps = {
   images: image[]
   imgIndex: number
   setImgIndex: Dispatch<SetStateAction<number>>
-  children: JSX.Element[]
+  children: ReactNode
 }
 
 const DRAG_BUFFER = 50
@@ -54,7 +54,7 @@ export const ImageCarousel = ({
   )
 }
 
-type slideProps = { currentSlide: boolean, children: JSX.Element }
+type slideProps = { currentSlide: boolean, children: ReactNode }
 
 export const Slide = ({ currentSlide, children }: slideProps) => {
   return (

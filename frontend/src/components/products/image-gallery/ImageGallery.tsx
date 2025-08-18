@@ -13,7 +13,7 @@ import { ROUTES } from '@/lib/routes'
 
 // Props for the basic gallery with NO links
 type Props = {
-  slug?: never
+  slug?: string
   images: Array<image>
   className?: string
 }
@@ -35,20 +35,26 @@ export const ProductImageGallery = ({ images, className, slug }: Props) => {
         imgIndex={imgIndex}
       >
         {images.map((imageobject, idx) => {
-          const imagePath = ROUTES.PRODUCT_IMAGE_MODAL.path({ slug: slug!, imageIndex: `${imgIndex}` })
+          const PropductImage = <Image
+            className="rounded-3xl w-full h-auto object-cover aspect-square"
+            src={imageobject.src}
+            alt={imageobject.id || 'product image'}
+            width={1000}
+            height={1000}
+            priority={idx === imgIndex}
+          />
 
           return (
             <Slide currentSlide={idx == imgIndex} key={idx}>
-              <Link href={imagePath}>
-                <Image
-                  className="rounded-3xl w-full h-auto object-cover aspect-square"
-                  src={imageobject.src}
-                  alt={imageobject.id || 'product image'}
-                  width={1000}
-                  height={1000}
-                  priority={idx === imgIndex}
-                />
-              </Link>
+              {slug ? (
+                <Link href={ROUTES.PRODUCT_IMAGE_MODAL.path({ slug: slug, imageIndex: `${imgIndex}` })}>
+                  {PropductImage}
+                </Link>
+              ) : (
+                <div>
+                  {PropductImage}
+                </div>
+              )}
             </Slide>
           )
         })}
