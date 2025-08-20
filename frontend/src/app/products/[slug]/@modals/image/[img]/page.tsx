@@ -30,7 +30,7 @@ export default async function ImageModal({ params }: { params: Promise<{ img: st
         <DialogDescription className="sr-only">
           A larger, more detailed view of the product.
         </DialogDescription>
-        <ImageGallery className='flex-[4]' images={images} />
+        <ImageGallery id="test2" className='flex-[4]' images={images} />
       </DialogContent>
     </ModalController>
   );

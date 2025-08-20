@@ -1,8 +1,6 @@
 import React, { Suspense } from 'react'
 import ImageGallery from '@/components/products/image-gallery'
 import { type image } from '@/lib/schemas/schemas'
-import ImageGallerySkeleton from '@/components/products/image-gallery/ImageGallerySkeleton'
-import { type ReadonlyURLSearchParams } from 'next/navigation'
 
 async function getProductData(slug: string) {
 
@@ -22,24 +20,16 @@ async function getProductData(slug: string) {
 
 export default async function ProductHeroPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ slug: string }>
-  searchParams: Promise<ReadonlyURLSearchParams>
 }) {
   const { slug } = await params
   const { images } = await getProductData(slug)
 
-  // Create a unique key from the URL search params to prevent state "flicker"
-  const galleryKey = new URLSearchParams(await searchParams).toString()
-
   return (
     <div className="flex w-full max-w-7xl p-2 md:flex-row flex-col bg-orange-400 rounded-lg">
 
-      {/* Dynamic Part: The Image Gallery is wrapped in Suspense */}
-      <Suspense key={galleryKey} fallback={<ImageGallerySkeleton className="flex-[4]" />}>
-        <ImageGallery className="flex-[4]" slug={slug} images={images} />
-      </Suspense>
+      <ImageGallery id='test1' className="flex-[4]" slug={slug} images={images} />
 
       {/* Static Part: The product details */}
       <div className="flex flex-[3] bg-green-500 flex-col md:pr-4">

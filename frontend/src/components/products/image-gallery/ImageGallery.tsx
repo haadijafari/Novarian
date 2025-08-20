@@ -16,14 +16,16 @@ type Props = {
   slug?: string
   images: Array<image>
   className?: string
+  id?: string
 }
 
-export const ProductImageGallery = ({ images, className, slug }: Props) => {
+export const ImageGallery = ({ id, images, className, slug }: Props) => {
   const [imgIndex, setImgIndex] = useSyncedImageIndex(images.length)
 
   return (
     <div
       dir="ltr"
+      id={id}
       className={cn(
         'flex flex-col p-2 relative h-full w-full overflow-x-hidden rounded-3xl',
         className
@@ -73,4 +75,4 @@ export const ProductImageGallery = ({ images, className, slug }: Props) => {
   )
 }
 
-export default ProductImageGallery
+export default ImageGallery
