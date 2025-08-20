@@ -1,4 +1,4 @@
-export const transition = () => {
+export const verticalPageFlip = () => {
   document.documentElement.animate(
     [
       {

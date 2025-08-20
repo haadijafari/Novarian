@@ -1,9 +1,8 @@
-import React, { Suspense } from 'react'
-import ImageGallery from '@/components/products/image-gallery'
+import React from 'react'
 import { type image } from '@/lib/schemas/schemas'
+import HeroGallery from '@/components/products/product-hero'
 
 async function getProductData(slug: string) {
-
   // TODO: fetch the product here using the slug
   // Simulate network delay
   await new Promise((res) => setTimeout(res, 1000))
@@ -28,8 +27,7 @@ export default async function ProductHeroPage({
 
   return (
     <div className="flex w-full max-w-7xl p-2 md:flex-row flex-col bg-orange-400 rounded-lg">
-
-      <ImageGallery id='test1' className="flex-[4]" slug={slug} images={images} />
+      <HeroGallery id='test2' className="flex-[4]" slug={slug} images={images} />
 
       {/* Static Part: The product details */}
       <div className="flex flex-[3] bg-green-500 flex-col md:pr-4">

@@ -1,25 +1,26 @@
 'use client'
 
 import React from 'react'
-import { ImageCarousel, Slide } from './ImageCarousel'
+import { ImageCarousel, Slide } from '../ImageCarousel'
 import DesktopExtras from './desktopExtras'
 import MobileExtras from './mobileExtras'
 import { useSyncedImageIndex } from '@/lib/useSyncedImageIndex'
 import { type image } from '@/lib/schemas/schemas'
 import { cn } from '@/lib/utils'
-import Link from 'next/link'
 import Image from 'next/image'
 import { ROUTES } from '@/lib/routes'
+import LinkWithTransition from '@/components/ui/LinkWithTransition'
+import { imageModalTransition } from '@/transitions/imageModal'
 
 // Props for the basic gallery with NO links
 type Props = {
-  slug?: string
+  slug: string
   images: Array<image>
   className?: string
   id?: string
 }
 
-export const ImageGallery = ({ id, images, className, slug }: Props) => {
+export const HeroGallery = ({ id, images, className, slug }: Props) => {
   const [imgIndex, setImgIndex] = useSyncedImageIndex(images.length)
 
   return (
@@ -37,6 +38,7 @@ export const ImageGallery = ({ id, images, className, slug }: Props) => {
         imgIndex={imgIndex}
       >
         {images.map((imageobject, idx) => {
+
           const PropductImage = <Image
             className="rounded-3xl w-full h-auto object-cover aspect-square"
             src={imageobject.src}
@@ -48,15 +50,13 @@ export const ImageGallery = ({ id, images, className, slug }: Props) => {
 
           return (
             <Slide currentSlide={idx == imgIndex} key={idx}>
-              {slug ? (
-                <Link href={ROUTES.PRODUCT_IMAGE_MODAL.path({ slug: slug, imageIndex: `${imgIndex}` })}>
-                  {PropductImage}
-                </Link>
-              ) : (
-                <div>
-                  {PropductImage}
-                </div>
-              )}
+              <LinkWithTransition
+                route={ROUTES.PRODUCT_IMAGE_MODAL}
+                routeArgs={{ slug: slug, imageIndex: `${imgIndex}` }}
+                transition={imageModalTransition}
+              >
+                {PropductImage}
+              </LinkWithTransition>
             </Slide>
           )
         })}
@@ -71,8 +71,8 @@ export const ImageGallery = ({ id, images, className, slug }: Props) => {
         images={images}
         setImgIndex={setImgIndex}
       />
-    </div>
+    </div >
   )
 }
 
-export default ImageGallery
+export default HeroGallery

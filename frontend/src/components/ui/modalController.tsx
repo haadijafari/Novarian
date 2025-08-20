@@ -1,10 +1,12 @@
 'use client';
 
 import { Dialog } from '@/components/ui/dialog';
-import { useRouter, usePathname } from 'next/navigation';
+import { imageModalTransition } from '@/transitions/imageModal';
+import { useTransitionRouter } from 'next-view-transitions';
+import { usePathname } from 'next/navigation';
 
 export function ModalController({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
+  const router = useTransitionRouter();
   const pathname = usePathname();
 
   // Derive the open state directly from the URL on every render.
@@ -14,7 +16,7 @@ export function ModalController({ children }: { children: React.ReactNode }) {
     if (!isOpen) {
       // Update the source of truth (the URL) to close the modal.
       const basePath = pathname.split('/image')[0];
-      router.push(basePath);
+      router.push(basePath, { onTransitionReady: imageModalTransition });
     }
   };
 

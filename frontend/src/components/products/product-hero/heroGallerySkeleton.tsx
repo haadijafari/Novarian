@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
 import React from 'react'
 
-const ImageGallerySkeleton = ({ className }: { className: string }) => {
+const HeroGallerySkeleton = ({ className }: { className: string }) => {
   const NUM_IMG = 4
 
   return (
@@ -24,4 +24,4 @@ const ImageGallerySkeleton = ({ className }: { className: string }) => {
   )
 }
 
-export default ImageGallerySkeleton 
+export default HeroGallerySkeleton 
