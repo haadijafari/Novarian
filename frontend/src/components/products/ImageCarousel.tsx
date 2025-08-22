@@ -47,7 +47,7 @@ export const ImageCarousel = ({
       animate={{ translateX: `-${imgIndex * 100}%` }}
       initial={false}
       transition={SPRING_OPTIONS}
-      className="flex h-full cursor-grab active:cursor-grabbing"
+      className="flex overflow-hidden h-full cursor-grab active:cursor-grabbing"
     >
       {children}
     </motion.div>

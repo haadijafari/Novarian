@@ -16,7 +16,7 @@ export const dialogVariants = cva(
           "left-[50%] top-[50%] w-full max-w-lg translate-x-[-50%] translate-y-[-50%] rounded-lg",
 
         imageModal:
-          "left-[50%] w-auto h-full aspect-[4/5] translate-x-[-50%] rounded-b-lg top-[50%] translate-y-[-50%] rounded-lg",
+          "left-[50%] portrait:w-full portrait:aspect-[4/5] landscape:h-full landscape:aspect-[5/4] translate-x-[-50%] rounded-b-lg top-[50%] translate-y-[-50%] rounded-lg",
       },
     },
     defaultVariants: {
