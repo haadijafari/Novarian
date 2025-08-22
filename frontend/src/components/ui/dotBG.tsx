@@ -27,23 +27,13 @@ interface DotBGProps {
   style?: React.CSSProperties;
 }
 
-function Placeholder() {
-  return (
-    <div className="flex h-full min-h-64 w-full min-w-72 items-center justify-center">
-      <div className="rounded bg-white px-4 py-2">This has dot background</div>
-    </div>
-  );
-}
-
 export default function DotBG({
   color = "#cacaca",
   size = 1,
   spacing = 10,
   children,
   className,
-  style = {
-    backgroundColor: "white",
-  },
+  style
 }: DotBGProps) {
   return (
     <div
@@ -54,7 +44,7 @@ export default function DotBG({
       }}
       className={className}
     >
-      {children ?? <Placeholder />}
+      {children}
     </div>
   );
 }
