@@ -115,3 +115,8 @@ body {
     /* Firefox */
   }
 }
+
+::view-transition-group(root) {
+  /* Disable the default browser animation (fade-in) */
+  animation: none;
+}

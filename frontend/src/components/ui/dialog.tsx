@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 import DotBG from "./dotBG"
 
 export const dialogVariants = cva(
-  "bg-surface data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed z-50 grid gap-4 border shadow-lg duration-200",
+  "bg-surface border-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed z-50 grid gap-4 border shadow-lg duration-200",
   {
     variants: {
       variant: {
