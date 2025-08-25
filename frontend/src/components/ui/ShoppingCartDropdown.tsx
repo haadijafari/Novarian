@@ -6,7 +6,7 @@ const ShoppingCartDropdown = () => {
     <Dropdown
       button={
         <p className="cursor-pointer">
-          <ShoppingCart className="h-4 w-4 text-gray-600 dark:text-white" />
+          <ShoppingCart className="h-4 w-4 text-gray-600 fill-white" />
         </p>
       }
       classNames={'py-2 top-8 -left-[180px] w-max'}

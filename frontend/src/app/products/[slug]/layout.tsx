@@ -1,6 +1,5 @@
-import Navbar from '@/components/navbar/productNavbar' // Updated import path
+import Navbar from '@/components/navbar/productNavbar'
 import ProductAccordion from '@/components/products/productAccordion'
-import { ProductBreadCrumb } from '@/components/products/productBreadCrumb'
 import Footer from '@/components/ui/Footer'
 import { ReactNode } from 'react'
 
