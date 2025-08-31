@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils'
 import { LucideProps } from 'lucide-react'
 import React, { InputHTMLAttributes } from 'react'
 
@@ -24,51 +25,49 @@ const InputWithIcon = ({
   <div className="input-box w-full relative">
     <input
       placeholder=' '
-      className={`${className} peer ${persian && "text-right"}`}
+      className={cn(className, persian && "text-right", "peer")}
       {...inputProps}
       id={id}
     />
 
     <label
       htmlFor={id}
-      className={`
-      ${labelClassName}
-      absolute text-ink-muted
-      delay-100 duration-200 ease-in-out
-      top-1/2 -translate-y-1/2 rounded-full 
-      pointer-events-none
+      className={cn(
+        "absolute text-ink-muted delay-100 duration-200 ease-in-out top-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+        ,
+        `
+        peer-focus:top-0
+        peer-[:not(:placeholder-shown)]:top-0
 
-      ${persian ? "mr-4 right-4" : "ml-4 left-4"}
+        peer-focus:text-sm
+        peer-[:not(:placeholder-shown)]:text-sm
 
-      peer-focus:top-0
-      peer-[:not(:placeholder-shown)]:top-0
+        peer-focus:py-0
+        peer-[:not(:placeholder-shown)]:py-0
 
-      peer-focus:text-sm
-      peer-[:not(:placeholder-shown)]:text-sm
+        peer-focus:px-2.5
+        peer-[:not(:placeholder-shown)]:px-2.5
 
-      peer-focus:py-0
-      peer-[:not(:placeholder-shown)]:py-0
+        peer-focus:bg-surface-muted
+        peer-[:not(:placeholder-shown)]:bg-surface-muted
 
-      peer-focus:px-2.5
-      peer-[:not(:placeholder-shown)]:px-2.5
-
-      peer-focus:bg-surface-muted
-      peer-[:not(:placeholder-shown)]:bg-surface-muted
-
-      peer-focus:text-ink-muted
-      peer-[:not(:placeholder-shown)]:text-ink-muted
-  `}
+        peer-focus:text-ink-muted peer-[:not(:placeholder-shown)]:text-ink-muted
+        `,
+        labelClassName, persian ? "mr-3 right-2.5" : "ml-4 left-4")}
     >
       {placeholder}
     </label>
 
-    <IconComponent
-      size={iconSize}
-      style={persian ? { left: `${iconSize}px` } : { right: `${iconSize}px` }}
-      className={`absolute top-1/2 transform -translate-y-1/2 text-ink-muted`}
-    />
+    <div
+      className={cn(
+        "flex justify-center items-center absolute h-2/3 aspect-square rounded-full top-1/2 transform -translate-y-1/2 text-ink-muted",
+        persian ? "left-0 translate-x-1/4" : "right-0 -translate-x-1/4")}
+    >
+      <IconComponent
+        size={iconSize}
+      />
+    </div>
   </div >
 )
 
-export default InputWithIcon
-
+export default InputWithIcon 
