@@ -1,6 +1,6 @@
 import React from 'react'
 import { type image } from '@/lib/schemas/schemas'
-import HeroGallery from '@/components/products/product-hero'
+import { HeroGallery } from '@/components/products/product-detail/ProductHero'
 
 async function getProductData(slug: string) {
   // TODO: fetch the product here using the slug

@@ -1,6 +1,6 @@
-import Navbar from '@/components/navbar/productNavbar'
-import ProductAccordion from '@/components/products/productAccordion'
-import Footer from '@/components/ui/Footer'
+import { ProductNavbar } from '@/components/navbar/product-navbar'
+import { ProductAccordion } from '@/components/products'
+import { Footer } from '@/components/ui/Footer'
 import { ReactNode } from 'react'
 
 type Props = { children: ReactNode, modals: ReactNode, productHero: ReactNode, reviews: React.ReactNode, suggestions: ReactNode, discussions: ReactNode }
@@ -9,7 +9,7 @@ export default function Layout({ children, modals, productHero, reviews, suggest
 
   return (
     <div className="flex flex-col dark:bg-navy-900">
-      <Navbar
+      <ProductNavbar
         brandText={"اسم-محصول"}
       />
       <div className="mx-2.5 flex-none transition-all md:pr-2 xl:ml-[323px]">
@@ -31,5 +31,5 @@ export default function Layout({ children, modals, productHero, reviews, suggest
       <Footer />
       {modals}
     </div>
-  );
+  )
 }

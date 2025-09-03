@@ -1,5 +1,5 @@
-import ProductFilter from '@/components/products/ProductFilter'
 import React from 'react'
+import { ProductFilter } from '@/components/products/product-list/ProductFilter'
 
 const Products = () => {
 
@@ -12,7 +12,7 @@ const Products = () => {
     { name: "women", Icon: "venus" },
     { name: "cs", Icon: "laptop-minimal" },
     { name: "brush", Icon: "brush" }
-  ]; */
+  ] */
 
 
   return (

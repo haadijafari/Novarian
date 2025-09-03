@@ -1,10 +1,10 @@
-import ReviewForm from "@/components/products/reviewForm";
+import { ReviewForm } from "@/components/products/product-detail/customer-reviews"
+import { ModalController } from "@/components/products/product-detail/ImageModal/_parts"
 import {
   DialogContent,
   DialogTitle,
   DialogDescription
-} from "@/components/ui/dialog";
-import { ModalController } from "@/components/ui/modalController";
+} from "@/components/ui/primitives"
 
 export default async function ImageModal() {
 
@@ -19,5 +19,5 @@ export default async function ImageModal() {
         <ReviewForm />
       </DialogContent>
     </ModalController>
-  );
+  )
 }

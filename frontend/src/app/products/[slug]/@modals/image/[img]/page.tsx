@@ -1,13 +1,13 @@
-import ModalGallery from "@/components/products/image-modal";
+import ModalGallery from "@/components/products/product-detail/ImageModal"
+import { ModalController } from "@/components/products/product-detail/ImageModal/_parts"
 import {
   DialogContent,
   DialogTitle,
   DialogDescription
-} from "@/components/ui/dialog";
-import { ModalController } from "@/components/ui/modalController";
+} from "@/components/ui/primitives"
 import { type image } from '@/lib/schemas/schemas'
 
-export default async function ImageModal({ params }: { params: Promise<{ img: string }> }) {
+async function ImageModal({ params }: { params: Promise<{ img: string }> }) {
   // TODO: fetch the product here
   // Simulate delay only once when slug changes (page load)
   await new Promise((res) => setTimeout(res, 100))
@@ -20,7 +20,7 @@ export default async function ImageModal({ params }: { params: Promise<{ img: st
   ]
 
   const { img } = await params
-  const altText = `Enlarged view of product image ${img}`;
+  const altText = `Enlarged view of product image ${img}`
 
   return (
     <ModalController>
@@ -33,5 +33,7 @@ export default async function ImageModal({ params }: { params: Promise<{ img: st
         <ModalGallery id="test1" images={images} />
       </DialogContent>
     </ModalController>
-  );
+  )
 }
+
+export default ImageModal

@@ -1,9 +1,9 @@
 import React from 'react'
-import OtpPage from '@/components/auth/otp/OtpPage'
-import LoginForm from '@/components/auth/login/loginForm'
+import LoginForm from '@/components/auth/login/LoginView'
 import { AnimatePresence } from 'motion/react'
 import * as motion from 'motion/react-client'
 import { capsuleVariants, formVarants } from './page.variants'
+import { OtpView } from '@/components/auth/otp'
 
 type homePageProps = {
   state: "login" | "otp"
@@ -51,7 +51,7 @@ export default async function LoginPage({
             exit="exit"
             transition={{ duration: 0.6, ease: "easeInOut" }}
             className='top-0 overflow-auto flex absolute left-0 w-dvw sm:w-[50%] sm:h-[100%] h-[80%] justify-center md:[--x-initial:-100%] max-sm:[--y-initial:-60%] max-sm:[--y-animate:0]'>
-            <OtpPage phoneNumber={number} />
+            <OtpView phoneNumber={number} />
           </motion.div>
         )}
       </AnimatePresence>

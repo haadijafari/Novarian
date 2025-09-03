@@ -1,5 +1,5 @@
-import HeroGallerySkeleton from "@/components/products/product-hero/heroGallerySkeleton"
-import { Skeleton } from "@/components/ui/skeleton"
+import { HeroGallerySkeleton } from "@/components/products/product-detail/ProductHero"
+import { Skeleton } from "@/components/ui/layout"
 
 export default function Loading() {
   return (

@@ -6,9 +6,9 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
+} from "@/components/ui/primitives"
 import { mockProducts } from "../../../../../public/mockProducts"
-import ProductCard from "@/components/products/ProductCard"
+import ProductCard from "@/components/products/ProductCard/ProductCard"
 
 export default function CarouselSpacing() {
   //TODO: fetch from product suggestions
