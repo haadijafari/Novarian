@@ -1,7 +1,18 @@
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from '../../primitives'
-import { motion, MotionConfig, type HTMLMotionProps, type Transition } from 'framer-motion'
+import { motion, MotionConfig, type Variants, type HTMLMotionProps, type Transition } from 'framer-motion'
 import React, { useContext, useId, useMemo } from 'react';
 import { XIcon } from 'lucide-react';
+
+const fade_in: Variants = {
+  visible: {
+    scale: 1,
+    opacity: 1,
+  },
+  hidden: {
+    scale: 0.8,
+    opacity: 0,
+  }
+}
 
 const MorphingDialogContext =
   React.createContext<{ uniqueId: string } | null>(null);
@@ -97,14 +108,9 @@ const MorphClose = ({ ...props }: HTMLMotionProps<"button">) => {
 
   return (
     <MotionClose
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{
-        ease: "easeOut",
-        duration: 0.2,
-        delay: 0.2
-      }}
-
+      variants={fade_in}
+      initial='hidden'
+      animate='visible'
       className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
       {...props}
     >

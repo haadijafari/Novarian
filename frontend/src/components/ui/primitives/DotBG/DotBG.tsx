@@ -1,5 +1,3 @@
-import { cn } from "@/lib/utils";
-
 interface DotBGProps {
   /**
    * Color of the dot
@@ -44,10 +42,7 @@ function DotBG({
         backgroundImage: `radial-gradient(${color} ${size}px, transparent ${size}px)`,
         backgroundSize: `calc(${spacing} * ${size}px) calc(${spacing} * ${size}px)`,
       }}
-      className={cn(
-        'animate-fade',
-        className,
-      )}
+      className={className}
     >
       {children}
     </div>
