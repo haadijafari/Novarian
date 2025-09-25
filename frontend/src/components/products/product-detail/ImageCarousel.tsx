@@ -2,7 +2,7 @@
 
 import type { ReactNode, Dispatch, SetStateAction } from 'react'
 import React from 'react'
-import { motion, useMotionValue } from 'motion/react'
+import { motion, Transition, useMotionValue } from 'motion/react'
 import type { image } from '@/lib/schemas/schemas'
 
 type ImageCarouselProps = {
@@ -14,7 +14,7 @@ type ImageCarouselProps = {
 
 const DRAG_BUFFER = 50
 
-const SPRING_OPTIONS = {
+const SPRING_OPTIONS: Transition = {
   type: 'spring',
   mass: 3,
   stiffness: 400,
@@ -38,19 +38,24 @@ const ImageCarousel = ({
     }
   }
 
+  //WARNING: you should use radix ui for the ux, this slider lacks several ux problems including 
+  //keybourd support and aria tags
+
   return (
-    <motion.div
-      drag="x"
-      dragConstraints={{ left: 0, right: 0 }}
-      style={{ x: dragX }}
-      onDragEnd={onDragEnd}
-      animate={{ translateX: `-${imgIndex * 100}%` }}
-      initial={false}
-      transition={SPRING_OPTIONS}
-      className="flex overflow-hidden h-full cursor-grab active:cursor-grabbing"
-    >
-      {children}
-    </motion.div>
+    <div className="w-full h-full overflow-hidden">
+      <motion.div
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        style={{ x: dragX }}
+        onDragEnd={onDragEnd}
+        animate={{ translateX: `-${imgIndex * 100}%` }}
+        initial={false}
+        transition={SPRING_OPTIONS}
+        className="flex w-full h-full cursor-grab active:cursor-grabbing"
+      >
+        {children}
+      </motion.div>
+    </div>
   )
 }
 

@@ -1,3 +1,5 @@
+'use client'
+
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from '../../primitives'
 import { motion, MotionConfig, type Variants, type HTMLMotionProps, type Transition } from 'framer-motion'
 import React, { useContext, useId, useMemo } from 'react';
