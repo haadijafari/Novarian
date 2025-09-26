@@ -1,9 +1,10 @@
 'use client'
 
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from '../../primitives'
+import { Dialog, DialogClose, DialogContent } from '../../primitives'
 import { motion, MotionConfig, type Variants, type HTMLMotionProps, type Transition } from 'framer-motion'
-import React, { useContext, useId, useMemo } from 'react';
-import { XIcon } from 'lucide-react';
+import React from 'react'
+import { XIcon } from 'lucide-react'
+import { useModalController } from '@/lib/hooks/useModalController'
 
 const fade_in: Variants = {
   visible: {
@@ -16,88 +17,64 @@ const fade_in: Variants = {
   }
 }
 
-const MorphingDialogContext =
-  React.createContext<{ uniqueId: string } | null>(null);
-
-function useMorphingDialog() {
-  const context = useContext(MorphingDialogContext);
-  if (!context) {
-    throw new Error(
-      'useMorphingDialog must be used within a MorphingDialogProvider'
-    );
-  }
-  return context;
+type MorphDialogProps = React.ComponentProps<typeof Dialog> & {
+  transition?: Transition
+  modalKey: string
 }
 
-
-const MorphDialog = ({
-  transition,
-  ...props
-}: React.ComponentProps<typeof Dialog>
-  & { transition?: Transition }) => {
-
-  const uniqueId = useId()
-  const contextValue = useMemo(
-    () => ({
-      uniqueId,
-    }),
-    [uniqueId]
-  );
-
-
+const MorphDialog = ({ transition, modalKey, ...props }: MorphDialogProps) => {
   return (
-    <MorphingDialogContext.Provider value={contextValue}>
-      <MotionConfig transition={transition}>
-        <Dialog {...props} />
-      </MotionConfig>
-    </MorphingDialogContext.Provider>
+    <MotionConfig transition={transition}>
+      <Dialog data-modal-key={modalKey} {...props} />
+    </MotionConfig>
   )
 }
 
-const MorphTrigger = ({
-  ...props
-}: HTMLMotionProps<"button">) => {
-  const { uniqueId } = useMorphingDialog()
+type MorphTriggerProps = {
+  modalKey: string
+} & HTMLMotionProps<'button'>
 
+const MorphTrigger = ({ modalKey, children, ...props }: MorphTriggerProps) => {
+  const { openModal } = useModalController() // opens modal by setting ?modal=
   return (
-    <DialogTrigger asChild>
-      <motion.button
-        layoutId={`Dialog-container-${uniqueId}`}
-        {...props}
-      />
-    </DialogTrigger>
+    <motion.button
+      layoutId={`Dialog-container-${modalKey}`}
+      onClick={() => openModal(modalKey)}
+      {...props}
+    >
+      {children}
+    </motion.button>
   )
 }
 
-const MorphComponent = ({
-  rule,
-  ...props
-}: { rule: string }
-  & HTMLMotionProps<"div">
-) => {
-  const { uniqueId } = useMorphingDialog()
+type MorphComponentProps = {
+  rule: string
+  modalKey: string
+} & HTMLMotionProps<'div'>
 
+const MorphComponent = ({ rule, modalKey, ...props }: MorphComponentProps) => {
   return (
     <motion.div
-      layoutId={`Dialog-${rule}-${uniqueId}`}
+      layoutId={`Dialog-${rule}-${modalKey}`}
       {...props}
     />
   )
 }
 
-export const MorphContent = ({
+const MorphContent = ({
+  modalKey,
   children,
   showCloseButton = true,
   className,
   ...props
-}: React.ComponentProps<typeof DialogContent>) => {
+}: React.ComponentProps<typeof DialogContent> & { modalKey: string }) => {
 
   return (
     <DialogContent
       // Force the wrapper to be invisible, overriding any default styles
       className="bg-transparent shadow-none border-none p-0"
       showCloseButton={false} {...props}>
-      <MorphComponent rule='container' className={className}>
+      <MorphComponent rule='container' modalKey={modalKey} className={className}>
         {children}
       </MorphComponent>
       {showCloseButton && <MorphClose />}
@@ -105,7 +82,7 @@ export const MorphContent = ({
   )
 }
 
-const MorphClose = ({ ...props }: HTMLMotionProps<"button">) => {
+const MorphClose = ({ ...props }: HTMLMotionProps<'button'>) => {
   const MotionClose = motion(DialogClose)
 
   return (
@@ -126,5 +103,6 @@ export {
   MorphDialog,
   MorphTrigger,
   MorphComponent,
+  MorphContent,
   MorphClose
 }
