@@ -13,7 +13,7 @@ const getInitialIndex = (searchParams: URLSearchParams, imageCount: number): num
   return 0
 }
 
-export const useSyncedImageIndex = (imageCount: number) => {
+const useSyncedImageIndex = (imageCount: number) => {
   const searchParams = useSearchParams()
 
   // Initialize state using the helper function
@@ -32,3 +32,5 @@ export const useSyncedImageIndex = (imageCount: number) => {
 
   return [imgIndex, setImgIndex] as const
 }
+
+export default useSyncedImageIndex

@@ -3,7 +3,7 @@
 import { useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-export function useModalController() {
+function useModalController() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -25,3 +25,5 @@ export function useModalController() {
 
   return { current, openModal, closeModal }
 }
+
+export default useModalController

@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { ImageCarousel, Slide } from '../ImageCarousel'
-import { useSyncedImageIndex } from '@/lib/useSyncedImageIndex'
+import { useSyncedImageIndex } from '@/lib/hooks'
 import { type image } from '@/lib/schemas/schemas'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'

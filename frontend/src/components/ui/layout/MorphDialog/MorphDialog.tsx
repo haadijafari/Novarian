@@ -4,7 +4,7 @@ import { Dialog, DialogClose, DialogContent } from '../../primitives'
 import { motion, MotionConfig, type Variants, type HTMLMotionProps, type Transition } from 'framer-motion'
 import React from 'react'
 import { XIcon } from 'lucide-react'
-import { useModalController } from '@/lib/hooks/useModalController'
+import { useModalController } from '@/lib/hooks'
 
 const fade_in: Variants = {
   visible: {
