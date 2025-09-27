@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 type Props = { incoming?: boolean; children: React.ReactNode };
 
 const MessageBubble = ({ incoming = false, children }: Props) => {
-  const containerBG = 'bg-surface';
+  const containerBG = 'bg-surface-muted';
 
   const recevierBG = 'bg-slate-200 text-black';
   const senderBG = 'bg-sky-500 text-white';
@@ -36,11 +36,11 @@ const MessageBubble = ({ incoming = false, children }: Props) => {
   );
 };
 
-const ChatContainer = ({ children, containerBG }: { containerBG: string, children: React.ReactNode }) => {
+const ChatContainer = ({ children, className }: { className: string, children: React.ReactNode }) => {
   return (
     <div className={cn(
+      className,
       'flex space-y-3 flex-col h-auto w-full p-3',
-      containerBG
     )} dir='ltr'>
       {children}
     </div>

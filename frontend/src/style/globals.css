@@ -15,7 +15,7 @@ body {
 }
 
 @theme {
-  --animate-fade-in: fade-in 1.0s cubic-bezier(0.390, 0.575, 0.565, 1.000);
+  --animate-fade-in: fade-in 0.4s cubic-bezier(.12, 1.16, .91, .97);
 
   @keyframes fade-in {
     0% {
@@ -27,7 +27,7 @@ body {
     }
   }
 
-  --animate-fade-out: fade-out 1.0s cubic-bezier(0.390, 0.575, 0.565, 1.000);
+  --animate-fade-out: fade-out 0.4s cubic-bezier(.12, 1.16, .91, .97);
 
   @keyframes fade-out {
     0% {

@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 interface DotBGProps {
   /**
    * Color of the dot
@@ -30,7 +32,7 @@ interface DotBGProps {
 function DotBG({
   color = "#cacaca",
   size = 1,
-  spacing = 10,
+  spacing = 15,
   children,
   className,
   style
@@ -42,7 +44,7 @@ function DotBG({
         backgroundImage: `radial-gradient(${color} ${size}px, transparent ${size}px)`,
         backgroundSize: `calc(${spacing} * ${size}px) calc(${spacing} * ${size}px)`,
       }}
-      className={className}
+      className={cn(className, 'backdrop-blur-xl')}
     >
       {children}
     </div>
