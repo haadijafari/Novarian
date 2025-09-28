@@ -13,7 +13,7 @@ const MessageBubble = ({ incoming = false, children }: Props) => {
     <div
       className={cn(
         'relative rounded-3xl px-5 py-2.5 text-lg break-words max-w-4/5',
-        incoming ? 'self-start' : 'self-end',
+        incoming ? 'self-end' : 'self-start',
         incoming ? recevierBG : senderBG
       )}
     >
@@ -41,7 +41,7 @@ const ChatContainer = ({ children, className }: { className: string, children: R
     <div className={cn(
       className,
       'flex space-y-3 flex-col h-auto w-full p-3',
-    )} dir='ltr'>
+    )}>
       {children}
     </div>
   )

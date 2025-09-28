@@ -5,6 +5,7 @@ import { motion, MotionConfig, type Variants, type HTMLMotionProps, type Transit
 import React from 'react'
 import { XIcon } from 'lucide-react'
 import { useModalController } from '@/lib/hooks'
+import { cn } from '@/lib/utils'
 
 const fade_in: Variants = {
   visible: {
@@ -82,7 +83,9 @@ const MorphContent = ({
   )
 }
 
-const MorphClose = ({ ...props }: HTMLMotionProps<'button'>) => {
+const MorphClose = ({ dir = 'rtl', ...props }: HTMLMotionProps<'button'> & {
+  dir?: "ltr" | "rtl"
+}) => {
   const MotionClose = motion(DialogClose)
 
   return (
@@ -90,7 +93,10 @@ const MorphClose = ({ ...props }: HTMLMotionProps<'button'>) => {
       variants={fade_in}
       initial='hidden'
       animate='visible'
-      className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+      className={cn(
+        dir == 'rtl' ? 'left-4' : 'right-4',
+        "ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+      )}
       {...props}
     >
       <XIcon />
